@@ -39,7 +39,14 @@ namespace SGDBMetadata
         {
             if (options.IsBackgroundDownload)
             {
-                return new MetadataFile(services.getCoverImageUrl(options.GameData.Name, options.GameData.Source.ToString().ToLower(), options.GameData.GameId));
+                if (options.GameData.Source != null)
+                {
+                    return new MetadataFile(services.getCoverImageUrl(options.GameData.Name, options.GameData.Source.ToString().ToLower(), options.GameData.GameId));
+                }
+                else
+                {
+                    return new MetadataFile(services.getCoverImageUrl(options.GameData.Name));
+                }
             } else {
                 var sgdbException = new Exception("Service failure.");
                 throw sgdbException;
@@ -50,7 +57,15 @@ namespace SGDBMetadata
         {
             if (options.IsBackgroundDownload)
             {
-                return new MetadataFile(services.getHeroImageUrl(options.GameData.Name, options.GameData.Source.ToString().ToLower(), options.GameData.GameId));
+                if(options.GameData.Source != null)
+                {
+                    return new MetadataFile(services.getHeroImageUrl(options.GameData.Name, options.GameData.Source.ToString().ToLower(), options.GameData.GameId));
+                }
+                else
+                {
+                    return new MetadataFile(services.getHeroImageUrl(options.GameData.Name));
+                }
+                
             } else {
                 var sgdbException = new Exception("Service failure.");
                 throw sgdbException;
@@ -61,7 +76,14 @@ namespace SGDBMetadata
         {
             if (options.IsBackgroundDownload)
             {
-                return new MetadataFile(services.getLogoImageUrl(options.GameData.Name, options.GameData.Source.ToString().ToLower(), options.GameData.GameId));
+                if (options.GameData.Source != null)
+                {
+                    return new MetadataFile(services.getLogoImageUrl(options.GameData.Name, options.GameData.Source.ToString().ToLower(), options.GameData.GameId));
+                }
+                else
+                {
+                    return new MetadataFile(services.getLogoImageUrl(options.GameData.Name));
+                }
             }
             else
             {
