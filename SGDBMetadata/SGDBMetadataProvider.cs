@@ -21,11 +21,11 @@ namespace SGDBMetadata
                 return SupportedFields;
             }
         }
-
-
         public List<MetadataField> SupportedFields { get; } = new List<MetadataField>
         {
-            MetadataField.CoverImage
+            MetadataField.CoverImage,
+            MetadataField.BackgroundImage,
+            MetadataField.Icon
         };
         public SGDBMetadataProvider(MetadataRequestOptions options, SGDBMetadata plugin, string apiKey)
         {
@@ -39,21 +39,35 @@ namespace SGDBMetadata
         {
             if (options.IsBackgroundDownload)
             {
-                return new MetadataFile(services.getCoverImageUrl(options.GameData.Name));
+                return new MetadataFile(services.getCoverImageUrl(options.GameData.Name, options.GameData.Source.ToString().ToLower(), options.GameData.GameId));
             } else {
                 var sgdbException = new Exception("Service failure.");
                 throw sgdbException;
             }
         }
-/*
-        public override string GetBackgroundImage()
+
+        public override MetadataFile GetBackgroundImage()
         {
             if (options.IsBackgroundDownload)
             {
-                return new MetadataFile(services.GetHeroImageUrl(options.Game.Name));
+                return new MetadataFile(services.getHeroImageUrl(options.GameData.Name, options.GameData.Source.ToString().ToLower(), options.GameData.GameId));
             } else {
-                return false;
+                var sgdbException = new Exception("Service failure.");
+                throw sgdbException;
             }
-        }*/
+        }
+
+        public override MetadataFile GetIcon()
+        {
+            if (options.IsBackgroundDownload)
+            {
+                return new MetadataFile(services.getLogoImageUrl(options.GameData.Name, options.GameData.Source.ToString().ToLower(), options.GameData.GameId));
+            }
+            else
+            {
+                var sgdbException = new Exception("Service failure.");
+                throw sgdbException;
+            }
+        }
     }
 }

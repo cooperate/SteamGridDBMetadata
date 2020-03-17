@@ -43,30 +43,63 @@ namespace SGDBMetadata
             return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(content);
         }
 
-        public SearchModel getSGDBGames(string searchName)
+        public ResponseModel<SearchModel> getSGDBGames(string searchName)
         {
             var logger = LogManager.GetLogger();
             logger.Info(searchName);
             var request = new RestRequest("search/autocomplete/{searchName}", Method.GET);
             request.AddParameter("searchName", searchName, ParameterType.UrlSegment);
-            return Execute<SearchModel>(request);
+            return Execute<ResponseModel<SearchModel>>(request);
         }
 
-        public GridModel getSGDBGameGrid(int id)
+        public ResponseModel<GridModel> getSGDBGameGridByAppId(string platform, string gameId)
+        {
+            var request = new RestRequest("grids/{platform}/{gameId}", Method.GET);
+            request.AddParameter("platform", platform, ParameterType.UrlSegment);
+            request.AddParameter("gameId", gameId, ParameterType.UrlSegment);
+            request.AddParameter("dimensions", "600x900", ParameterType.GetOrPost);
+            return Execute<ResponseModel<GridModel>>(request);
+        }
+
+        public ResponseModel<GridModel> getSGDBGameGridCover(int gameId)
         {
             var request = new RestRequest("grids/game/{id}", Method.GET);
-            request.AddParameter("id", id, ParameterType.UrlSegment);
+            request.AddParameter("id", gameId, ParameterType.UrlSegment);
             request.AddParameter("dimensions", "600x900", ParameterType.GetOrPost);
-            return Execute<GridModel>(request);
+            return Execute<ResponseModel<GridModel>>(request);
         }
-
-        /*public ResponseModel getSGDBGameHero(UInt64 id)
+        
+        public ResponseModel<HeroModel> getSGDBGameHero(int gameId)
         {
             var request = new RestRequest("/heroes/game/{id}", Method.GET);
-            return this.Execute<ResponseModel>(request);
-        }*/
+            request.AddParameter("id", gameId, ParameterType.UrlSegment);
+            return this.Execute<ResponseModel<HeroModel>>(request);
+        }
 
-        public SearchSchema getGameSGDBFuzzySearch(string gameTitle)
+        public ResponseModel<HeroModel> getSGDBGameHeroByAppId(string platform, string gameId)
+        {
+            var request = new RestRequest("heroes/{platform}/{gameId}", Method.GET);
+            request.AddParameter("platform", platform, ParameterType.UrlSegment);
+            request.AddParameter("gameId", gameId, ParameterType.UrlSegment);
+            return Execute<ResponseModel<HeroModel>>(request);
+        }
+
+        public ResponseModel<MediaModel> getSGDBGameLogo(int gameId)
+        {
+            var request = new RestRequest("logos/game/{gameId}", Method.GET);
+            request.AddParameter("gameId", gameId, ParameterType.UrlSegment);
+            return Execute<ResponseModel<MediaModel>>(request);
+        }
+
+        public ResponseModel<MediaModel> getSGDBGameLogoByAppId(string platform, string gameId)
+        {
+            var request = new RestRequest("logos/{platform}/{gameId}", Method.GET);
+            request.AddParameter("platform", platform, ParameterType.UrlSegment);
+            request.AddParameter("gameId", gameId, ParameterType.UrlSegment);
+            return Execute<ResponseModel<MediaModel>>(request);
+        }
+
+        public SearchModel getGameSGDBFuzzySearch(string gameTitle)
         {
             var logger = LogManager.GetLogger();
             logger.Info(gameTitle);
@@ -83,74 +116,70 @@ namespace SGDBMetadata
             }
         }
 
-        public string getCoverImageUrl(string gameTitle)
+        public string getCoverImageUrl(string gameName, string platform = null, string gameId = null)
         {
-            var gameId = getGameSGDBFuzzySearch(gameTitle).id;
-            var gameCoverResponse = getSGDBGameGrid(gameId); //First element of search results, should probably implement fuzzysearchquery based on intentions
-            if (gameCoverResponse.success)
+            if (platform != null && gameId != null)
             {
-                var logger = LogManager.GetLogger();
-                logger.Info(gameCoverResponse.data[0].url);
-                return gameCoverResponse.data[0].url; //This request seems to return results in descending order by score, this is ideal.
+                ResponseModel<GridModel> grid = getSGDBGameGridByAppId(platform, gameId); //First element of search results, should probably implement fuzzysearchquery based on intentions
+                if(grid.success)
+                {
+                    return grid.data[0].url;
+                }
             }
             else
             {
-                return "bad path";
-            }
-            /*
-            Example response for one grid entity.
-            {
-                "id": 60363,
-                "score": 0,
-                "style": "alternate",
-                "notes": null,
-                "language": "en",
-                "url": "https://d38w655bqoyvyi.cloudfront.net/grid/01edeb72ae20fe8bd93d126ec0fbaf91.png",
-                "thumb": "https://d38w655bqoyvyi.cloudfront.net/thumb/01edeb72ae20fe8bd93d126ec0fbaf91.png",
-                "author": {
-                    "name": "Dark Seals",
-                    "steam64": "76561198040948626",
-                    "avatar": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/69/69c6707a64b7f31b9b3aa2e900bb1d9f988a56b5.jpg"
+                SearchModel gameCoverSearch = getGameSGDBFuzzySearch(gameName);
+                ResponseModel<GridModel> grid = getSGDBGameGridCover(gameCoverSearch.id);
+                if (grid.success)
+                {
+                    return grid.data[0].url;
                 }
-            },
-            */
+            }
+            return "bad path";
         }
 
-        /*public string getHeroImageUrl(string gameTitle)
+        public string getHeroImageUrl(string gameName, string platform = null, string gameId = null)
         {
-            var gameListResponse = getSGDBGames(gameTitle);
-            if (gameListResponse.success)
+            if (platform != null && gameId != null)
             {
-                var gameCoverResponse = getSGDBGameHero(gameListResponse.data[0].id); //First element of search results, should probably implement fuzzysearchquery based on intentions
-                if (gameCoverResponse.success)
+                ResponseModel<HeroModel> hero = getSGDBGameHeroByAppId(platform, gameId); //First element of search results, should probably implement fuzzysearchquery based on intentions
+                if (hero.success)
                 {
-                    return gameCoverResponse.data[0].url; //This request seems to return results in descending order by score, this is ideal.
-                } else
-                {
-                    return "bad path";
+                    return hero.data[0].url;
                 }
-                *//*
-                Example response for one hero entity.
-                 {
-                     "id": 3823,
-                     "score": 1,
-                     "notes": null,
-                     "language": "en",
-                     "style": "alternate",
-                     "url": "https://d38w655bqoyvyi.cloudfront.net/hero/bca382c81484983f2d437f97d1e141f3.png",
-                     "thumb": "https://d38w655bqoyvyi.cloudfront.net/hero_thumb/bca382c81484983f2d437f97d1e141f3.png",
-                     "author": {
-                         "name": "Mac!",
-                         "steam64": "76561198069521439",
-                         "avatar": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/c1/c1261edf193be8d738e1e43d3c23ec8fbf89f32d.jpg"
-                     }
-                 }
-                *//*
             }
             else
             {
-                return "bad path";
+                SearchModel gameHeroSearch = getGameSGDBFuzzySearch(gameName);
+                ResponseModel<HeroModel> hero= getSGDBGameHero(gameHeroSearch.id);
+                if (hero.success)
+                {
+                    return hero.data[0].url;
+                }
             }
-        }*/
+            return "bad path";
+        }
+
+        public string getLogoImageUrl(string gameName, string platform = null, string gameId = null)
+        {
+            if (platform != null && gameId != null)
+            {
+                ResponseModel<MediaModel> logo = getSGDBGameLogoByAppId(platform, gameId); //First element of search results, should probably implement fuzzysearchquery based on intentions
+                if (logo.success)
+                {
+                    return logo.data[0].url;
+                }
+            }
+            else
+            {
+                SearchModel gameLogoSearch = getGameSGDBFuzzySearch(gameName);
+                ResponseModel<MediaModel> logo = getSGDBGameLogo(gameLogoSearch.id);
+                if (logo.success)
+                {
+                    return logo.data[0].url;
+                }
+            }
+            return "bad path";
+        }
     }
 }

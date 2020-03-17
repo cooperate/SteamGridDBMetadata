@@ -57,8 +57,8 @@
   <ItemGroup>
     <Compile Include="AuthorSchema.cs" />
     <Compile Include="GridModel.cs" />
-    <Compile Include="GridSchema.cs" />
-    <Compile Include="SearchSchema.cs" />
+    <Compile Include="HeroModel.cs" />
+    <Compile Include="MediaModel.cs" />
     <Compile Include="SearchModel.cs" />
     <Compile Include="ResponseModel.cs" />
     <Compile Include="SGDBService.cs" />

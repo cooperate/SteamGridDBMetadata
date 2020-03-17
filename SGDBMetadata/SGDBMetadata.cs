@@ -20,7 +20,8 @@ namespace SGDBMetadata
         public override List<MetadataField> SupportedFields { get; } = new List<MetadataField>
         {
             MetadataField.CoverImage,
-            MetadataField.BackgroundImage
+            MetadataField.BackgroundImage,
+            MetadataField.Icon
         };
 
         // Change to something more appropriate
