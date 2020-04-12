@@ -57,7 +57,7 @@ namespace SGDBMetadata
                 {
                     var covers = services.getCoverImages(searchSelection.Name);
                     var selection = GetCoverManually(covers);
-                    if (selection.Path == "nopath" || selection == null)
+                    if (selection == null || selection.Path == "nopath")
                     {
                         return base.GetCoverImage();
                     } else {
@@ -94,7 +94,7 @@ namespace SGDBMetadata
                 {
                     var heroes = services.getHeroImages(searchSelection.Name);
                     var selection = GetHeroManually(heroes);
-                    if (selection.Path == "nopath" || selection == null)
+                    if (selection == null || selection.Path == "nopath")
                     {
                         return base.GetBackgroundImage();
                     }
@@ -132,7 +132,7 @@ namespace SGDBMetadata
                 {
                     var icons = services.getLogoImages(searchSelection.Name);
                     var selection = GetIconManually(icons);
-                    if (selection.Path == "nopath" || selection == null)
+                    if (selection == null || selection.Path == "nopath")
                     {
                         return base.GetIcon();
                     }
