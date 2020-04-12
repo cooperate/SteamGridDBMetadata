@@ -44,6 +44,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
@@ -58,6 +59,8 @@
     <Compile Include="AuthorSchema.cs" />
     <Compile Include="GridModel.cs" />
     <Compile Include="HeroModel.cs" />
+    <Compile Include="ImageConversion.cs" />
+    <Compile Include="ImageDownloader.cs" />
     <Compile Include="MediaModel.cs" />
     <Compile Include="SearchModel.cs" />
     <Compile Include="ResponseModel.cs" />
