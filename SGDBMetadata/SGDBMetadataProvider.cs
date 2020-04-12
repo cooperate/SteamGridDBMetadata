@@ -57,12 +57,16 @@ namespace SGDBMetadata
                 {
                     var covers = services.getCoverImages(searchSelection.Name);
                     var selection = GetCoverManually(covers);
-                    return new MetadataFile(selection.Path);
+                    if (selection.Path == "nopath")
+                    {
+                        return base.GetCoverImage();
+                    } else {
+                        return new MetadataFile(selection.Path);
+                    }
                 }
                 else
                 {
-                    var sgdbException = new Exception("Service failure.");
-                    throw sgdbException;
+                    return base.GetCoverImage();
                 }
             }
         }
@@ -90,12 +94,18 @@ namespace SGDBMetadata
                 {
                     var heroes = services.getHeroImages(searchSelection.Name);
                     var selection = GetHeroManually(heroes);
-                    return new MetadataFile(selection.Path);
+                    if (selection.Path == "nopath")
+                    {
+                        return base.GetBackgroundImage();
+                    }
+                    else
+                    {
+                        return new MetadataFile(selection.Path);
+                    }
                 }
                 else
                 {
-                    var sgdbException = new Exception("Service failure.");
-                    throw sgdbException;
+                    return base.GetBackgroundImage();
                 }
             }
         }
@@ -122,12 +132,18 @@ namespace SGDBMetadata
                 {
                     var icons = services.getLogoImages(searchSelection.Name);
                     var selection = GetIconManually(icons);
-                    return new MetadataFile(selection.Path);
+                    if (selection.Path == "nopath")
+                    {
+                        return base.GetIcon();
+                    }
+                    else
+                    {
+                        return new MetadataFile(selection.Path);
+                    }
                 }
                 else
                 {
-                    var sgdbException = new Exception("Service failure.");
-                    throw sgdbException;
+                    return base.GetIcon();
                 }
             }
         }
@@ -168,8 +184,14 @@ namespace SGDBMetadata
                     Path = cover.url
                 });
             }
-            return plugin.PlayniteApi.Dialogs.ChooseImageFile(
-                selection, "Choose Cover");
+            if (selection.Count > 0)
+            {
+                return plugin.PlayniteApi.Dialogs.ChooseImageFile(
+                    selection, "Choose Cover");
+            } else
+            {
+                return new ImageFileOption("nopath");
+            }
         }
 
         private ImageFileOption GetHeroManually(List<HeroModel> possibleHeroes)
@@ -182,8 +204,15 @@ namespace SGDBMetadata
                     Path = hero.url
                 });
             }
-            return plugin.PlayniteApi.Dialogs.ChooseImageFile(
+            if(selection.Count > 0)
+            {
+                return plugin.PlayniteApi.Dialogs.ChooseImageFile(
                 selection, "Choose Background");
+            } else
+            {
+                return new ImageFileOption("nopath");
+            }
+            
         }
 
         private ImageFileOption GetIconManually(List<MediaModel> possibleIcons)
@@ -196,8 +225,13 @@ namespace SGDBMetadata
                     Path = icon.url
                 });
             }
-            return plugin.PlayniteApi.Dialogs.ChooseImageFile(
+            if(selection.Count > 0) { 
+                return plugin.PlayniteApi.Dialogs.ChooseImageFile(
                 selection, "Choose Icon");
-        }
+            } else
+            {
+                return new ImageFileOption("nopath");
+            }
+}
     }
 }
