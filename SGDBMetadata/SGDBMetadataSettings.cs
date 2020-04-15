@@ -13,6 +13,11 @@ namespace SGDBMetadata
         private readonly SGDBMetadata plugin;
 
         public string Option1 { get; set; } = string.Empty;
+        public List<string> Dimension;
+        public List<string> Style;
+
+        public string SDimension { get; set; } = string.Empty;
+        public string SStyle { get; set; } = string.Empty;
 
         // Playnite serializes settings object to a JSON object and saves it as text file.
         // If you want to exclude some property from being saved then use `JsonIgnore` ignore attribute.
@@ -22,6 +27,25 @@ namespace SGDBMetadata
         // Parameterless constructor must exist if you want to use LoadPluginSettings method.
         public SGDBMetadataSettings()
         {
+            Dimension = new List<string>
+            {
+                "any",
+                "460x215",
+                "920x430",
+                "600x900",
+                "342x482",
+                "legacy"
+            };
+
+            Style = new List<string>
+            {
+                "any",
+                "alternate",
+                "blurred",
+                "white_logo",
+                "material",
+                "no_logo"
+            };
         }
 
         public SGDBMetadataSettings(SGDBMetadata plugin)
@@ -36,6 +60,8 @@ namespace SGDBMetadata
             if (savedSettings != null)
             {
                 Option1 = savedSettings.Option1;
+                SDimension = savedSettings.SDimension;
+                SStyle = savedSettings.SStyle;
             }
         }
 

@@ -16,11 +16,15 @@ namespace SGDBMetadata
         private string baseUrl = "https://www.steamgriddb.com/api/v2/";
 
         private RestClient client;
+        private string dimension;
+        private string style;
 
-        public SgdbServiceClient(string bearerToken)
+        public SgdbServiceClient(string bearerToken, string dimension, string style)
         {
             client = new RestClient(baseUrl);
             client.Authenticator = new JwtAuthenticator(bearerToken);
+            this.dimension = dimension;
+            this.style = style;
         }
 
         public RestClient RestClient { get; set; }
@@ -57,7 +61,12 @@ namespace SGDBMetadata
             var request = new RestRequest("grids/{platform}/{gameId}", Method.GET);
             request.AddParameter("platform", platform, ParameterType.UrlSegment);
             request.AddParameter("gameId", gameId, ParameterType.UrlSegment);
-            request.AddParameter("dimensions", "600x900", ParameterType.GetOrPost);
+            if (dimension != "any") {
+                request.AddParameter("dimensions", dimension, ParameterType.GetOrPost);
+            }
+            if (style != "any") {
+                request.AddParameter("styles", style, ParameterType.GetOrPost);
+            }
             return Execute<ResponseModel<GridModel>>(request);
         }
 
@@ -65,7 +74,14 @@ namespace SGDBMetadata
         {
             var request = new RestRequest("grids/game/{id}", Method.GET);
             request.AddParameter("id", gameId, ParameterType.UrlSegment);
-            request.AddParameter("dimensions", "600x900", ParameterType.GetOrPost);
+            if (dimension != "any")
+            {
+                request.AddParameter("dimensions", dimension, ParameterType.GetOrPost);
+            }
+            if (style != "any")
+            {
+                request.AddParameter("styles", style, ParameterType.GetOrPost);
+            }
             return Execute<ResponseModel<GridModel>>(request);
         }
         

@@ -20,6 +20,25 @@ namespace SGDBMetadata
         public SGDBMetadataSettingsView()
         {
             InitializeComponent();
+            cmbDimensions.ItemsSource = new List<string>
+            {
+                "any",
+                "460x215",
+                "920x430",
+                "600x900",
+                "342x482",
+                "legacy"
+            };
+
+            cmbStyles.ItemsSource = new List<string>
+            {
+                "any",
+                "alternate",
+                "blurred",
+                "white_logo",
+                "material",
+                "no_logo"
+            };
         }
     }
 }

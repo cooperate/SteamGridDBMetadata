@@ -29,11 +29,11 @@ namespace SGDBMetadata
                 return availableFields;
             }
         }
-        public SGDBMetadataProvider(MetadataRequestOptions options, SGDBMetadata plugin, string apiKey)
+        public SGDBMetadataProvider(MetadataRequestOptions options, SGDBMetadata plugin, string apiKey, string dimension, string style)
         {
             this.options = options;
             this.plugin = plugin;
-            services = new SgdbServiceClient(apiKey);
+            services = new SgdbServiceClient(apiKey, dimension, style);
         }
 
         // Override additional methods based on supported metadata fields.
