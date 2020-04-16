@@ -22,4 +22,4 @@ To download metadata for a title, right-click it from the Playnite interface and
 
 ## Contributing
 
-In order to compile, you need the Playnite SDK referenced. If your project can't find the SDK you need to reference it. Build the solution to generate the SDK under `packages`. The SDK is stored under `.\packages\PlayniteSDK.5.2.0\lib\net462`.
+In order to compile or build, you need the Playnite SDK referenced in the project. If your project can't find the SDK you may need to build the solution to generate the SDK library. The SDK is stored under `.\packages\PlayniteSDK.5.2.0\lib\net462`.
