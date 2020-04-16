@@ -1,10 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Playnite.SDK;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SGDBMetadata
 {
@@ -29,22 +25,22 @@ namespace SGDBMetadata
         {
             Dimension = new List<string>
             {
-                "any",
+                "Any",
                 "460x215",
                 "920x430",
                 "600x900",
                 "342x482",
-                "legacy"
+                "Legacy"
             };
 
             Style = new List<string>
             {
-                "any",
-                "alternate",
-                "blurred",
-                "white_logo",
-                "material",
-                "no_logo"
+                "Any",
+                "Alternate",
+                "Blurred",
+                "White Logo",
+                "Material",
+                "No Logo"
             };
         }
 

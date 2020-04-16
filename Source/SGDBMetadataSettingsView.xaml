@@ -6,12 +6,12 @@
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
     <StackPanel>
-        <TextBlock Text="SteamGrid DB API Key"/>
-        <TextBox Text="{Binding Option1}"/>
-        
-        <TextBlock Text="Grid Style"/>
-        <ComboBox Name="cmbStyles" ItemsSource="{Binding Style}" SelectedItem="{Binding Path=SStyle}" />
-        <TextBlock Text="Grid Dimensions"/>
-        <ComboBox Name="cmbDimensions" ItemsSource="{Binding Dimension}" SelectedItem="{Binding Path=SDimension}"/>
+        <TextBlock Text="API Key:" Margin="15,10,20,0"/>
+        <TextBox Text="{Binding Option1}" Margin="15,10,20,0"/>
+
+        <TextBlock Text="Cover Style:" Margin="15,10,20,0"/>
+        <ComboBox x:Name="cmbStyles" ItemsSource="{Binding Style}" SelectedItem="{Binding SStyle}" Margin="15,10,20,0" />
+        <TextBlock Text="Cover Size:" Margin="15,10,20,0"/>
+        <ComboBox x:Name="cmbDimensions" ItemsSource="{Binding Dimension}" SelectedItem="{Binding SDimension}" Margin="15,10,20,0"/>
     </StackPanel>
 </UserControl>

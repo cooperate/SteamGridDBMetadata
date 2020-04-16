@@ -4,9 +4,6 @@ using Playnite.SDK.Metadata;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SGDBMetadata;
 
 namespace SGDBMetadata
 {
@@ -51,7 +48,7 @@ namespace SGDBMetadata
                 }
             } else {
                 var gameList = new List<GenericItemOption>(services.getGameListSGDB(options.GameData.Name).Select(game => new GenericItemOption(game.name, game.id.ToString())));
-                GetGame(gameList, "Choose Game For Cover");
+                GetGame(gameList, "Cover");
 
                 if (searchSelection != null)
                 {
@@ -88,7 +85,7 @@ namespace SGDBMetadata
             else
             {
                 var gameList = new List<GenericItemOption>(services.getGameListSGDB(options.GameData.Name).Select(game => new GenericItemOption(game.name, game.id.ToString())));
-                GetGame(gameList, "Choose Game For Background");
+                GetGame(gameList, "Background");
 
                 if (searchSelection != null)
                 {
@@ -126,7 +123,7 @@ namespace SGDBMetadata
             else
             {
                 var gameList = new List<GenericItemOption>(services.getGameListSGDB(options.GameData.Name).Select(game => new GenericItemOption(game.name, game.id.ToString())));
-                GetGame(gameList, "Choose Game For Icon");
+                GetGame(gameList, "Icon");
 
                 if (searchSelection != null)
                 {
