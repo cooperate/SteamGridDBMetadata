@@ -61,10 +61,10 @@ namespace SGDBMetadata
             var request = new RestRequest("grids/{platform}/{gameId}", Method.GET);
             request.AddParameter("platform", platform, ParameterType.UrlSegment);
             request.AddParameter("gameId", gameId, ParameterType.UrlSegment);
-            if (dimension != "any") {
+            if (dimension != null || dimension != "any") {
                 request.AddParameter("dimensions", dimension, ParameterType.GetOrPost);
             }
-            if (style != "any") {
+            if (dimension != null || dimension != "any") {
                 request.AddParameter("styles", style, ParameterType.GetOrPost);
             }
             return Execute<ResponseModel<GridModel>>(request);
@@ -78,7 +78,7 @@ namespace SGDBMetadata
             {
                 request.AddParameter("dimensions", dimension, ParameterType.GetOrPost);
             }
-            if (style != "any")
+            if (style != null || style != "any")
             {
                 request.AddParameter("styles", style, ParameterType.GetOrPost);
             }

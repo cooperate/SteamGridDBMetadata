@@ -20,6 +20,7 @@ namespace SGDBMetadata
         public SGDBMetadataSettingsView()
         {
             InitializeComponent();
+            
             cmbDimensions.ItemsSource = new List<string>
             {
                 "any",
@@ -29,6 +30,7 @@ namespace SGDBMetadata
                 "342x482",
                 "legacy"
             };
+            cmbDimensions.SelectedIndex = 0;
 
             cmbStyles.ItemsSource = new List<string>
             {
@@ -39,6 +41,7 @@ namespace SGDBMetadata
                 "material",
                 "no_logo"
             };
+            cmbStyles.SelectedIndex = 0;
         }
     }
 }
