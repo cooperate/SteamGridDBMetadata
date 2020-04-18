@@ -25,22 +25,22 @@ namespace SGDBMetadata
         {
             Dimension = new List<string>
             {
-                "Any",
+                "any",
                 "460x215",
                 "920x430",
                 "600x900",
                 "342x482",
-                "Legacy"
+                "legacy"
             };
 
             Style = new List<string>
             {
-                "Any",
-                "Alternate",
-                "Blurred",
-                "White Logo",
-                "Material",
-                "No Logo"
+                "any",
+                "alternate",
+                "blurred",
+                "white_logo",
+                "material",
+                "no_logo"
             };
         }
 
