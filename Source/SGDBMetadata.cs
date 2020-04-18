@@ -2,9 +2,6 @@
 using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace SGDBMetadata
@@ -24,8 +21,7 @@ namespace SGDBMetadata
             MetadataField.Icon
         };
 
-        // Change to something more appropriate
-        public override string Name => "Steam Grid DB Metadata";
+        public override string Name => "SteamGridDB";
 
         public SGDBMetadata(IPlayniteAPI api) : base(api)
         {
