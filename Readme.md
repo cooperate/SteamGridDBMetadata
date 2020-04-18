@@ -1,10 +1,10 @@
-# Playnite SteamGridDB Metadata Plugin
+# Playnite SteamGridDB Metadata Extension
 
-A simple addon  for [Playnite](https://playnite.link/) to download metadata from [SteamGridDB](https://www.steamgriddb.com/)!
+A simple extension  for [Playnite](https://playnite.link/) to download metadata from [SteamGridDB](https://www.steamgriddb.com/)!
 
 ## Releases
 
-Get the latest release [here](https://github.com/cooperate/SteamGridDBMetadata/releases/latest).
+Get the latest release [here](https://github.com/cooperate/SteamGridDBMetadata/releases/latest). To install, simply drag-and-drop the `.pext` file into the Playnite interface.
 
 ## Usage
 
@@ -22,4 +22,4 @@ To download metadata for a title, right-click it from the Playnite interface and
 
 ## Contributing
 
-- If your project can't find the SDK you need to reference it. Build the solution to generate the SDK under `packages`. The SDK is stored under `.\packages\PlayniteSDK.5.2.0\lib\net462`.
+In order to compile or build, you need the Playnite SDK referenced in the project. If your project can't find the SDK you may need to build the solution to generate the SDK library. The SDK is stored under `.\packages\PlayniteSDK.5.2.0\lib\net462`.
