@@ -17,31 +17,30 @@ namespace SGDBMetadata
 {
     public partial class SGDBMetadataSettingsView : UserControl
     {
-        public SGDBMetadataSettingsView()
+         public SGDBMetadataSettingsView()
         {
             InitializeComponent();
-            
-            cmbDimensions.ItemsSource = new List<string>
+            cmbDimensions.ItemsSource = new Dictionary<string, string>
             {
-                "any",
-                "460x215",
-                "920x430",
-                "600x900",
-                "342x482",
-                "legacy"
+                { "any", "Any" },
+                { "460x215", "460x215" },
+                { "920x430",  "920x430" },
+                { "600x900", "600x900" },
+                { "342x482", "342x482" },
+                { "Legacy", "Legacy" }
             };
-            cmbDimensions.SelectedIndex = 0;
+            cmbDimensions.SelectedValue = "any";
 
-            cmbStyles.ItemsSource = new List<string>
+            cmbStyles.ItemsSource = new Dictionary<string, string>
             {
-                "any",
-                "alternate",
-                "blurred",
-                "white_logo",
-                "material",
-                "no_logo"
+                { "any", "Any" },
+                { "alternate", "Alternate" },
+                { "blurred", "Blurred" },
+                { "white_logo", "White Logo" },
+                { "material", "Material" },
+                { "no_logo", "No Logo" }
             };
-            cmbStyles.SelectedIndex = 0;
+            cmbStyles.SelectedValue = "any";
         }
     }
 }
