@@ -13,9 +13,6 @@ namespace SGDBMetadata
         private readonly SGDBMetadata plugin;
 
         public string Option1 { get; set; } = string.Empty;
-        public List<string> Dimension;
-        public List<string> Style;
-
         public string SDimension { get; set; } = string.Empty;
         public string SStyle { get; set; } = string.Empty;
 
@@ -27,25 +24,6 @@ namespace SGDBMetadata
         // Parameterless constructor must exist if you want to use LoadPluginSettings method.
         public SGDBMetadataSettings()
         {
-            Dimension = new List<string>
-            {
-                "any",
-                "460x215",
-                "920x430",
-                "600x900",
-                "342x482",
-                "legacy"
-            };
-
-            Style = new List<string>
-            {
-                "any",
-                "alternate",
-                "blurred",
-                "white_logo",
-                "material",
-                "no_logo"
-            };
         }
 
         public SGDBMetadataSettings(SGDBMetadata plugin)
@@ -55,7 +33,11 @@ namespace SGDBMetadata
 
             // Load saved settings.
             var savedSettings = plugin.LoadPluginSettings<SGDBMetadataSettings>();
-
+            var logger = LogManager.GetLogger();
+            logger.Info("saved settings");
+            logger.Info(savedSettings.Option1);
+            logger.Info(savedSettings.SDimension);
+            logger.Info(savedSettings.SStyle);
             // LoadPluginSettings returns null if not saved data is available.
             if (savedSettings != null)
             {
