@@ -21,6 +21,8 @@ namespace SGDBMetadata
         {
             get
             {
+                var logger = LogManager.GetLogger();
+                logger.Info("AvailableFields");
                 if (availableFields == null)
                 {
                     availableFields = GetAvailableFields();
@@ -34,11 +36,15 @@ namespace SGDBMetadata
             this.options = options;
             this.plugin = plugin;
             services = new SgdbServiceClient(apiKey, dimension, style);
+            var logger = LogManager.GetLogger();
+            logger.Info("SGDB Initialized");
         }
 
         // Override additional methods based on supported metadata fields.
         public override MetadataFile GetCoverImage()
         {
+            var logger = LogManager.GetLogger();
+            logger.Info("GetCoverImage");
             if (options.IsBackgroundDownload)
             {
                 if (options.GameData.Source != null)
@@ -50,10 +56,8 @@ namespace SGDBMetadata
                     return new MetadataFile(services.getCoverImageUrl(options.GameData.Name));
                 }
             } else {
-                var gameList = new List<GenericItemOption>(services.getGameListSGDB(options.GameData.Name).Select(game => new GenericItemOption(game.name, game.id.ToString())));
-                GetGame(gameList, "Choose Game For Cover");
 
-                if (searchSelection != null)
+                if (AvailableFields.Contains(MetadataField.Name))
                 {
                     var covers = services.getCoverImages(searchSelection.Name);
                     var selection = GetCoverManually(covers);
@@ -87,10 +91,7 @@ namespace SGDBMetadata
             }
             else
             {
-                var gameList = new List<GenericItemOption>(services.getGameListSGDB(options.GameData.Name).Select(game => new GenericItemOption(game.name, game.id.ToString())));
-                GetGame(gameList, "Choose Game For Background");
-
-                if (searchSelection != null)
+                if (AvailableFields.Contains(MetadataField.Name))
                 {
                     var heroes = services.getHeroImages(searchSelection.Name);
                     var selection = GetHeroManually(heroes);
@@ -125,10 +126,7 @@ namespace SGDBMetadata
             }
             else
             {
-                var gameList = new List<GenericItemOption>(services.getGameListSGDB(options.GameData.Name).Select(game => new GenericItemOption(game.name, game.id.ToString())));
-                GetGame(gameList, "Choose Game For Icon");
-
-                if (searchSelection != null)
+                if (AvailableFields.Contains(MetadataField.Name))
                 {
                     var icons = services.getLogoImages(searchSelection.Name);
                     var selection = GetIconManually(icons);
@@ -163,17 +161,33 @@ namespace SGDBMetadata
                     throw sgdbException;
                 }
             }, options.GameData.Name, caption);
-            this.searchSelection = item;
+            searchSelection = item;
         }
-
-        private List<MetadataField> GetAvailableFields()
+    private List<MetadataField> GetAvailableFields()
         {
-            var fields = new List<MetadataField> { MetadataField.CoverImage };
+            var logger = LogManager.GetLogger();
+            logger.Info("GetAvailableFields");
+
+            if (searchSelection == null)
+            {
+                GetSgdbMetadata();
+            }
+            var fields = new List<MetadataField> { MetadataField.Name};
             fields.Add(MetadataField.Icon);
             fields.Add(MetadataField.BackgroundImage);
+            fields.Add(MetadataField.CoverImage);
             return fields;
         }
 
+        private void GetSgdbMetadata() {
+            if (!options.IsBackgroundDownload)
+            {
+                var logger = LogManager.GetLogger();
+                logger.Info("GetSgdbMetadata");
+                var gameList = new List<GenericItemOption>(services.getGameListSGDB(options.GameData.Name).Select(game => new GenericItemOption(game.name, game.id.ToString())));
+                GetGame(gameList, "Choose Game");
+            }
+        }
         private ImageFileOption GetCoverManually(List<GridModel> possibleCovers)
         {
             var selection = new List<ImageFileOption>();

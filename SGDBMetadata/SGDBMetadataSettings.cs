@@ -33,14 +33,14 @@ namespace SGDBMetadata
 
             // Load saved settings.
             var savedSettings = plugin.LoadPluginSettings<SGDBMetadataSettings>();
-            var logger = LogManager.GetLogger();
-            logger.Info("saved settings");
-            logger.Info(savedSettings.Option1);
-            logger.Info(savedSettings.SDimension);
-            logger.Info(savedSettings.SStyle);
             // LoadPluginSettings returns null if not saved data is available.
             if (savedSettings != null)
             {
+                var logger = LogManager.GetLogger();
+                logger.Info("saved settings");
+                logger.Info(savedSettings.Option1);
+                logger.Info(savedSettings.SDimension);
+                logger.Info(savedSettings.SStyle);
                 Option1 = savedSettings.Option1;
                 SDimension = savedSettings.SDimension;
                 SStyle = savedSettings.SStyle;
