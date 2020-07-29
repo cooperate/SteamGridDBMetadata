@@ -49,11 +49,21 @@ namespace SGDBMetadata
             {
                 if (options.GameData.Source != null)
                 {
-                    return new MetadataFile(services.getCoverImageUrl(options.GameData.Name, options.GameData.Source.ToString().ToLower(), options.GameData.GameId));
+                    var gameUrl = services.getCoverImageUrl(options.GameData.Name, options.GameData.Source.ToString().ToLower(), options.GameData.GameId);
+                    if(gameUrl == "bad path") {
+                        return base.GetCoverImage();
+                    } else{
+                        return new MetadataFile();
+                    }
                 }
                 else
                 {
-                    return new MetadataFile(services.getCoverImageUrl(options.GameData.Name));
+                    var gameUrl = services.getCoverImageUrl(options.GameData.Name);
+                    if(gameUrl == "bad path") {
+                        return base.GetCoverImage();
+                    }else {
+                        return new MetadataFile(gameUrl);
+                    }
                 }
             } else {
 
@@ -81,11 +91,21 @@ namespace SGDBMetadata
             {
                 if (options.GameData.Source != null)
                 {
-                    return new MetadataFile(services.getHeroImageUrl(options.GameData.Name, options.GameData.Source.ToString().ToLower(), options.GameData.GameId));
+                    var gameUrl = services.getHeroImageUrl(options.GameData.Name, options.GameData.Source.ToString().ToLower(), options.GameData.GameId);
+                    if(gameUrl == "bad path") {
+                        return base.GetBackgroundImage();
+                    } else {
+                        return new MetadataFile();
+                    }
                 }
                 else
                 {
-                    return new MetadataFile(services.getHeroImageUrl(options.GameData.Name));
+                    var gameUrl = services.getHeroImageUrl(options.GameData.Name);
+                    if(gameUrl == "bad path") {
+                        return base.GetBackgroundImage();
+                    } else {
+                        return new MetadataFile();
+                    }
                 }
 
             }
@@ -117,11 +137,22 @@ namespace SGDBMetadata
             {
                 if (options.GameData.Source != null)
                 {
-                    return new MetadataFile(services.getLogoImageUrl(options.GameData.Name, options.GameData.Source.ToString().ToLower(), options.GameData.GameId));
+                    var gameUrl = services.getLogoImageUrl(options.GameData.Name, options.GameData.Source.ToString().ToLower(), options.GameData.GameId);
+                    if(gameUrl == "bad path") {
+                        return base.GetIcon();
+                    } else {
+                        return new MetadataFile();
+                    }
                 }
                 else
                 {
-                    return new MetadataFile(services.getLogoImageUrl(options.GameData.Name));
+                    var gameUrl = services.getLogoImageUrl(options.GameData.Name);
+                    if(gameUrl == "bad path") {
+                        return base.GetIcon();
+                    }
+                    else {
+                        return new MetadataFile();
+                    }
                 }
             }
             else
