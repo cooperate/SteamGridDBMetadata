@@ -154,7 +154,7 @@ namespace SGDBMetadata
             if (platform != null && gameId != null)
             {
                 ResponseModel<GridModel> grid = getSGDBGameGridByAppId(platform, gameId); //First element of search results, should probably implement fuzzysearchquery based on intentions
-                if(grid.success)
+                if(grid.success && grid.data.Count > 0)
                 {
                     return grid.data[0].url;
                 }
@@ -163,7 +163,7 @@ namespace SGDBMetadata
             {
                 SearchModel gameCoverSearch = getGameSGDBFuzzySearch(gameName);
                 ResponseModel<GridModel> grid = getSGDBGameGridCover(gameCoverSearch.id);
-                if (grid.success)
+                if (grid.success && grid.data.Count > 0)
                 {
                     return grid.data[0].url;
                 }
@@ -176,10 +176,15 @@ namespace SGDBMetadata
             if (platform != null && gameId != null)
             {
                 ResponseModel<GridModel> grid = getSGDBGameGridByAppId(platform, gameId); //First element of search results, should probably implement fuzzysearchquery based on intentions
-                if (grid.success)
+                if (grid.success && grid.data.Count > 0)
                 {
                     return grid.data;
-                }else
+                }
+                else if (grid.success && grid.data.Count == 0)
+                {
+                    return null;
+                }
+                else
                 {
                     var sgdbException = new Exception("Service failure.");
                     throw sgdbException;
@@ -189,10 +194,15 @@ namespace SGDBMetadata
             {
                 SearchModel gameCoverSearch = getGameSGDBFuzzySearch(gameName);
                 ResponseModel<GridModel> grid = getSGDBGameGridCover(gameCoverSearch.id);
-                if (grid.success)
+                if (grid.success && grid.data.Count > 0)
                 {
                     return grid.data;
-                } else
+                }
+                else if (grid.success && grid.data.Count == 0)
+                {
+                    return null;
+                }
+                else
                 {
                     var sgdbException = new Exception("Service failure.");
                     throw sgdbException;
@@ -205,7 +215,7 @@ namespace SGDBMetadata
             if (platform != null && gameId != null)
             {
                 ResponseModel<HeroModel> hero = getSGDBGameHeroByAppId(platform, gameId); //First element of search results, should probably implement fuzzysearchquery based on intentions
-                if (hero.success)
+                if (hero.success && hero.data.Count > 0)
                 {
                     return hero.data[0].url;
                 }
@@ -214,7 +224,7 @@ namespace SGDBMetadata
             {
                 SearchModel gameHeroSearch = getGameSGDBFuzzySearch(gameName);
                 ResponseModel<HeroModel> hero= getSGDBGameHero(gameHeroSearch.id);
-                if (hero.success)
+                if (hero.success && hero.data.Count > 0)
                 {
                     return hero.data[0].url;
                 }
@@ -227,10 +237,15 @@ namespace SGDBMetadata
             if (platform != null && gameId != null)
             {
                 ResponseModel<HeroModel> hero = getSGDBGameHeroByAppId(platform, gameId); //First element of search results, should probably implement fuzzysearchquery based on intentions
-                if (hero.success)
+                if (hero.success && hero.data.Count > 0)
                 {
                     return hero.data;
-                } else
+                }
+                else if (hero.success && hero.data.Count == 0)
+                {
+                    return null;
+                }
+                else
                 {
                     var sgdbException = new Exception("Service failure.");
                     throw sgdbException;
@@ -240,10 +255,15 @@ namespace SGDBMetadata
             {
                 SearchModel gameHeroSearch = getGameSGDBFuzzySearch(gameName);
                 ResponseModel<HeroModel> hero = getSGDBGameHero(gameHeroSearch.id);
-                if (hero.success)
+                if (hero.success && hero.data.Count > 0)
                 {
                     return hero.data;
-                } else
+                }
+                else if (hero.success && hero.data.Count == 0)
+                {
+                    return null;
+                }
+                else
                 {
                     var sgdbException = new Exception("Service failure.");
                     throw sgdbException;
@@ -256,7 +276,7 @@ namespace SGDBMetadata
             if (platform != null && gameId != null)
             {
                 ResponseModel<MediaModel> logo = getSGDBGameLogoByAppId(platform, gameId); //First element of search results, should probably implement fuzzysearchquery based on intentions
-                if (logo.success)
+                if (logo.success && logo.data.Count > 0)
                 {
                     return logo.data[0].url;
                 }
@@ -265,7 +285,7 @@ namespace SGDBMetadata
             {
                 SearchModel gameLogoSearch = getGameSGDBFuzzySearch(gameName);
                 ResponseModel<MediaModel> logo = getSGDBGameLogo(gameLogoSearch.id);
-                if (logo.success)
+                if (logo.success && logo.data.Count > 0)
                 {
                     return logo.data[0].url;
                 }
@@ -278,10 +298,15 @@ namespace SGDBMetadata
             if (platform != null && gameId != null)
             {
                 ResponseModel<MediaModel> logo = getSGDBGameLogoByAppId(platform, gameId); //First element of search results, should probably implement fuzzysearchquery based on intentions
-                if (logo.success)
+                if (logo.success && logo.data.Count > 0)
                 {
                     return logo.data;
-                } else
+                }
+                else if (logo.success && logo.data.Count == 0)
+                {
+                    return null;
+                }
+                else
                 {
                     var sgdbException = new Exception("Service failure.");
                     throw sgdbException;
@@ -291,10 +316,15 @@ namespace SGDBMetadata
             {
                 SearchModel gameLogoSearch = getGameSGDBFuzzySearch(gameName);
                 ResponseModel<MediaModel> logo = getSGDBGameLogo(gameLogoSearch.id);
-                if (logo.success)
+                if (logo.success && logo.data.Count > 0)
                 {
                     return logo.data;
-                } else
+                }
+                else if (logo.success && logo.data.Count == 0)
+                {
+                    return null;
+                }
+                else
                 {
                     var sgdbException = new Exception("Service failure.");
                     throw sgdbException;

@@ -69,13 +69,26 @@ namespace SGDBMetadata
 
                 if (AvailableFields.Contains(MetadataField.Name))
                 {
-                    var covers = services.getCoverImages(searchSelection.Name);
-                    var selection = GetCoverManually(covers);
-                    if (selection == null || selection.Path == "nopath")
+                    logger.Info("search Selection" + searchSelection);
+                    if (searchSelection != null)
+                    {
+                        var covers = services.getCoverImages(searchSelection.Name);
+                        dynamic selection = null;
+                        if(covers != null)
+                        {
+                            selection = GetCoverManually(covers);
+                        }
+                        if (selection == null || selection.Path == "nopath")
+                        {
+                            return base.GetCoverImage();
+                        }
+                        else
+                        {
+                            return new MetadataFile(selection.Path);
+                        }
+                    } else
                     {
                         return base.GetCoverImage();
-                    } else {
-                        return new MetadataFile(selection.Path);
                     }
                 }
                 else
@@ -113,15 +126,25 @@ namespace SGDBMetadata
             {
                 if (AvailableFields.Contains(MetadataField.Name))
                 {
-                    var heroes = services.getHeroImages(searchSelection.Name);
-                    var selection = GetHeroManually(heroes);
-                    if (selection == null || selection.Path == "nopath")
+                    if (searchSelection != null)
+                    {
+                        var heroes = services.getHeroImages(searchSelection.Name);
+                        dynamic selection = null;
+                        if (heroes != null)
+                        {
+                           selection = GetHeroManually(heroes);
+                        }
+                        if (selection == null || selection.Path == "nopath")
+                        {
+                            return base.GetBackgroundImage();
+                        }
+                        else
+                        {
+                            return new MetadataFile(selection.Path);
+                        }
+                    } else
                     {
                         return base.GetBackgroundImage();
-                    }
-                    else
-                    {
-                        return new MetadataFile(selection.Path);
                     }
                 }
                 else
@@ -159,15 +182,25 @@ namespace SGDBMetadata
             {
                 if (AvailableFields.Contains(MetadataField.Name))
                 {
-                    var icons = services.getLogoImages(searchSelection.Name);
-                    var selection = GetIconManually(icons);
-                    if (selection == null || selection.Path == "nopath")
+                    if (searchSelection != null)
+                    {
+                        var icons = services.getLogoImages(searchSelection.Name);
+                        dynamic selection = null;
+                        if (icons != null)
+                        {
+                            selection = GetIconManually(icons);
+                        }
+                        if (selection == null || selection.Path == "nopath")
+                        {
+                            return base.GetIcon();
+                        }
+                        else
+                        {
+                            return new MetadataFile(selection.Path);
+                        }
+                    } else
                     {
                         return base.GetIcon();
-                    }
-                    else
-                    {
-                        return new MetadataFile(selection.Path);
                     }
                 }
                 else
