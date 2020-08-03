@@ -40,6 +40,24 @@ namespace SGDBMetadata
             logger.Info("SGDB Initialized");
         }
 
+        public string convertPlayniteGameSourceToSGDBPlatformEnum(string platform)
+        {
+            //check for platform "steam""origin""egs""bnet""uplay"
+            switch (platform)
+            {
+                case "steam":
+                    return "steam";
+                case "origin":
+                    return "origin";
+                case "epic":
+                    return "egs";
+                case "battle.net":
+                    return "bnet";
+                default:
+                    return null;
+            }
+
+        }
         // Override additional methods based on supported metadata fields.
         public override MetadataFile GetCoverImage()
         {
@@ -47,23 +65,11 @@ namespace SGDBMetadata
             logger.Info("GetCoverImage");
             if (options.IsBackgroundDownload)
             {
-                if (options.GameData.Source != null)
-                {
-                    var gameUrl = services.getCoverImageUrl(options.GameData.Name, options.GameData.Source.ToString().ToLower(), options.GameData.GameId);
-                    if(gameUrl == "bad path") {
-                        return base.GetCoverImage();
-                    } else{
-                        return new MetadataFile();
-                    }
-                }
-                else
-                {
-                    var gameUrl = services.getCoverImageUrl(options.GameData.Name);
-                    if(gameUrl == "bad path") {
-                        return base.GetCoverImage();
-                    }else {
-                        return new MetadataFile(gameUrl);
-                    }
+                var gameUrl = services.getCoverImageUrl(options.GameData.Name, convertPlayniteGameSourceToSGDBPlatformEnum(options.GameData.Source.ToString().ToLower()), options.GameData.GameId);
+                if(gameUrl == "bad path") {
+                    return base.GetCoverImage();
+                } else{
+                    return new MetadataFile(gameUrl);
                 }
             } else {
 
@@ -102,25 +108,13 @@ namespace SGDBMetadata
         {
             if (options.IsBackgroundDownload)
             {
-                if (options.GameData.Source != null)
-                {
-                    var gameUrl = services.getHeroImageUrl(options.GameData.Name, options.GameData.Source.ToString().ToLower(), options.GameData.GameId);
-                    if(gameUrl == "bad path") {
-                        return base.GetBackgroundImage();
-                    } else {
-                        return new MetadataFile();
-                    }
-                }
-                else
-                {
-                    var gameUrl = services.getHeroImageUrl(options.GameData.Name);
-                    if(gameUrl == "bad path") {
-                        return base.GetBackgroundImage();
-                    } else {
-                        return new MetadataFile();
-                    }
-                }
-
+                
+                var gameUrl = services.getHeroImageUrl(options.GameData.Name, convertPlayniteGameSourceToSGDBPlatformEnum(options.GameData.Source.ToString().ToLower()), options.GameData.GameId);
+                if(gameUrl == "bad path") {
+                    return base.GetBackgroundImage();
+                } else {
+                    return new MetadataFile(gameUrl);
+                }           
             }
             else
             {
@@ -158,24 +152,11 @@ namespace SGDBMetadata
         {
             if (options.IsBackgroundDownload)
             {
-                if (options.GameData.Source != null)
-                {
-                    var gameUrl = services.getLogoImageUrl(options.GameData.Name, options.GameData.Source.ToString().ToLower(), options.GameData.GameId);
-                    if(gameUrl == "bad path") {
-                        return base.GetIcon();
-                    } else {
-                        return new MetadataFile();
-                    }
-                }
-                else
-                {
-                    var gameUrl = services.getLogoImageUrl(options.GameData.Name);
-                    if(gameUrl == "bad path") {
-                        return base.GetIcon();
-                    }
-                    else {
-                        return new MetadataFile();
-                    }
+                var gameUrl = services.getLogoImageUrl(options.GameData.Name, convertPlayniteGameSourceToSGDBPlatformEnum(options.GameData.Source.ToString().ToLower()), options.GameData.GameId);
+                if(gameUrl == "bad path") {
+                    return base.GetIcon();
+                } else {
+                    return new MetadataFile(gameUrl);
                 }
             }
             else

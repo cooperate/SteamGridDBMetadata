@@ -61,10 +61,10 @@ namespace SGDBMetadata
             var request = new RestRequest("grids/{platform}/{gameId}", Method.GET);
             request.AddParameter("platform", platform, ParameterType.UrlSegment);
             request.AddParameter("gameId", gameId, ParameterType.UrlSegment);
-            if (dimension != null || dimension != "any") {
+            if (dimension != null && dimension != "any") {
                 request.AddParameter("dimensions", dimension, ParameterType.GetOrPost);
             }
-            if (dimension != null || dimension != "any") {
+            if (style != null && style != "any") {
                 request.AddParameter("styles", style, ParameterType.GetOrPost);
             }
             return Execute<ResponseModel<GridModel>>(request);
@@ -74,11 +74,11 @@ namespace SGDBMetadata
         {
             var request = new RestRequest("grids/game/{id}", Method.GET);
             request.AddParameter("id", gameId, ParameterType.UrlSegment);
-            if (dimension != "any")
+            if (dimension != null && dimension != "any")
             {
                 request.AddParameter("dimensions", dimension, ParameterType.GetOrPost);
             }
-            if (style != null || style != "any")
+            if (style != null && style != "any")
             {
                 request.AddParameter("styles", style, ParameterType.GetOrPost);
             }
@@ -87,6 +87,8 @@ namespace SGDBMetadata
         
         public ResponseModel<HeroModel> getSGDBGameHero(int gameId)
         {
+            var logger = LogManager.GetLogger();
+            logger.Info("getSGDBGameHero");
             var request = new RestRequest("/heroes/game/{id}", Method.GET);
             request.AddParameter("id", gameId, ParameterType.UrlSegment);
             return this.Execute<ResponseModel<HeroModel>>(request);
@@ -94,6 +96,8 @@ namespace SGDBMetadata
 
         public ResponseModel<HeroModel> getSGDBGameHeroByAppId(string platform, string gameId)
         {
+            var logger = LogManager.GetLogger();
+            logger.Info("getSGDBGameHeroByAppId");
             var request = new RestRequest("heroes/{platform}/{gameId}", Method.GET);
             request.AddParameter("platform", platform, ParameterType.UrlSegment);
             request.AddParameter("gameId", gameId, ParameterType.UrlSegment);
@@ -212,6 +216,11 @@ namespace SGDBMetadata
 
         public string getHeroImageUrl(string gameName, string platform = null, string gameId = null)
         {
+            var logger = LogManager.GetLogger();
+            logger.Info("getHeroImageUrl");
+            logger.Info(gameName);
+            logger.Info(platform);
+            logger.Info(gameId);
             if (platform != null && gameId != null)
             {
                 ResponseModel<HeroModel> hero = getSGDBGameHeroByAppId(platform, gameId); //First element of search results, should probably implement fuzzysearchquery based on intentions
@@ -223,7 +232,7 @@ namespace SGDBMetadata
             else
             {
                 SearchModel gameHeroSearch = getGameSGDBFuzzySearch(gameName);
-                ResponseModel<HeroModel> hero= getSGDBGameHero(gameHeroSearch.id);
+                ResponseModel<HeroModel> hero = getSGDBGameHero(gameHeroSearch.id);
                 if (hero.success && hero.data.Count > 0)
                 {
                     return hero.data[0].url;
@@ -234,6 +243,11 @@ namespace SGDBMetadata
 
         public List<HeroModel> getHeroImages(string gameName, string platform = null, string gameId = null)
         {
+            var logger = LogManager.GetLogger();
+            logger.Info("getHeroImages");
+            logger.Info(gameName);
+            logger.Info(platform);
+            logger.Info(gameId);
             if (platform != null && gameId != null)
             {
                 ResponseModel<HeroModel> hero = getSGDBGameHeroByAppId(platform, gameId); //First element of search results, should probably implement fuzzysearchquery based on intentions
