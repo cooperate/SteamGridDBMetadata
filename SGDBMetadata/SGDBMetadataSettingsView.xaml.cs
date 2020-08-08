@@ -27,7 +27,7 @@ namespace SGDBMetadata
                 { "920x430",  "920x430" },
                 { "600x900", "600x900" },
                 { "342x482", "342x482" },
-                { "Legacy", "Legacy" }
+                { "660x930", "660x930" }
             };
             cmbDimensions.SelectedValue = "any";
 

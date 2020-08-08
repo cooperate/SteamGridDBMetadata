@@ -1,6 +1,6 @@
 ﻿Name: SteamGridDB Metadata Provider
 Author: cooperate
-Version: 0.5.3
+Version: 0.5.4
 Module: SGDBMetadata.dll
 Type: MetadataProvider
 Icon: icon.png
