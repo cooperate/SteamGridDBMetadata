@@ -1,5 +1,5 @@
 ## General info
-SteamGridDB Metadata is a provider for Playnite that leverages the [SteamGridDB Api](https://www.steamgriddb.com/api/v2) to curate your artwork.
+SteamGridDB Metadata is a provider for Playnite that leverages the [SteamGridDB api](https://www.steamgriddb.com/api/v2) to curate your artwork.
 	
 ## Installation
 To use this provider, simply download the latest release and drag and drop the .pext file over-top of the Playnite window.
