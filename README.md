@@ -7,7 +7,7 @@ To use this provider, simply download the latest release and drag and drop the .
 ## Configuration
 To use this provider, you *must* have a SteamGridDB Api key.  You can obtain this key by creating an account at [SteamGridDB](https://www.steamgriddb.com) and then requesting it on your [preferences page](https://www.steamgriddb.com/profile/preferences).
 
-Enter the api in Playnite under Settings -> Metadata Sources -> SteamGrid DB api Key.
+Enter the api key in Playnite under Settings -> Metadata Sources -> SteamGrid DB api Key.
 
 Options are fairly limited thus far but support is provided for cover style and cover size.  
 
