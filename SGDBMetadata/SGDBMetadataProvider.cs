@@ -66,7 +66,7 @@ namespace SGDBMetadata
             if (options.IsBackgroundDownload)
             {
                 string gameUrl;
-                if(options.GameData.Source != null && options.GameData.GameId != null) {
+                if(options.GameData.Source != null && options.GameData.Source.ToString().ToLower() == "steam" && options.GameData.GameId != null) {
                     gameUrl = services.getCoverImageUrl(options.GameData.Name, convertPlayniteGameSourceToSGDBPlatformEnum(options.GameData.Source.ToString().ToLower()), options.GameData.GameId);
                 } else {
                     gameUrl = services.getCoverImageUrl(options.GameData.Name);
@@ -114,7 +114,7 @@ namespace SGDBMetadata
             if (options.IsBackgroundDownload)
             {
                 string gameUrl;
-                if(options.GameData.Source != null && options.GameData.GameId != null) {
+                if(options.GameData.Source != null && options.GameData.Source.ToString().ToLower() == "steam" && options.GameData.GameId != null) {
                     gameUrl = services.getHeroImageUrl(options.GameData.Name, convertPlayniteGameSourceToSGDBPlatformEnum(options.GameData.Source.ToString().ToLower()), options.GameData.GameId);
                 } else {
                     gameUrl = services.getHeroImageUrl(options.GameData.Name);
@@ -164,7 +164,7 @@ namespace SGDBMetadata
                 var logger = LogManager.GetLogger();
                 logger.Info("SGDBMetadataProvider GetIcon options " + options.GameData.ToString());
                 string gameUrl;
-                if(options.GameData.Source != null && options.GameData.GameId  != null) {
+                if(options.GameData.Source != null && options.GameData.Source.ToString().ToLower() == "steam" && options.GameData.GameId != null) {
                     gameUrl = services.getLogoImageUrl(options.GameData.Name, convertPlayniteGameSourceToSGDBPlatformEnum(options.GameData.Source.ToString().ToLower()), options.GameData.GameId);
                 } else {
                     gameUrl = services.getLogoImageUrl(options.GameData.Name);
