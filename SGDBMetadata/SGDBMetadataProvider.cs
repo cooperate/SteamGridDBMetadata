@@ -56,8 +56,8 @@ namespace SGDBMetadata
                 default:
                     return null;
             }
-
         }
+
         // Override additional methods based on supported metadata fields.
         public override MetadataFile GetCoverImage()
         {
@@ -66,8 +66,15 @@ namespace SGDBMetadata
             if (options.IsBackgroundDownload)
             {
                 string gameUrl;
-                if(options.GameData.Source != null && options.GameData.Source.ToString().ToLower() == "steam" && options.GameData.GameId != null) {
-                    gameUrl = services.getCoverImageUrl(options.GameData.Name, convertPlayniteGameSourceToSGDBPlatformEnum(options.GameData.Source.ToString().ToLower()), options.GameData.GameId);
+                if(
+                    options.GameData.Source != null
+                    && options.GameData.Source.ToString().ToLower() == "steam"
+                    && options.GameData.GameId != null
+                ) {
+                    gameUrl = services.getCoverImageUrl(
+                        options.GameData.Name,
+                        convertPlayniteGameSourceToSGDBPlatformEnum(options.GameData.Source.ToString().ToLower()),
+                        options.GameData.GameId);
                 } else {
                     gameUrl = services.getCoverImageUrl(options.GameData.Name);
                 }
@@ -77,7 +84,6 @@ namespace SGDBMetadata
                     return new MetadataFile(gameUrl);
                 }
             } else {
-
                 if (AvailableFields.Contains(MetadataField.Name))
                 {
                     logger.Info("search Selection" + searchSelection);
@@ -95,7 +101,7 @@ namespace SGDBMetadata
                         }
                         else
                         {
-                            return new MetadataFile(selection.Path);
+                            return new MetadataFile(selection.FullRes);
                         }
                     } else
                     {
@@ -143,7 +149,7 @@ namespace SGDBMetadata
                         }
                         else
                         {
-                            return new MetadataFile(selection.Path);
+                            return new MetadataFile(selection.FullRes);
                         }
                     } else
                     {
@@ -193,7 +199,7 @@ namespace SGDBMetadata
                         }
                         else
                         {
-                            return new MetadataFile(selection.Path);
+                            return new MetadataFile(selection.FullRes);
                         }
                     } else
                     {
@@ -254,10 +260,7 @@ namespace SGDBMetadata
             var selection = new List<ImageFileOption>();
             foreach (var cover in possibleCovers)
             {
-                selection.Add(new ImageFileOption
-                {
-                    Path = cover.url
-                });
+                selection.Add(new ThumbFileOption { Path = cover.thumb, FullRes = cover.url });
             }
             if (selection.Count > 0)
             {
@@ -274,10 +277,7 @@ namespace SGDBMetadata
             var selection = new List<ImageFileOption>();
             foreach (var hero in possibleHeroes)
             {
-                selection.Add(new ImageFileOption
-                {
-                    Path = hero.url
-                });
+                selection.Add(new ThumbFileOption { Path = hero.thumb, FullRes = hero.url });
             }
             if(selection.Count > 0)
             {
@@ -295,10 +295,7 @@ namespace SGDBMetadata
             var selection = new List<ImageFileOption>();
             foreach (var icon in possibleIcons)
             {
-                selection.Add(new ImageFileOption
-                {
-                    Path = icon.url
-                });
+                selection.Add(new ThumbFileOption { Path = icon.thumb, FullRes = icon.url });
             }
             if(selection.Count > 0) { 
                 return plugin.PlayniteApi.Dialogs.ChooseImageFile(
