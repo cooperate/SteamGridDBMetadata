@@ -8,9 +8,11 @@ indent_style = space
 # Code files
 [*.{cs,csx,vb,vbx}]
 indent_size = 4
+trim_trailing_whitespace = true
 insert_final_newline = true
 charset = utf-8-bom
 end_of_line = lf
+max_line_length = 100
 ###############################
 # .NET Coding Conventions     #
 ###############################
@@ -114,7 +116,7 @@ csharp_space_between_method_declaration_empty_parameter_list_parentheses = false
 csharp_space_between_method_call_name_and_opening_parenthesis = false
 csharp_space_between_method_call_empty_parameter_list_parentheses = false
 # Wrapping preferences
-csharp_preserve_single_line_statements = true
+csharp_preserve_single_line_statements = false
 csharp_preserve_single_line_blocks = true
 ###############################
 # VB Coding Conventions       #
