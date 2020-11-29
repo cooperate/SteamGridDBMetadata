@@ -1,12 +1,9 @@
-﻿using Playnite.SDK;
-using Playnite.SDK.Plugins;
-using Playnite.SDK.Metadata;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SGDBMetadata;
+using Playnite.SDK;
+using Playnite.SDK.Metadata;
+using Playnite.SDK.Plugins;
 
 namespace SGDBMetadata
 {
@@ -56,8 +53,8 @@ namespace SGDBMetadata
                 default:
                     return null;
             }
-
         }
+
         // Override additional methods based on supported metadata fields.
         public override MetadataFile GetCoverImage()
         {
@@ -66,18 +63,32 @@ namespace SGDBMetadata
             if (options.IsBackgroundDownload)
             {
                 string gameUrl;
-                if(options.GameData.Source != null && options.GameData.Source.ToString().ToLower() == "steam" && options.GameData.GameId != null) {
-                    gameUrl = services.getCoverImageUrl(options.GameData.Name, convertPlayniteGameSourceToSGDBPlatformEnum(options.GameData.Source.ToString().ToLower()), options.GameData.GameId);
-                } else {
+                if (
+                    options.GameData.Source != null
+                    && options.GameData.Source.ToString().ToLower() == "steam"
+                    && options.GameData.GameId != null
+                )
+                {
+                    gameUrl = services.getCoverImageUrl(
+                        options.GameData.Name,
+                        convertPlayniteGameSourceToSGDBPlatformEnum(options.GameData.Source.ToString().ToLower()),
+                        options.GameData.GameId);
+                }
+                else
+                {
                     gameUrl = services.getCoverImageUrl(options.GameData.Name);
                 }
-                if(gameUrl == "bad path") {
+                if (gameUrl == "bad path")
+                {
                     return base.GetCoverImage();
-                } else{
+                }
+                else
+                {
                     return new MetadataFile(gameUrl);
                 }
-            } else {
-
+            }
+            else
+            {
                 if (AvailableFields.Contains(MetadataField.Name))
                 {
                     logger.Info("search Selection" + searchSelection);
@@ -85,7 +96,7 @@ namespace SGDBMetadata
                     {
                         var covers = services.getCoverImages(searchSelection.Name);
                         dynamic selection = null;
-                        if(covers != null)
+                        if (covers != null)
                         {
                             selection = GetCoverManually(covers);
                         }
@@ -95,9 +106,10 @@ namespace SGDBMetadata
                         }
                         else
                         {
-                            return new MetadataFile(selection.Path);
+                            return new MetadataFile(selection.FullRes);
                         }
-                    } else
+                    }
+                    else
                     {
                         return base.GetCoverImage();
                     }
@@ -114,16 +126,22 @@ namespace SGDBMetadata
             if (options.IsBackgroundDownload)
             {
                 string gameUrl;
-                if(options.GameData.Source != null && options.GameData.Source.ToString().ToLower() == "steam" && options.GameData.GameId != null) {
+                if (options.GameData.Source != null && options.GameData.Source.ToString().ToLower() == "steam" && options.GameData.GameId != null)
+                {
                     gameUrl = services.getHeroImageUrl(options.GameData.Name, convertPlayniteGameSourceToSGDBPlatformEnum(options.GameData.Source.ToString().ToLower()), options.GameData.GameId);
-                } else {
+                }
+                else
+                {
                     gameUrl = services.getHeroImageUrl(options.GameData.Name);
                 }
-                if(gameUrl == "bad path") {
+                if (gameUrl == "bad path")
+                {
                     return base.GetBackgroundImage();
-                } else {
+                }
+                else
+                {
                     return new MetadataFile(gameUrl);
-                }           
+                }
             }
             else
             {
@@ -135,7 +153,7 @@ namespace SGDBMetadata
                         dynamic selection = null;
                         if (heroes != null)
                         {
-                           selection = GetHeroManually(heroes);
+                            selection = GetHeroManually(heroes);
                         }
                         if (selection == null || selection.Path == "nopath")
                         {
@@ -143,9 +161,10 @@ namespace SGDBMetadata
                         }
                         else
                         {
-                            return new MetadataFile(selection.Path);
+                            return new MetadataFile(selection.FullRes);
                         }
-                    } else
+                    }
+                    else
                     {
                         return base.GetBackgroundImage();
                     }
@@ -164,14 +183,20 @@ namespace SGDBMetadata
                 var logger = LogManager.GetLogger();
                 logger.Info("SGDBMetadataProvider GetIcon options " + options.GameData.ToString());
                 string gameUrl;
-                if(options.GameData.Source != null && options.GameData.Source.ToString().ToLower() == "steam" && options.GameData.GameId != null) {
+                if (options.GameData.Source != null && options.GameData.Source.ToString().ToLower() == "steam" && options.GameData.GameId != null)
+                {
                     gameUrl = services.getLogoImageUrl(options.GameData.Name, convertPlayniteGameSourceToSGDBPlatformEnum(options.GameData.Source.ToString().ToLower()), options.GameData.GameId);
-                } else {
+                }
+                else
+                {
                     gameUrl = services.getLogoImageUrl(options.GameData.Name);
                 }
-                if(gameUrl == "bad path") {
+                if (gameUrl == "bad path")
+                {
                     return base.GetIcon();
-                } else {
+                }
+                else
+                {
                     return new MetadataFile(gameUrl);
                 }
             }
@@ -193,9 +218,10 @@ namespace SGDBMetadata
                         }
                         else
                         {
-                            return new MetadataFile(selection.Path);
+                            return new MetadataFile(selection.FullRes);
                         }
-                    } else
+                    }
+                    else
                     {
                         return base.GetIcon();
                     }
@@ -214,7 +240,7 @@ namespace SGDBMetadata
                 try
                 {
                     return new List<GenericItemOption>(services.getGameListSGDB(a).Select(game => new GenericItemOption(game.name, game.id.ToString())));
-                    
+
                 }
                 catch
                 {
@@ -224,7 +250,7 @@ namespace SGDBMetadata
             }, options.GameData.Name, caption);
             searchSelection = item;
         }
-    private List<MetadataField> GetAvailableFields()
+        private List<MetadataField> GetAvailableFields()
         {
             var logger = LogManager.GetLogger();
             logger.Info("GetAvailableFields");
@@ -233,14 +259,15 @@ namespace SGDBMetadata
             {
                 GetSgdbMetadata();
             }
-            var fields = new List<MetadataField> { MetadataField.Name};
+            var fields = new List<MetadataField> { MetadataField.Name };
             fields.Add(MetadataField.Icon);
             fields.Add(MetadataField.BackgroundImage);
             fields.Add(MetadataField.CoverImage);
             return fields;
         }
 
-        private void GetSgdbMetadata() {
+        private void GetSgdbMetadata()
+        {
             if (!options.IsBackgroundDownload)
             {
                 var logger = LogManager.GetLogger();
@@ -254,16 +281,14 @@ namespace SGDBMetadata
             var selection = new List<ImageFileOption>();
             foreach (var cover in possibleCovers)
             {
-                selection.Add(new ImageFileOption
-                {
-                    Path = cover.url
-                });
+                selection.Add(new ThumbFileOption { Path = cover.thumb, FullRes = cover.url });
             }
             if (selection.Count > 0)
             {
                 return plugin.PlayniteApi.Dialogs.ChooseImageFile(
                     selection, "Choose Cover");
-            } else
+            }
+            else
             {
                 return new ImageFileOption("nopath");
             }
@@ -274,20 +299,18 @@ namespace SGDBMetadata
             var selection = new List<ImageFileOption>();
             foreach (var hero in possibleHeroes)
             {
-                selection.Add(new ImageFileOption
-                {
-                    Path = hero.url
-                });
+                selection.Add(new ThumbFileOption { Path = hero.thumb, FullRes = hero.url });
             }
-            if(selection.Count > 0)
+            if (selection.Count > 0)
             {
                 return plugin.PlayniteApi.Dialogs.ChooseImageFile(
                 selection, "Choose Background");
-            } else
+            }
+            else
             {
                 return new ImageFileOption("nopath");
             }
-            
+
         }
 
         private ImageFileOption GetIconManually(List<MediaModel> possibleIcons)
@@ -295,18 +318,21 @@ namespace SGDBMetadata
             var selection = new List<ImageFileOption>();
             foreach (var icon in possibleIcons)
             {
-                selection.Add(new ImageFileOption
+                selection.Add(new ThumbFileOption
                 {
-                    Path = icon.url
+                    Path = icon.thumb,
+                    FullRes = icon.url
                 });
             }
-            if(selection.Count > 0) { 
+            if (selection.Count > 0)
+            {
                 return plugin.PlayniteApi.Dialogs.ChooseImageFile(
                 selection, "Choose Icon");
-            } else
+            }
+            else
             {
                 return new ImageFileOption("nopath");
             }
-}
+        }
     }
 }
