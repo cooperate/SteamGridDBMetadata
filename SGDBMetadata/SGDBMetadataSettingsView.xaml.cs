@@ -44,17 +44,6 @@ namespace SGDBMetadata
             };
             cmbStyles.SelectedValue = "any";
 
-            cmbStyles.ItemsSource = new Dictionary<string, string>
-            {
-                { "any", "Any" },
-                { "alternate", "Alternate" },
-                { "blurred", "Blurred" },
-                { "white_logo", "White Logo" },
-                { "material", "Material" },
-                { "no_logo", "No Logo" }
-            };
-            cmbStyles.SelectedValue = "any";
-
             cmbNsfw.ItemsSource = new Dictionary<string, string>
             {
                 { "any", "Any" },
