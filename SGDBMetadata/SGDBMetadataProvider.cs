@@ -65,7 +65,7 @@ namespace SGDBMetadata
                 string gameUrl;
                 if (
                     options.GameData.Source != null
-                    && options.GameData.Source.ToString().ToLower() == "steam"
+                    && options.GameData.PluginId == BuiltinExtensions.GetIdFromExtension(BuiltinExtension.SteamLibrary)
                     && options.GameData.GameId != null
                 )
                 {
