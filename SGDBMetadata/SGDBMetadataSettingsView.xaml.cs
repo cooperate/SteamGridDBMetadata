@@ -43,6 +43,33 @@ namespace SGDBMetadata
                 { "no_logo", "No Logo" }
             };
             cmbStyles.SelectedValue = "any";
+
+            cmbStyles.ItemsSource = new Dictionary<string, string>
+            {
+                { "any", "Any" },
+                { "alternate", "Alternate" },
+                { "blurred", "Blurred" },
+                { "white_logo", "White Logo" },
+                { "material", "Material" },
+                { "no_logo", "No Logo" }
+            };
+            cmbStyles.SelectedValue = "any";
+
+            cmbNsfw.ItemsSource = new Dictionary<string, string>
+            {
+                { "any", "Any" },
+                { "false", "Only get assets not tagged as adult content" },
+                { "true", "Only get assets tagged as adult content" },
+            };
+            cmbNsfw.SelectedValue = "any";
+
+            cmbHumor.ItemsSource = new Dictionary<string, string>
+            {
+                { "any", "Any" },
+                { "false", "Only get assets not tagged as humor" },
+                { "true", "Only get assets tagged as humor" },
+            };
+            cmbHumor.SelectedValue = "any";
         }
     }
 }

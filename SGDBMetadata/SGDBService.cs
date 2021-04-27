@@ -18,13 +18,17 @@ namespace SGDBMetadata
         private RestClient client;
         private string dimension;
         private string style;
+        private string nsfw;
+        private string humor;
 
-        public SgdbServiceClient(string bearerToken, string dimension, string style)
+        public SgdbServiceClient(string bearerToken, string dimension, string style, string nsfw, string humor)
         {
             client = new RestClient(baseUrl);
             client.Authenticator = new JwtAuthenticator(bearerToken);
             this.dimension = dimension;
             this.style = style;
+            this.nsfw = nsfw;
+            this.humor = humor;
         }
 
         public RestClient RestClient { get; set; }
@@ -67,6 +71,14 @@ namespace SGDBMetadata
             if (style != null && style != "any") {
                 request.AddParameter("styles", style, ParameterType.GetOrPost);
             }
+            if (nsfw != null && nsfw != "any")
+            {
+                request.AddParameter("nsfw", nsfw, ParameterType.GetOrPost);
+            }
+            if (humor != null && humor != "any")
+            {
+                request.AddParameter("humor", humor, ParameterType.GetOrPost);
+            }
             return Execute<ResponseModel<GridModel>>(request);
         }
 
@@ -81,6 +93,14 @@ namespace SGDBMetadata
             if (style != null && style != "any")
             {
                 request.AddParameter("styles", style, ParameterType.GetOrPost);
+            }
+            if (nsfw != null && nsfw != "any")
+            {
+                request.AddParameter("nsfw", nsfw, ParameterType.GetOrPost);
+            }
+            if (humor != null && humor != "any")
+            {
+                request.AddParameter("humor", humor, ParameterType.GetOrPost);
             }
             return Execute<ResponseModel<GridModel>>(request);
         }

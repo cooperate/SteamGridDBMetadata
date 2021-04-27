@@ -28,11 +28,11 @@ namespace SGDBMetadata
                 return availableFields;
             }
         }
-        public SGDBMetadataProvider(MetadataRequestOptions options, SGDBMetadata plugin, string apiKey, string dimension, string style)
+        public SGDBMetadataProvider(MetadataRequestOptions options, SGDBMetadata plugin, string apiKey, string dimension, string style, string nsfw, string humor)
         {
             this.options = options;
             this.plugin = plugin;
-            services = new SgdbServiceClient(apiKey, dimension, style);
+            services = new SgdbServiceClient(apiKey, dimension, style, nsfw, humor);
             var logger = LogManager.GetLogger();
             logger.Info("SGDB Initialized");
         }

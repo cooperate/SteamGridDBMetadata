@@ -34,7 +34,7 @@ namespace SGDBMetadata
 
         public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options)
         {
-            return new SGDBMetadataProvider(options, this, settings.Option1, settings.SDimension, settings.SStyle);
+            return new SGDBMetadataProvider(options, this, settings.Option1, settings.SDimension, settings.SStyle, settings.SNsfw, settings.SHumor);
         }
 
         public override ISettings GetSettings(bool firstRunSettings)
