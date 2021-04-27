@@ -37,18 +37,18 @@ namespace SGDBMetadata
             logger.Info("SGDB Initialized");
         }
 
-        public string convertPlayniteGameSourceToSGDBPlatformEnum(string platform)
+        public string convertPlayniteGamePluginIdToSGDBPlatformEnum(Guid pluginId)
         {
             //check for platform "steam""origin""egs""bnet""uplay"
-            switch (platform)
+            switch (BuiltinExtensions.GetExtensionFromId(pluginId))
             {
-                case "steam":
+                case BuiltinExtension.SteamLibrary:
                     return "steam";
-                case "origin":
+                case BuiltinExtension.OriginLibrary:
                     return "origin";
-                case "epic":
+                case BuiltinExtension.EpicLibrary:
                     return "egs";
-                case "battle.net":
+                case BuiltinExtension.BattleNetLibrary:
                     return "bnet";
                 default:
                     return null;
@@ -71,7 +71,7 @@ namespace SGDBMetadata
                 {
                     gameUrl = services.getCoverImageUrl(
                         options.GameData.Name,
-                        convertPlayniteGameSourceToSGDBPlatformEnum(options.GameData.Source.ToString().ToLower()),
+                        convertPlayniteGamePluginIdToSGDBPlatformEnum(options.GameData.Id),
                         options.GameData.GameId);
                 }
                 else
@@ -128,7 +128,7 @@ namespace SGDBMetadata
                 string gameUrl;
                 if (options.GameData.Source != null && options.GameData.Source.ToString().ToLower() == "steam" && options.GameData.GameId != null)
                 {
-                    gameUrl = services.getHeroImageUrl(options.GameData.Name, convertPlayniteGameSourceToSGDBPlatformEnum(options.GameData.Source.ToString().ToLower()), options.GameData.GameId);
+                    gameUrl = services.getHeroImageUrl(options.GameData.Name, convertPlayniteGamePluginIdToSGDBPlatformEnum(options.GameData.PluginId), options.GameData.GameId);
                 }
                 else
                 {
@@ -185,7 +185,7 @@ namespace SGDBMetadata
                 string gameUrl;
                 if (options.GameData.Source != null && options.GameData.Source.ToString().ToLower() == "steam" && options.GameData.GameId != null)
                 {
-                    gameUrl = services.getLogoImageUrl(options.GameData.Name, convertPlayniteGameSourceToSGDBPlatformEnum(options.GameData.Source.ToString().ToLower()), options.GameData.GameId);
+                    gameUrl = services.getLogoImageUrl(options.GameData.Name, convertPlayniteGamePluginIdToSGDBPlatformEnum(options.GameData.PluginId), options.GameData.GameId);
                 }
                 else
                 {
