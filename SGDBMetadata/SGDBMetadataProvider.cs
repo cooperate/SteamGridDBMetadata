@@ -71,7 +71,7 @@ namespace SGDBMetadata
                 {
                     gameUrl = services.getCoverImageUrl(
                         options.GameData.Name,
-                        convertPlayniteGamePluginIdToSGDBPlatformEnum(options.GameData.Id),
+                        convertPlayniteGamePluginIdToSGDBPlatformEnum(options.GameData.PluginId),
                         options.GameData.GameId);
                 }
                 else
