@@ -65,17 +65,19 @@ namespace SGDBMetadata
             var request = new RestRequest("grids/{platform}/{gameId}", Method.GET);
             request.AddParameter("platform", platform, ParameterType.UrlSegment);
             request.AddParameter("gameId", gameId, ParameterType.UrlSegment);
-            if (dimension != null && dimension != "any") {
+            if (!string.IsNullOrEmpty(dimension) && dimension != "any")
+            {
                 request.AddParameter("dimensions", dimension, ParameterType.GetOrPost);
             }
-            if (style != null && style != "any") {
+            if (!string.IsNullOrEmpty(style) && style != "any")
+            {
                 request.AddParameter("styles", style, ParameterType.GetOrPost);
             }
-            if (nsfw != null && nsfw != "any")
+            if (!string.IsNullOrEmpty(nsfw) && nsfw != "any")
             {
                 request.AddParameter("nsfw", nsfw, ParameterType.GetOrPost);
             }
-            if (humor != null && humor != "any")
+            if (!string.IsNullOrEmpty(humor) && humor != "any")
             {
                 request.AddParameter("humor", humor, ParameterType.GetOrPost);
             }
@@ -86,19 +88,19 @@ namespace SGDBMetadata
         {
             var request = new RestRequest("grids/game/{id}", Method.GET);
             request.AddParameter("id", gameId, ParameterType.UrlSegment);
-            if (dimension != null && dimension != "any")
+            if (!string.IsNullOrEmpty(dimension) && dimension != "any")
             {
                 request.AddParameter("dimensions", dimension, ParameterType.GetOrPost);
             }
-            if (style != null && style != "any")
+            if (!string.IsNullOrEmpty(style) && style != "any")
             {
                 request.AddParameter("styles", style, ParameterType.GetOrPost);
             }
-            if (nsfw != null && nsfw != "any")
+            if (!string.IsNullOrEmpty(nsfw) && nsfw != "any")
             {
                 request.AddParameter("nsfw", nsfw, ParameterType.GetOrPost);
             }
-            if (humor != null && humor != "any")
+            if (!string.IsNullOrEmpty(humor) && humor != "any")
             {
                 request.AddParameter("humor", humor, ParameterType.GetOrPost);
             }
