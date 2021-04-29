@@ -126,7 +126,7 @@ namespace SGDBMetadata
             if (options.IsBackgroundDownload)
             {
                 string gameUrl;
-                if (options.GameData.Source != null && options.GameData.Source.ToString().ToLower() == "steam" && options.GameData.GameId != null)
+                if (options.GameData.Source != null && options.GameData.PluginId == BuiltinExtensions.GetIdFromExtension(BuiltinExtension.SteamLibrary) && options.GameData.GameId != null)
                 {
                     gameUrl = services.getHeroImageUrl(options.GameData.Name, convertPlayniteGamePluginIdToSGDBPlatformEnum(options.GameData.PluginId), options.GameData.GameId);
                 }
@@ -183,7 +183,7 @@ namespace SGDBMetadata
                 var logger = LogManager.GetLogger();
                 logger.Info("SGDBMetadataProvider GetIcon options " + options.GameData.ToString());
                 string gameUrl;
-                if (options.GameData.Source != null && options.GameData.Source.ToString().ToLower() == "steam" && options.GameData.GameId != null)
+                if (options.GameData.Source != null && options.GameData.PluginId == BuiltinExtensions.GetIdFromExtension(BuiltinExtension.SteamLibrary) && options.GameData.GameId != null)
                 {
                     gameUrl = services.getIconImageUrl(options.GameData.Name, convertPlayniteGamePluginIdToSGDBPlatformEnum(options.GameData.PluginId), options.GameData.GameId);
                 }
