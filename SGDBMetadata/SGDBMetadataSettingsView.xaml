@@ -32,5 +32,11 @@
             DisplayMemberPath="Value"
             SelectedValuePath="Key"
             SelectedValue="{Binding SHumor}" Margin="0,10,0,0"/>
+
+        <TextBlock Text="Asset to download for game icons:" Margin="0,10,0,0"/>
+        <ComboBox x:Name="cmbIconAssetSelection"
+            DisplayMemberPath="Value"
+            SelectedValuePath="Key"
+            SelectedValue="{Binding SIconAssetSelection}" Margin="0,10,0,0"/>
     </StackPanel>
 </UserControl>

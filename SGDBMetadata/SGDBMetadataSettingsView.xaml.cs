@@ -70,6 +70,13 @@ namespace SGDBMetadata
                 { "true", "Only get assets tagged as humor" },
             };
             cmbHumor.SelectedValue = "any";
+
+            cmbIconAssetSelection.ItemsSource = new Dictionary<string, string>
+            {
+                { "icons", "Icons" },
+                { "logos", "Logos" },
+            };
+            cmbHumor.SelectedValue = "icons";
         }
     }
 }

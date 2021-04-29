@@ -17,6 +17,7 @@ namespace SGDBMetadata
         public string SStyle { get; set; } = string.Empty;
         public string SNsfw { get; set; } = string.Empty;
         public string SHumor { get; set; } = string.Empty;
+        public string SIconAssetSelection { get; set; } = string.Empty;
 
         // Playnite serializes settings object to a JSON object and saves it as text file.
         // If you want to exclude some property from being saved then use `JsonIgnore` ignore attribute.
@@ -45,11 +46,13 @@ namespace SGDBMetadata
                 logger.Info(savedSettings.SStyle);
                 logger.Info(savedSettings.SNsfw);
                 logger.Info(savedSettings.SHumor);
+                logger.Info(savedSettings.SIconAssetSelection);
                 Option1 = savedSettings.Option1;
                 SDimension = savedSettings.SDimension;
                 SStyle = savedSettings.SStyle;
                 SNsfw = savedSettings.SNsfw;
                 SHumor = savedSettings.SHumor;
+                SIconAssetSelection = savedSettings.SIconAssetSelection;
             }
         }
 

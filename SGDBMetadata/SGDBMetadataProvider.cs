@@ -14,6 +14,7 @@ namespace SGDBMetadata
         private SgdbServiceClient services;
         private GenericItemOption searchSelection;
         private List<MetadataField> availableFields;
+        private string iconAssetSelection;
         public override List<MetadataField> AvailableFields
         {
             get
@@ -28,10 +29,11 @@ namespace SGDBMetadata
                 return availableFields;
             }
         }
-        public SGDBMetadataProvider(MetadataRequestOptions options, SGDBMetadata plugin, string apiKey, string dimension, string style, string nsfw, string humor)
+        public SGDBMetadataProvider(MetadataRequestOptions options, SGDBMetadata plugin, string apiKey, string dimension, string style, string nsfw, string humor, string iconAssetSelection)
         {
             this.options = options;
             this.plugin = plugin;
+            this.iconAssetSelection = iconAssetSelection;
             services = new SgdbServiceClient(apiKey, dimension, style, nsfw, humor);
             var logger = LogManager.GetLogger();
             logger.Info("SGDB Initialized");
@@ -185,11 +187,25 @@ namespace SGDBMetadata
                 string gameUrl;
                 if (options.GameData.Source != null && options.GameData.PluginId == BuiltinExtensions.GetIdFromExtension(BuiltinExtension.SteamLibrary) && options.GameData.GameId != null)
                 {
-                    gameUrl = services.getIconImageUrl(options.GameData.Name, convertPlayniteGamePluginIdToSGDBPlatformEnum(options.GameData.PluginId), options.GameData.GameId);
+                    if (iconAssetSelection == "logos")
+                    {
+                        gameUrl = services.getLogoImageUrl(options.GameData.Name, convertPlayniteGamePluginIdToSGDBPlatformEnum(options.GameData.PluginId), options.GameData.GameId);
+                    }
+                    else
+                    {
+                        gameUrl = services.getIconImageUrl(options.GameData.Name, convertPlayniteGamePluginIdToSGDBPlatformEnum(options.GameData.PluginId), options.GameData.GameId);
+                    }
                 }
                 else
                 {
-                    gameUrl = services.getIconImageUrl(options.GameData.Name);
+                    if (iconAssetSelection == "logos")
+                    {
+                        gameUrl = services.getLogoImageUrl(options.GameData.Name);
+                    }
+                    else
+                    {
+                        gameUrl = services.getIconImageUrl(options.GameData.Name);
+                    }
                 }
                 if (gameUrl == "bad path")
                 {
@@ -206,7 +222,15 @@ namespace SGDBMetadata
                 {
                     if (searchSelection != null)
                     {
-                        var icons = services.getIconImages(searchSelection.Name);
+                        List<MediaModel> icons;
+                        if (iconAssetSelection == "logos")
+                        {
+                            icons = services.getLogoImages(searchSelection.Name);
+                        }
+                        else
+                        {
+                            icons = services.getIconImages(searchSelection.Name);
+                        }
                         dynamic selection = null;
                         if (icons != null)
                         {
