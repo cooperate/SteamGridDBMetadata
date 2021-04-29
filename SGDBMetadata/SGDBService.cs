@@ -141,6 +141,21 @@ namespace SGDBMetadata
             return Execute<ResponseModel<MediaModel>>(request);
         }
 
+        public ResponseModel<MediaModel> getSGDBGameIcon(int gameId)
+        {
+            var request = new RestRequest("icons/game/{gameId}", Method.GET);
+            request.AddParameter("gameId", gameId, ParameterType.UrlSegment);
+            return Execute<ResponseModel<MediaModel>>(request);
+        }
+
+        public ResponseModel<MediaModel> getSGDBGameIconByAppId(string platform, string gameId)
+        {
+            var request = new RestRequest("icons/{platform}/{gameId}", Method.GET);
+            request.AddParameter("platform", platform, ParameterType.UrlSegment);
+            request.AddParameter("gameId", gameId, ParameterType.UrlSegment);
+            return Execute<ResponseModel<MediaModel>>(request);
+        }
+
         public SearchModel getGameSGDBFuzzySearch(string gameTitle)
         {
             var logger = LogManager.GetLogger();
@@ -357,6 +372,67 @@ namespace SGDBMetadata
                     return logo.data;
                 }
                 else if (logo.success && logo.data.Count == 0)
+                {
+                    return null;
+                }
+                else
+                {
+                    var sgdbException = new Exception("Service failure.");
+                    throw sgdbException;
+                }
+            }
+        }
+
+        public string getIconImageUrl(string gameName, string platform = null, string gameId = null)
+        {
+            if (platform != null && gameId != null)
+            {
+                ResponseModel<MediaModel> icon = getSGDBGameIconByAppId(platform, gameId); //First element of search results, should probably implement fuzzysearchquery based on intentions
+                if (icon.success && icon.data.Count > 0)
+                {
+                    return icon.data[0].url;
+                }
+            }
+            else
+            {
+                SearchModel gameIconSearch = getGameSGDBFuzzySearch(gameName);
+                ResponseModel<MediaModel> icon = getSGDBGameIcon(gameIconSearch.id);
+                if (icon.success && icon.data.Count > 0)
+                {
+                    return icon.data[0].url;
+                }
+            }
+            return "bad path";
+        }
+
+        public List<MediaModel> getIconImages(string gameName, string platform = null, string gameId = null)
+        {
+            if (platform != null && gameId != null)
+            {
+                ResponseModel<MediaModel> icon = getSGDBGameIconByAppId(platform, gameId); //First element of search results, should probably implement fuzzysearchquery based on intentions
+                if (icon.success && icon.data.Count > 0)
+                {
+                    return icon.data;
+                }
+                else if (icon.success && icon.data.Count == 0)
+                {
+                    return null;
+                }
+                else
+                {
+                    var sgdbException = new Exception("Service failure.");
+                    throw sgdbException;
+                }
+            }
+            else
+            {
+                SearchModel gameIconSearch = getGameSGDBFuzzySearch(gameName);
+                ResponseModel<MediaModel> icon = getSGDBGameIcon(gameIconSearch.id);
+                if (icon.success && icon.data.Count > 0)
+                {
+                    return icon.data;
+                }
+                else if (icon.success && icon.data.Count == 0)
                 {
                     return null;
                 }

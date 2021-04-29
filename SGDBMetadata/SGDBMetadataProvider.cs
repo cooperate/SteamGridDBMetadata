@@ -185,11 +185,11 @@ namespace SGDBMetadata
                 string gameUrl;
                 if (options.GameData.Source != null && options.GameData.Source.ToString().ToLower() == "steam" && options.GameData.GameId != null)
                 {
-                    gameUrl = services.getLogoImageUrl(options.GameData.Name, convertPlayniteGamePluginIdToSGDBPlatformEnum(options.GameData.PluginId), options.GameData.GameId);
+                    gameUrl = services.getIconImageUrl(options.GameData.Name, convertPlayniteGamePluginIdToSGDBPlatformEnum(options.GameData.PluginId), options.GameData.GameId);
                 }
                 else
                 {
-                    gameUrl = services.getLogoImageUrl(options.GameData.Name);
+                    gameUrl = services.getIconImageUrl(options.GameData.Name);
                 }
                 if (gameUrl == "bad path")
                 {
@@ -206,7 +206,7 @@ namespace SGDBMetadata
                 {
                     if (searchSelection != null)
                     {
-                        var icons = services.getLogoImages(searchSelection.Name);
+                        var icons = services.getIconImages(searchSelection.Name);
                         dynamic selection = null;
                         if (icons != null)
                         {
