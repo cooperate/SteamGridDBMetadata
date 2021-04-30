@@ -6,7 +6,7 @@
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
     <StackPanel>
-        <TextBlock Text="SteamGrid DB API Key"/>
+        <TextBlock Text="SteamGridDB API Key"/>
         <TextBox Text="{Binding Option1}"/>
 
       <TextBlock Text="Cover Style:" Margin="15,10,20,0"/>
