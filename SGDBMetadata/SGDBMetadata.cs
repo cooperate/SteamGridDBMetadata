@@ -25,7 +25,7 @@ namespace SGDBMetadata
         };
 
         // Change to something more appropriate
-        public override string Name => "Steam Grid DB Metadata";
+        public override string Name => "SteamGridDB Metadata";
 
         public SGDBMetadata(IPlayniteAPI api) : base(api)
         {
