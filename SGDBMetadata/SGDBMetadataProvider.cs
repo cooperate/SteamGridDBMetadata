@@ -14,6 +14,7 @@ namespace SGDBMetadata
         private SgdbServiceClient services;
         private GenericItemOption searchSelection;
         private List<MetadataField> availableFields;
+        private string iconAssetSelection;
         public override List<MetadataField> AvailableFields
         {
             get
@@ -28,27 +29,28 @@ namespace SGDBMetadata
                 return availableFields;
             }
         }
-        public SGDBMetadataProvider(MetadataRequestOptions options, SGDBMetadata plugin, string apiKey, string dimension, string style)
+        public SGDBMetadataProvider(MetadataRequestOptions options, SGDBMetadata plugin, string apiKey, string dimension, string style, string nsfw, string humor, string iconAssetSelection)
         {
             this.options = options;
             this.plugin = plugin;
-            services = new SgdbServiceClient(apiKey, dimension, style);
+            this.iconAssetSelection = iconAssetSelection;
+            services = new SgdbServiceClient(apiKey, dimension, style, nsfw, humor);
             var logger = LogManager.GetLogger();
             logger.Info("SGDB Initialized");
         }
 
-        public string convertPlayniteGameSourceToSGDBPlatformEnum(string platform)
+        public string convertPlayniteGamePluginIdToSGDBPlatformEnum(Guid pluginId)
         {
             //check for platform "steam""origin""egs""bnet""uplay"
-            switch (platform)
+            switch (BuiltinExtensions.GetExtensionFromId(pluginId))
             {
-                case "steam":
+                case BuiltinExtension.SteamLibrary:
                     return "steam";
-                case "origin":
+                case BuiltinExtension.OriginLibrary:
                     return "origin";
-                case "epic":
+                case BuiltinExtension.EpicLibrary:
                     return "egs";
-                case "battle.net":
+                case BuiltinExtension.BattleNetLibrary:
                     return "bnet";
                 default:
                     return null;
@@ -65,13 +67,13 @@ namespace SGDBMetadata
                 string gameUrl;
                 if (
                     options.GameData.Source != null
-                    && options.GameData.Source.ToString().ToLower() == "steam"
+                    && options.GameData.PluginId == BuiltinExtensions.GetIdFromExtension(BuiltinExtension.SteamLibrary)
                     && options.GameData.GameId != null
                 )
                 {
                     gameUrl = services.getCoverImageUrl(
                         options.GameData.Name,
-                        convertPlayniteGameSourceToSGDBPlatformEnum(options.GameData.Source.ToString().ToLower()),
+                        convertPlayniteGamePluginIdToSGDBPlatformEnum(options.GameData.PluginId),
                         options.GameData.GameId);
                 }
                 else
@@ -126,9 +128,9 @@ namespace SGDBMetadata
             if (options.IsBackgroundDownload)
             {
                 string gameUrl;
-                if (options.GameData.Source != null && options.GameData.Source.ToString().ToLower() == "steam" && options.GameData.GameId != null)
+                if (options.GameData.Source != null && options.GameData.PluginId == BuiltinExtensions.GetIdFromExtension(BuiltinExtension.SteamLibrary) && options.GameData.GameId != null)
                 {
-                    gameUrl = services.getHeroImageUrl(options.GameData.Name, convertPlayniteGameSourceToSGDBPlatformEnum(options.GameData.Source.ToString().ToLower()), options.GameData.GameId);
+                    gameUrl = services.getHeroImageUrl(options.GameData.Name, convertPlayniteGamePluginIdToSGDBPlatformEnum(options.GameData.PluginId), options.GameData.GameId);
                 }
                 else
                 {
@@ -183,13 +185,27 @@ namespace SGDBMetadata
                 var logger = LogManager.GetLogger();
                 logger.Info("SGDBMetadataProvider GetIcon options " + options.GameData.ToString());
                 string gameUrl;
-                if (options.GameData.Source != null && options.GameData.Source.ToString().ToLower() == "steam" && options.GameData.GameId != null)
+                if (options.GameData.Source != null && options.GameData.PluginId == BuiltinExtensions.GetIdFromExtension(BuiltinExtension.SteamLibrary) && options.GameData.GameId != null)
                 {
-                    gameUrl = services.getLogoImageUrl(options.GameData.Name, convertPlayniteGameSourceToSGDBPlatformEnum(options.GameData.Source.ToString().ToLower()), options.GameData.GameId);
+                    if (iconAssetSelection == "logos")
+                    {
+                        gameUrl = services.getLogoImageUrl(options.GameData.Name, convertPlayniteGamePluginIdToSGDBPlatformEnum(options.GameData.PluginId), options.GameData.GameId);
+                    }
+                    else
+                    {
+                        gameUrl = services.getIconImageUrl(options.GameData.Name, convertPlayniteGamePluginIdToSGDBPlatformEnum(options.GameData.PluginId), options.GameData.GameId);
+                    }
                 }
                 else
                 {
-                    gameUrl = services.getLogoImageUrl(options.GameData.Name);
+                    if (iconAssetSelection == "logos")
+                    {
+                        gameUrl = services.getLogoImageUrl(options.GameData.Name);
+                    }
+                    else
+                    {
+                        gameUrl = services.getIconImageUrl(options.GameData.Name);
+                    }
                 }
                 if (gameUrl == "bad path")
                 {
@@ -206,7 +222,15 @@ namespace SGDBMetadata
                 {
                     if (searchSelection != null)
                     {
-                        var icons = services.getLogoImages(searchSelection.Name);
+                        List<MediaModel> icons;
+                        if (iconAssetSelection == "logos")
+                        {
+                            icons = services.getLogoImages(searchSelection.Name);
+                        }
+                        else
+                        {
+                            icons = services.getIconImages(searchSelection.Name);
+                        }
                         dynamic selection = null;
                         if (icons != null)
                         {

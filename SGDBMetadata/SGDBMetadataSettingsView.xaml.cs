@@ -27,7 +27,9 @@ namespace SGDBMetadata
                 { "920x430",  "920x430" },
                 { "600x900", "600x900" },
                 { "342x482", "342x482" },
-                { "660x930", "660x930" }
+                { "660x930", "660x930" },
+                { "512x512", "512x512" },
+                { "1024x1024", "1024x1024" }
             };
             cmbDimensions.SelectedValue = "any";
 
@@ -41,6 +43,29 @@ namespace SGDBMetadata
                 { "no_logo", "No Logo" }
             };
             cmbStyles.SelectedValue = "any";
+
+            cmbNsfw.ItemsSource = new Dictionary<string, string>
+            {
+                { "any", "Any" },
+                { "false", "Only get assets not tagged as adult content" },
+                { "true", "Only get assets tagged as adult content" },
+            };
+            cmbNsfw.SelectedValue = "any";
+
+            cmbHumor.ItemsSource = new Dictionary<string, string>
+            {
+                { "any", "Any" },
+                { "false", "Only get assets not tagged as humor" },
+                { "true", "Only get assets tagged as humor" },
+            };
+            cmbHumor.SelectedValue = "any";
+
+            cmbIconAssetSelection.ItemsSource = new Dictionary<string, string>
+            {
+                { "icons", "Icons" },
+                { "logos", "Logos" },
+            };
+            cmbHumor.SelectedValue = "icons";
         }
     }
 }

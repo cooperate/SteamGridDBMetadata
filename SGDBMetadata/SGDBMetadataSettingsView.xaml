@@ -5,19 +5,38 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
-    <StackPanel>
-        <TextBlock Text="SteamGrid DB API Key"/>
-        <TextBox Text="{Binding Option1}"/>
+    <StackPanel Margin="20">
+        <TextBlock Text="SteamGridDB API Key:"/>
+        <TextBox Text="{Binding Option1}" Margin="0,10,0,0" />
 
-      <TextBlock Text="Cover Style:" Margin="15,10,20,0"/>
-      <ComboBox x:Name="cmbStyles"
-                DisplayMemberPath="Value"
-                SelectedValuePath="Key"
-                SelectedValue="{Binding SStyle}" Margin="15,10,20,0" />
-      <TextBlock Text="Cover Size:" Margin="15,10,20,0"/>
-      <ComboBox x:Name="cmbDimensions"
-        DisplayMemberPath="Value"
-        SelectedValuePath="Key"
-        SelectedValue="{Binding SDimension}" Margin="15,10,20,0"/>
+        <TextBlock Text="Cover Style:" Margin="0,10,0,0"/>
+        <ComboBox x:Name="cmbStyles"
+            DisplayMemberPath="Value"
+            SelectedValuePath="Key"
+            SelectedValue="{Binding SStyle}" Margin="0,10,0,0" />
+        
+        <TextBlock Text="Cover Size:" Margin="0,10,0,0"/>
+        <ComboBox x:Name="cmbDimensions"
+            DisplayMemberPath="Value"
+            SelectedValuePath="Key"
+            SelectedValue="{Binding SDimension}" Margin="0,10,0,0"/>
+
+        <TextBlock Text="Cover adult content:" Margin="0,10,0,0"/>
+        <ComboBox x:Name="cmbNsfw"
+            DisplayMemberPath="Value"
+            SelectedValuePath="Key"
+            SelectedValue="{Binding SNsfw}" Margin="0,10,0,0"/>
+
+        <TextBlock Text="Cover humor:" Margin="0,10,0,0"/>
+        <ComboBox x:Name="cmbHumor"
+            DisplayMemberPath="Value"
+            SelectedValuePath="Key"
+            SelectedValue="{Binding SHumor}" Margin="0,10,0,0"/>
+
+        <TextBlock Text="Asset to download for game icons:" Margin="0,10,0,0"/>
+        <ComboBox x:Name="cmbIconAssetSelection"
+            DisplayMemberPath="Value"
+            SelectedValuePath="Key"
+            SelectedValue="{Binding SIconAssetSelection}" Margin="0,10,0,0"/>
     </StackPanel>
 </UserControl>

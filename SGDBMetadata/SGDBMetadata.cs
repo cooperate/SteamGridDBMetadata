@@ -25,7 +25,7 @@ namespace SGDBMetadata
         };
 
         // Change to something more appropriate
-        public override string Name => "Steam Grid DB Metadata";
+        public override string Name => "SteamGridDB";
 
         public SGDBMetadata(IPlayniteAPI api) : base(api)
         {
@@ -34,7 +34,7 @@ namespace SGDBMetadata
 
         public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options)
         {
-            return new SGDBMetadataProvider(options, this, settings.Option1, settings.SDimension, settings.SStyle);
+            return new SGDBMetadataProvider(options, this, settings.Option1, settings.SDimension, settings.SStyle, settings.SNsfw, settings.SHumor, settings.SIconAssetSelection);
         }
 
         public override ISettings GetSettings(bool firstRunSettings)

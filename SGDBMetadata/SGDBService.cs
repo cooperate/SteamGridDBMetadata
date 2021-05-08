@@ -18,13 +18,17 @@ namespace SGDBMetadata
         private RestClient client;
         private string dimension;
         private string style;
+        private string nsfw;
+        private string humor;
 
-        public SgdbServiceClient(string bearerToken, string dimension, string style)
+        public SgdbServiceClient(string bearerToken, string dimension, string style, string nsfw, string humor)
         {
             client = new RestClient(baseUrl);
             client.Authenticator = new JwtAuthenticator(bearerToken);
             this.dimension = dimension;
             this.style = style;
+            this.nsfw = nsfw;
+            this.humor = humor;
         }
 
         public RestClient RestClient { get; set; }
@@ -61,11 +65,21 @@ namespace SGDBMetadata
             var request = new RestRequest("grids/{platform}/{gameId}", Method.GET);
             request.AddParameter("platform", platform, ParameterType.UrlSegment);
             request.AddParameter("gameId", gameId, ParameterType.UrlSegment);
-            if (dimension != null && dimension != "any") {
+            if (!string.IsNullOrEmpty(dimension) && dimension != "any")
+            {
                 request.AddParameter("dimensions", dimension, ParameterType.GetOrPost);
             }
-            if (style != null && style != "any") {
+            if (!string.IsNullOrEmpty(style) && style != "any")
+            {
                 request.AddParameter("styles", style, ParameterType.GetOrPost);
+            }
+            if (!string.IsNullOrEmpty(nsfw) && nsfw != "any")
+            {
+                request.AddParameter("nsfw", nsfw, ParameterType.GetOrPost);
+            }
+            if (!string.IsNullOrEmpty(humor) && humor != "any")
+            {
+                request.AddParameter("humor", humor, ParameterType.GetOrPost);
             }
             return Execute<ResponseModel<GridModel>>(request);
         }
@@ -74,13 +88,21 @@ namespace SGDBMetadata
         {
             var request = new RestRequest("grids/game/{id}", Method.GET);
             request.AddParameter("id", gameId, ParameterType.UrlSegment);
-            if (dimension != null && dimension != "any")
+            if (!string.IsNullOrEmpty(dimension) && dimension != "any")
             {
                 request.AddParameter("dimensions", dimension, ParameterType.GetOrPost);
             }
-            if (style != null && style != "any")
+            if (!string.IsNullOrEmpty(style) && style != "any")
             {
                 request.AddParameter("styles", style, ParameterType.GetOrPost);
+            }
+            if (!string.IsNullOrEmpty(nsfw) && nsfw != "any")
+            {
+                request.AddParameter("nsfw", nsfw, ParameterType.GetOrPost);
+            }
+            if (!string.IsNullOrEmpty(humor) && humor != "any")
+            {
+                request.AddParameter("humor", humor, ParameterType.GetOrPost);
             }
             return Execute<ResponseModel<GridModel>>(request);
         }
@@ -114,6 +136,21 @@ namespace SGDBMetadata
         public ResponseModel<MediaModel> getSGDBGameLogoByAppId(string platform, string gameId)
         {
             var request = new RestRequest("logos/{platform}/{gameId}", Method.GET);
+            request.AddParameter("platform", platform, ParameterType.UrlSegment);
+            request.AddParameter("gameId", gameId, ParameterType.UrlSegment);
+            return Execute<ResponseModel<MediaModel>>(request);
+        }
+
+        public ResponseModel<MediaModel> getSGDBGameIcon(int gameId)
+        {
+            var request = new RestRequest("icons/game/{gameId}", Method.GET);
+            request.AddParameter("gameId", gameId, ParameterType.UrlSegment);
+            return Execute<ResponseModel<MediaModel>>(request);
+        }
+
+        public ResponseModel<MediaModel> getSGDBGameIconByAppId(string platform, string gameId)
+        {
+            var request = new RestRequest("icons/{platform}/{gameId}", Method.GET);
             request.AddParameter("platform", platform, ParameterType.UrlSegment);
             request.AddParameter("gameId", gameId, ParameterType.UrlSegment);
             return Execute<ResponseModel<MediaModel>>(request);
@@ -335,6 +372,67 @@ namespace SGDBMetadata
                     return logo.data;
                 }
                 else if (logo.success && logo.data.Count == 0)
+                {
+                    return null;
+                }
+                else
+                {
+                    var sgdbException = new Exception("Service failure.");
+                    throw sgdbException;
+                }
+            }
+        }
+
+        public string getIconImageUrl(string gameName, string platform = null, string gameId = null)
+        {
+            if (platform != null && gameId != null)
+            {
+                ResponseModel<MediaModel> icon = getSGDBGameIconByAppId(platform, gameId); //First element of search results, should probably implement fuzzysearchquery based on intentions
+                if (icon.success && icon.data.Count > 0)
+                {
+                    return icon.data[0].url;
+                }
+            }
+            else
+            {
+                SearchModel gameIconSearch = getGameSGDBFuzzySearch(gameName);
+                ResponseModel<MediaModel> icon = getSGDBGameIcon(gameIconSearch.id);
+                if (icon.success && icon.data.Count > 0)
+                {
+                    return icon.data[0].url;
+                }
+            }
+            return "bad path";
+        }
+
+        public List<MediaModel> getIconImages(string gameName, string platform = null, string gameId = null)
+        {
+            if (platform != null && gameId != null)
+            {
+                ResponseModel<MediaModel> icon = getSGDBGameIconByAppId(platform, gameId); //First element of search results, should probably implement fuzzysearchquery based on intentions
+                if (icon.success && icon.data.Count > 0)
+                {
+                    return icon.data;
+                }
+                else if (icon.success && icon.data.Count == 0)
+                {
+                    return null;
+                }
+                else
+                {
+                    var sgdbException = new Exception("Service failure.");
+                    throw sgdbException;
+                }
+            }
+            else
+            {
+                SearchModel gameIconSearch = getGameSGDBFuzzySearch(gameName);
+                ResponseModel<MediaModel> icon = getSGDBGameIcon(gameIconSearch.id);
+                if (icon.success && icon.data.Count > 0)
+                {
+                    return icon.data;
+                }
+                else if (icon.success && icon.data.Count == 0)
                 {
                     return null;
                 }
