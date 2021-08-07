@@ -15,8 +15,8 @@ namespace SGDBMetadata
         public string Option1 { get; set; } = string.Empty;
         public string SDimension { get; set; } = string.Empty;
         public string SStyle { get; set; } = string.Empty;
-        public string SNsfw { get; set; } = string.Empty;
-        public string SHumor { get; set; } = string.Empty;
+        public string SNsfw { get; set; } = "false";
+        public string SHumor { get; set; } = "false";
         public string SIconAssetSelection { get; set; } = string.Empty;
 
         // Playnite serializes settings object to a JSON object and saves it as text file.
