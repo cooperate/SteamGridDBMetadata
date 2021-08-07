@@ -73,11 +73,11 @@ namespace SGDBMetadata
             {
                 request.AddParameter("styles", style, ParameterType.GetOrPost);
             }
-            if (!string.IsNullOrEmpty(nsfw) && nsfw != "any")
+            if (!string.IsNullOrEmpty(nsfw))
             {
                 request.AddParameter("nsfw", nsfw, ParameterType.GetOrPost);
             }
-            if (!string.IsNullOrEmpty(humor) && humor != "any")
+            if (!string.IsNullOrEmpty(humor))
             {
                 request.AddParameter("humor", humor, ParameterType.GetOrPost);
             }
@@ -96,11 +96,11 @@ namespace SGDBMetadata
             {
                 request.AddParameter("styles", style, ParameterType.GetOrPost);
             }
-            if (!string.IsNullOrEmpty(nsfw) && nsfw != "any")
+            if (!string.IsNullOrEmpty(nsfw))
             {
                 request.AddParameter("nsfw", nsfw, ParameterType.GetOrPost);
             }
-            if (!string.IsNullOrEmpty(humor) && humor != "any")
+            if (!string.IsNullOrEmpty(humor))
             {
                 request.AddParameter("humor", humor, ParameterType.GetOrPost);
             }
