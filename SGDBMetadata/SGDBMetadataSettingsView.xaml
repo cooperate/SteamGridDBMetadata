@@ -7,7 +7,7 @@
              d:DesignHeight="400" d:DesignWidth="600">
     <StackPanel Margin="20">
         <TextBlock Text="SteamGridDB API Key:"/>
-        <TextBox Text="{Binding Option1}" Margin="0,10,0,0" />
+        <TextBox Text="{Binding ApiKey}" Margin="0,10,0,0" />
 
         <TextBlock Text="Cover Style:" Margin="0,10,0,0"/>
         <ComboBox x:Name="cmbStyles"
