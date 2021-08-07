@@ -12,12 +12,12 @@ namespace SGDBMetadata
     {
         private readonly SGDBMetadata plugin;
 
-        public string Option1 { get; set; } = string.Empty;
-        public string SDimension { get; set; } = string.Empty;
-        public string SStyle { get; set; } = string.Empty;
-        public string SNsfw { get; set; } = string.Empty;
-        public string SHumor { get; set; } = string.Empty;
-        public string SIconAssetSelection { get; set; } = string.Empty;
+        public string ApiKey { get; set; } = string.Empty;
+        public string SDimension { get; set; } = "600x900";
+        public string SStyle { get; set; } = "alternate";
+        public string SNsfw { get; set; } = "false";
+        public string SHumor { get; set; } = "false";
+        public string SIconAssetSelection { get; set; } = "icons";
 
         // Playnite serializes settings object to a JSON object and saves it as text file.
         // If you want to exclude some property from being saved then use `JsonIgnore` ignore attribute.
@@ -41,13 +41,12 @@ namespace SGDBMetadata
             {
                 var logger = LogManager.GetLogger();
                 logger.Info("saved settings");
-                logger.Info(savedSettings.Option1);
                 logger.Info(savedSettings.SDimension);
                 logger.Info(savedSettings.SStyle);
                 logger.Info(savedSettings.SNsfw);
                 logger.Info(savedSettings.SHumor);
                 logger.Info(savedSettings.SIconAssetSelection);
-                Option1 = savedSettings.Option1;
+                ApiKey = savedSettings.ApiKey;
                 SDimension = savedSettings.SDimension;
                 SStyle = savedSettings.SStyle;
                 SNsfw = savedSettings.SNsfw;
