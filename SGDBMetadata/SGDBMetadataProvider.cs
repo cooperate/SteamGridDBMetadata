@@ -13,6 +13,7 @@ namespace SGDBMetadata
         private readonly SGDBMetadata plugin;
         private SgdbServiceClient services;
         private GenericItemOption searchSelection;
+        private string gamePlatformEnum;
         private List<MetadataField> availableFields;
         private string iconAssetSelection;
         public override List<MetadataField> AvailableFields
@@ -39,21 +40,27 @@ namespace SGDBMetadata
             logger.Info("SGDB Initialized");
         }
 
-        public string convertPlayniteGamePluginIdToSGDBPlatformEnum(Guid pluginId)
+        public void convertPlayniteGamePluginIdToSGDBPlatformEnum(Guid pluginId)
         {
             //check for platform "steam""origin""egs""bnet""uplay"
+            // only steam is reliable enough on sgdb
+            // most games are not linked to other platforms
             switch (BuiltinExtensions.GetExtensionFromId(pluginId))
             {
                 case BuiltinExtension.SteamLibrary:
-                    return "steam";
+                    gamePlatformEnum = "steam";
+                    return;
                 case BuiltinExtension.OriginLibrary:
-                    return "origin";
+                    //gamePlatformEnum = "origin";
+                    return;
                 case BuiltinExtension.EpicLibrary:
-                    return "egs";
+                    //gamePlatformEnum = "egs";
+                    return;
                 case BuiltinExtension.BattleNetLibrary:
-                    return "bnet";
+                    //gamePlatformEnum = "bnet";
+                    return;
                 default:
-                    return null;
+                    return;
             }
         }
 
@@ -64,22 +71,7 @@ namespace SGDBMetadata
             logger.Info("GetCoverImage");
             if (options.IsBackgroundDownload)
             {
-                string gameUrl;
-                if (
-                    options.GameData.Source != null
-                    && options.GameData.PluginId == BuiltinExtensions.GetIdFromExtension(BuiltinExtension.SteamLibrary)
-                    && options.GameData.GameId != null
-                )
-                {
-                    gameUrl = services.getCoverImageUrl(
-                        options.GameData.Name,
-                        convertPlayniteGamePluginIdToSGDBPlatformEnum(options.GameData.PluginId),
-                        options.GameData.GameId);
-                }
-                else
-                {
-                    gameUrl = services.getCoverImageUrl(options.GameData.Name);
-                }
+                string gameUrl = services.getCoverImageUrl(options.GameData.Name, gamePlatformEnum ?? null, options.GameData.GameId ?? null);
                 if (gameUrl == "bad path")
                 {
                     return base.GetCoverImage();
@@ -93,10 +85,9 @@ namespace SGDBMetadata
             {
                 if (AvailableFields.Contains(MetadataField.Name))
                 {
-                    logger.Info("search Selection" + searchSelection);
-                    if (searchSelection != null)
+                    if (string.IsNullOrEmpty(gamePlatformEnum) == false || searchSelection != null)
                     {
-                        var covers = services.getCoverImages(searchSelection.Name);
+                        var covers = services.getCoverImages(searchSelection?.Name ?? null, gamePlatformEnum ?? null, options.GameData.GameId ?? null);
                         dynamic selection = null;
                         if (covers != null)
                         {
@@ -127,15 +118,7 @@ namespace SGDBMetadata
         {
             if (options.IsBackgroundDownload)
             {
-                string gameUrl;
-                if (options.GameData.Source != null && options.GameData.PluginId == BuiltinExtensions.GetIdFromExtension(BuiltinExtension.SteamLibrary) && options.GameData.GameId != null)
-                {
-                    gameUrl = services.getHeroImageUrl(options.GameData.Name, convertPlayniteGamePluginIdToSGDBPlatformEnum(options.GameData.PluginId), options.GameData.GameId);
-                }
-                else
-                {
-                    gameUrl = services.getHeroImageUrl(options.GameData.Name);
-                }
+                string gameUrl = services.getHeroImageUrl(options.GameData.Name, gamePlatformEnum ?? null, options.GameData.GameId ?? null);
                 if (gameUrl == "bad path")
                 {
                     return base.GetBackgroundImage();
@@ -149,9 +132,9 @@ namespace SGDBMetadata
             {
                 if (AvailableFields.Contains(MetadataField.Name))
                 {
-                    if (searchSelection != null)
+                    if (string.IsNullOrEmpty(gamePlatformEnum) == false || searchSelection != null)
                     {
-                        var heroes = services.getHeroImages(searchSelection.Name);
+                        var heroes = services.getHeroImages(searchSelection?.Name ?? null, gamePlatformEnum ?? null, options.GameData.GameId ?? null);
                         dynamic selection = null;
                         if (heroes != null)
                         {
@@ -183,29 +166,14 @@ namespace SGDBMetadata
             if (options.IsBackgroundDownload)
             {
                 var logger = LogManager.GetLogger();
-                logger.Info("SGDBMetadataProvider GetIcon options " + options.GameData.ToString());
                 string gameUrl;
-                if (options.GameData.Source != null && options.GameData.PluginId == BuiltinExtensions.GetIdFromExtension(BuiltinExtension.SteamLibrary) && options.GameData.GameId != null)
+                if (iconAssetSelection == "logos")
                 {
-                    if (iconAssetSelection == "logos")
-                    {
-                        gameUrl = services.getLogoImageUrl(options.GameData.Name, convertPlayniteGamePluginIdToSGDBPlatformEnum(options.GameData.PluginId), options.GameData.GameId);
-                    }
-                    else
-                    {
-                        gameUrl = services.getIconImageUrl(options.GameData.Name, convertPlayniteGamePluginIdToSGDBPlatformEnum(options.GameData.PluginId), options.GameData.GameId);
-                    }
+                    gameUrl = services.getLogoImageUrl(options.GameData.Name, gamePlatformEnum ?? null, options.GameData.GameId ?? null);
                 }
                 else
                 {
-                    if (iconAssetSelection == "logos")
-                    {
-                        gameUrl = services.getLogoImageUrl(options.GameData.Name);
-                    }
-                    else
-                    {
-                        gameUrl = services.getIconImageUrl(options.GameData.Name);
-                    }
+                    gameUrl = services.getIconImageUrl(options.GameData.Name, gamePlatformEnum ?? null, options.GameData.GameId ?? null);
                 }
                 if (gameUrl == "bad path")
                 {
@@ -220,16 +188,16 @@ namespace SGDBMetadata
             {
                 if (AvailableFields.Contains(MetadataField.Name))
                 {
-                    if (searchSelection != null)
+                    if (string.IsNullOrEmpty(gamePlatformEnum) == false || searchSelection != null)
                     {
                         List<MediaModel> icons;
                         if (iconAssetSelection == "logos")
                         {
-                            icons = services.getLogoImages(searchSelection.Name);
+                            icons = services.getLogoImages(searchSelection?.Name ?? null, gamePlatformEnum ?? null, options.GameData.GameId ?? null);
                         }
                         else
                         {
-                            icons = services.getIconImages(searchSelection.Name);
+                            icons = services.getIconImages(searchSelection?.Name ?? null, gamePlatformEnum ?? null, options.GameData.GameId ?? null);
                         }
                         dynamic selection = null;
                         if (icons != null)
@@ -274,12 +242,13 @@ namespace SGDBMetadata
             }, options.GameData.Name, caption);
             searchSelection = item;
         }
+
         private List<MetadataField> GetAvailableFields()
         {
             var logger = LogManager.GetLogger();
             logger.Info("GetAvailableFields");
-
-            if (searchSelection == null)
+            logger.Info("SGDBMetadataProvider GameData:" + options.GameData.ToString());
+            if (searchSelection == null || gamePlatformEnum == null)
             {
                 GetSgdbMetadata();
             }
@@ -292,12 +261,18 @@ namespace SGDBMetadata
 
         private void GetSgdbMetadata()
         {
+            convertPlayniteGamePluginIdToSGDBPlatformEnum(options.GameData.PluginId);
+
             if (!options.IsBackgroundDownload)
             {
                 var logger = LogManager.GetLogger();
                 logger.Info("GetSgdbMetadata");
-                var gameList = new List<GenericItemOption>(services.getGameListSGDB(options.GameData.Name).Select(game => new GenericItemOption(game.name, game.id.ToString())));
-                GetGame(gameList, "Choose Game");
+
+                if (string.IsNullOrEmpty(gamePlatformEnum))
+                {
+                    var gameList = new List<GenericItemOption>(services.getGameListSGDB(options.GameData.Name).Select(game => new GenericItemOption(game.name, game.id.ToString())));
+                    GetGame(gameList, "Choose Game");
+                }
             }
         }
         private ImageFileOption GetCoverManually(List<GridModel> possibleCovers)

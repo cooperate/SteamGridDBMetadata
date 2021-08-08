@@ -13,7 +13,7 @@ namespace SGDBMetadata
 {
     public class SgdbServiceClient
     {
-        private readonly string baseUrl = "https://www.steamgriddb.com/api/v2/";
+        private readonly string baseUrl = @"https://www.steamgriddb.com/api/v2/";
 
         private RestClient client;
         private readonly SGDBMetadataSettings settings;
@@ -207,7 +207,7 @@ namespace SGDBMetadata
             }
         }
 
-        public string getCoverImageUrl(string gameName, string platform = null, string gameId = null)
+        public string getCoverImageUrl(string gameName, string platform, string gameId)
         {
             if (platform != null && gameId != null)
             {
@@ -229,7 +229,7 @@ namespace SGDBMetadata
             return "bad path";
         }
 
-        public List<GridModel> getCoverImages(string gameName, string platform = null, string gameId = null)
+        public List<GridModel> getCoverImages(string gameName, string platform, string gameId)
         {
             if (platform != null && gameId != null)
             {
@@ -268,7 +268,7 @@ namespace SGDBMetadata
             }
         }
 
-        public string getHeroImageUrl(string gameName, string platform = null, string gameId = null)
+        public string getHeroImageUrl(string gameName, string platform, string gameId)
         {
             var logger = LogManager.GetLogger();
             logger.Info("getHeroImageUrl");
@@ -295,7 +295,7 @@ namespace SGDBMetadata
             return "bad path";
         }
 
-        public List<HeroModel> getHeroImages(string gameName, string platform = null, string gameId = null)
+        public List<HeroModel> getHeroImages(string gameName, string platform, string gameId)
         {
             var logger = LogManager.GetLogger();
             logger.Info("getHeroImages");
@@ -339,7 +339,7 @@ namespace SGDBMetadata
             }
         }
 
-        public string getLogoImageUrl(string gameName, string platform = null, string gameId = null)
+        public string getLogoImageUrl(string gameName, string platform, string gameId)
         {
             if (platform != null && gameId != null)
             {
@@ -361,7 +361,7 @@ namespace SGDBMetadata
             return "bad path";
         }
 
-        public List<MediaModel> getLogoImages(string gameName, string platform = null, string gameId = null)
+        public List<MediaModel> getLogoImages(string gameName, string platform, string gameId)
         {
             if (platform != null && gameId != null)
             {
@@ -400,7 +400,7 @@ namespace SGDBMetadata
             }
         }
 
-        public string getIconImageUrl(string gameName, string platform = null, string gameId = null)
+        public string getIconImageUrl(string gameName, string platform, string gameId)
         {
             if (platform != null && gameId != null)
             {
@@ -422,7 +422,7 @@ namespace SGDBMetadata
             return "bad path";
         }
 
-        public List<MediaModel> getIconImages(string gameName, string platform = null, string gameId = null)
+        public List<MediaModel> getIconImages(string gameName, string platform, string gameId)
         {
             if (platform != null && gameId != null)
             {
