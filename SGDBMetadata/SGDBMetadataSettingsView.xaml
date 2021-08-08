@@ -5,38 +5,119 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
-    <StackPanel Margin="20">
-        <TextBlock Text="SteamGridDB API Key:"/>
-        <TextBox Text="{Binding ApiKey}" Margin="0,10,0,0" />
+    <ScrollViewer>
+        <StackPanel Margin="20">
+            <TextBlock Text="SteamGridDB API Key:"/>
+            <TextBox Text="{Binding ApiKey}" Margin="0,10,0,0" />
 
-        <TextBlock Text="Cover Style:" Margin="0,10,0,0"/>
-        <ComboBox x:Name="cmbStyles"
-            DisplayMemberPath="Value"
-            SelectedValuePath="Key"
-            SelectedValue="{Binding SStyle}" Margin="0,10,0,0" />
-        
-        <TextBlock Text="Cover Size:" Margin="0,10,0,0"/>
-        <ComboBox x:Name="cmbDimensions"
-            DisplayMemberPath="Value"
-            SelectedValuePath="Key"
-            SelectedValue="{Binding SDimension}" Margin="0,10,0,0"/>
+            <Label Content="Cover settings" Margin="0,15,0,0"/>
+            <Separator/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Column="0" Grid.Row="0" Text="Style:" Margin="0,10,0,0"/>
+                <ComboBox x:Name="cmbCoverStyles" Grid.Column="1" Grid.Row="0"
+                        DisplayMemberPath="Value"
+                        SelectedValuePath="Key"
+                        SelectedValue="{Binding CoverStyle}" Margin="10,10,0,0" />
 
-        <TextBlock Text="Cover adult content:" Margin="0,10,0,0"/>
-        <ComboBox x:Name="cmbNsfw"
-            DisplayMemberPath="Value"
-            SelectedValuePath="Key"
-            SelectedValue="{Binding SNsfw}" Margin="0,10,0,0"/>
+                <TextBlock Grid.Column="0" Grid.Row="1" Text="Dimension:" Margin="0,10,0,0"/>
+                <ComboBox x:Name="cmbCoverDimensions" Grid.Column="1" Grid.Row="1"
+                        DisplayMemberPath="Value"
+                        SelectedValuePath="Key"
+                        SelectedValue="{Binding CoverDimension}" Margin="10,10,0,0"/>
 
-        <TextBlock Text="Cover humor:" Margin="0,10,0,0"/>
-        <ComboBox x:Name="cmbHumor"
-            DisplayMemberPath="Value"
-            SelectedValuePath="Key"
-            SelectedValue="{Binding SHumor}" Margin="0,10,0,0"/>
+                <TextBlock Grid.Column="0" Grid.Row="2" Text="Adult content:" Margin="0,10,0,0"/>
+                <ComboBox x:Name="cmbCoverNsfw" Grid.Column="1" Grid.Row="2"
+                        DisplayMemberPath="Value"
+                        SelectedValuePath="Key"
+                        SelectedValue="{Binding CoverNsfw}" Margin="10,10,0,0"/>
 
-        <TextBlock Text="Asset to download for game icons:" Margin="0,10,0,0"/>
-        <ComboBox x:Name="cmbIconAssetSelection"
-            DisplayMemberPath="Value"
-            SelectedValuePath="Key"
-            SelectedValue="{Binding SIconAssetSelection}" Margin="0,10,0,0"/>
-    </StackPanel>
+                <TextBlock Grid.Column="0" Grid.Row="3" Text="Humor:" Margin="0,10,0,0"/>
+                <ComboBox x:Name="cmbCoverHumor" Grid.Column="1" Grid.Row="3"
+                        DisplayMemberPath="Value"
+                        SelectedValuePath="Key"
+                        SelectedValue="{Binding CoverHumor}" Margin="10,10,0,0"/>
+            </Grid>
+
+            <Label Content="Background Image settings" Margin="0,15,0,0"/>
+            <Separator/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Column="0" Grid.Row="0" Text="Style:" Margin="0,10,0,0"/>
+                <ComboBox x:Name="cmbBackgroundStyles" Grid.Column="1" Grid.Row="0"
+                        DisplayMemberPath="Value"
+                        SelectedValuePath="Key"
+                        SelectedValue="{Binding BackgroundStyle}" Margin="10,10,0,0" />
+
+                <TextBlock Grid.Column="0" Grid.Row="1" Text="Dimension:" Margin="0,10,0,0"/>
+                <ComboBox x:Name="cmbBackgroundDimensions" Grid.Column="1" Grid.Row="1"
+                        DisplayMemberPath="Value"
+                        SelectedValuePath="Key"
+                        SelectedValue="{Binding BackgroundDimension}" Margin="10,10,0,0"/>
+
+                <TextBlock Grid.Column="0" Grid.Row="2" Text="Adult content:" Margin="0,10,0,0"/>
+                <ComboBox x:Name="cmbBackgroundNsfw" Grid.Column="1" Grid.Row="2"
+                        DisplayMemberPath="Value"
+                        SelectedValuePath="Key"
+                        SelectedValue="{Binding BackgroundNsfw}" Margin="10,10,0,0"/>
+
+                <TextBlock Grid.Column="0" Grid.Row="3" Text="Humor:" Margin="0,10,0,0"/>
+                <ComboBox x:Name="cmbBackgroundHumor" Grid.Column="1" Grid.Row="3"
+                        DisplayMemberPath="Value"
+                        SelectedValuePath="Key"
+                        SelectedValue="{Binding BackgroundHumor}" Margin="10,10,0,0"/>
+            </Grid>
+
+            <Label Content="Icon settings" Margin="0,15,0,0"/>
+            <Separator/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Column="0" Grid.Row="0" Text="Asset:" Margin="0,10,0,0"/>
+                <ComboBox x:Name="cmbIconAssetSelection" Grid.Column="1" Grid.Row="0"
+                        DisplayMemberPath="Value"
+                        SelectedValuePath="Key"
+                        SelectedValue="{Binding IconAssetSelection}" Margin="10,10,0,0"/>
+
+                <TextBlock Grid.Column="0" Grid.Row="1" Text="Adult content:" Margin="0,10,0,0"/>
+                <ComboBox x:Name="cmbIconNsfw" Grid.Column="1" Grid.Row="1"
+                        DisplayMemberPath="Value"
+                        SelectedValuePath="Key"
+                        SelectedValue="{Binding IconNsfw}" Margin="10,10,0,0"/>
+
+                <TextBlock Grid.Column="0" Grid.Row="2" Text="Humor:" Margin="0,10,0,0"/>
+                <ComboBox x:Name="cmbIconHumor" Grid.Column="1" Grid.Row="2"
+                        DisplayMemberPath="Value"
+                        SelectedValuePath="Key"
+                        SelectedValue="{Binding IconHumor}" Margin="10,10,0,0"/>
+            </Grid>
+            
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>

@@ -13,11 +13,17 @@ namespace SGDBMetadata
         private readonly SGDBMetadata plugin;
 
         public string ApiKey { get; set; } = string.Empty;
-        public string SDimension { get; set; } = "600x900";
-        public string SStyle { get; set; } = "alternate";
-        public string SNsfw { get; set; } = "false";
-        public string SHumor { get; set; } = "false";
-        public string SIconAssetSelection { get; set; } = "icons";
+        public string CoverStyle { get; set; } = "any";
+        public string CoverDimension { get; set; } = "600x900";
+        public string CoverNsfw { get; set; } = "false";
+        public string CoverHumor { get; set; } = "false";
+        public string BackgroundStyle { get; set; } = "any";
+        public string BackgroundDimension { get; set; } = "any";
+        public string BackgroundNsfw { get; set; } = "false";
+        public string BackgroundHumor { get; set; } = "false";
+        public string IconAssetSelection { get; set; } = "icons";
+        public string IconNsfw { get; set; } = "false";
+        public string IconHumor { get; set; } = "false";
 
         // Playnite serializes settings object to a JSON object and saves it as text file.
         // If you want to exclude some property from being saved then use `JsonIgnore` ignore attribute.
@@ -40,18 +46,24 @@ namespace SGDBMetadata
             if (savedSettings != null)
             {
                 var logger = LogManager.GetLogger();
-                logger.Info("saved settings");
-                logger.Info(savedSettings.SDimension);
-                logger.Info(savedSettings.SStyle);
-                logger.Info(savedSettings.SNsfw);
-                logger.Info(savedSettings.SHumor);
-                logger.Info(savedSettings.SIconAssetSelection);
                 ApiKey = savedSettings.ApiKey;
-                SDimension = savedSettings.SDimension;
-                SStyle = savedSettings.SStyle;
-                SNsfw = savedSettings.SNsfw;
-                SHumor = savedSettings.SHumor;
-                SIconAssetSelection = savedSettings.SIconAssetSelection;
+
+                // Cover settings
+                CoverStyle = savedSettings.CoverStyle;
+                CoverDimension = savedSettings.CoverDimension;
+                CoverNsfw = savedSettings.CoverNsfw;
+                CoverHumor = savedSettings.CoverHumor;
+
+                // Background Image settings
+                BackgroundStyle = savedSettings.BackgroundStyle;
+                BackgroundDimension = savedSettings.BackgroundDimension;
+                BackgroundNsfw = savedSettings.BackgroundNsfw;
+                BackgroundHumor = savedSettings.BackgroundHumor;
+
+                // Icon settings
+                IconAssetSelection = savedSettings.IconAssetSelection;
+                IconNsfw = savedSettings.IconNsfw;
+                IconHumor = savedSettings.IconHumor;
             }
         }
 

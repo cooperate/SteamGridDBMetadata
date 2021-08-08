@@ -33,7 +33,7 @@ namespace SGDBMetadata
         {
             this.options = options;
             this.plugin = plugin;
-            this.iconAssetSelection = settings.SIconAssetSelection;
+            this.iconAssetSelection = settings.IconAssetSelection;
             services = new SgdbServiceClient(settings);
             var logger = LogManager.GetLogger();
             logger.Info("SGDB Initialized");

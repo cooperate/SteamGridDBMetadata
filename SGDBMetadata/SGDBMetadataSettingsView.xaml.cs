@@ -20,7 +20,35 @@ namespace SGDBMetadata
          public SGDBMetadataSettingsView()
         {
             InitializeComponent();
-            cmbDimensions.ItemsSource = new Dictionary<string, string>
+
+            // Generic
+            var cmbGenericNsfw = new Dictionary<string, string>
+            {
+                { "any", "Any" },
+                { "false", "Only get assets not tagged as adult content" },
+                { "true", "Only get assets tagged as adult content" },
+            };
+
+            var cmbGenericHumor = new Dictionary<string, string>
+            {
+                { "any", "Any" },
+                { "false", "Only get assets not tagged as humor" },
+                { "true", "Only get assets tagged as humor" },
+            };
+
+
+            // Cover items sources
+            cmbCoverStyles.ItemsSource = new Dictionary<string, string>
+            {
+                { "any", "Any" },
+                { "alternate", "Alternate" },
+                { "blurred", "Blurred" },
+                { "white_logo", "White Logo" },
+                { "material", "Material" },
+                { "no_logo", "No Logo" }
+            };
+
+            cmbCoverDimensions.ItemsSource = new Dictionary<string, string>
             {
                 { "any", "Any" },
                 { "460x215", "460x215" },
@@ -31,9 +59,12 @@ namespace SGDBMetadata
                 { "512x512", "512x512" },
                 { "1024x1024", "1024x1024" }
             };
-            cmbDimensions.SelectedValue = "any";
 
-            cmbStyles.ItemsSource = new Dictionary<string, string>
+            cmbCoverNsfw.ItemsSource = cmbGenericNsfw;
+            cmbCoverHumor.ItemsSource = cmbGenericHumor;
+
+            // Background Image items sources
+            cmbBackgroundStyles.ItemsSource = new Dictionary<string, string>
             {
                 { "any", "Any" },
                 { "alternate", "Alternate" },
@@ -42,30 +73,26 @@ namespace SGDBMetadata
                 { "material", "Material" },
                 { "no_logo", "No Logo" }
             };
-            cmbStyles.SelectedValue = "any";
-
-            cmbNsfw.ItemsSource = new Dictionary<string, string>
+            cmbBackgroundDimensions.ItemsSource = new Dictionary<string, string>
             {
                 { "any", "Any" },
-                { "false", "Only get assets not tagged as adult content" },
-                { "true", "Only get assets tagged as adult content" },
+                { "1920x620", "1920x620" },
+                { "3840x1240",  "3840x1240" },
+                { "1600x650", "1600x650" }
             };
-            cmbNsfw.SelectedValue = "any";
 
-            cmbHumor.ItemsSource = new Dictionary<string, string>
-            {
-                { "any", "Any" },
-                { "false", "Only get assets not tagged as humor" },
-                { "true", "Only get assets tagged as humor" },
-            };
-            cmbHumor.SelectedValue = "any";
+            cmbBackgroundNsfw.ItemsSource = cmbGenericNsfw;
+            cmbBackgroundHumor.ItemsSource = cmbGenericHumor;
 
+            // Icon items sources
             cmbIconAssetSelection.ItemsSource = new Dictionary<string, string>
             {
                 { "icons", "Icons" },
                 { "logos", "Logos" },
             };
-            cmbHumor.SelectedValue = "icons";
+
+            cmbIconNsfw.ItemsSource = cmbGenericNsfw;
+            cmbIconHumor.ItemsSource = cmbGenericHumor;
         }
     }
 }
