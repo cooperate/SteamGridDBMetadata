@@ -29,12 +29,12 @@ namespace SGDBMetadata
                 return availableFields;
             }
         }
-        public SGDBMetadataProvider(MetadataRequestOptions options, SGDBMetadata plugin, string apiKey, string dimension, string style, string nsfw, string humor, string iconAssetSelection)
+        public SGDBMetadataProvider(MetadataRequestOptions options, SGDBMetadata plugin, SGDBMetadataSettings settings)
         {
             this.options = options;
             this.plugin = plugin;
-            this.iconAssetSelection = iconAssetSelection;
-            services = new SgdbServiceClient(apiKey, dimension, style, nsfw, humor);
+            this.iconAssetSelection = settings.SIconAssetSelection;
+            services = new SgdbServiceClient(settings);
             var logger = LogManager.GetLogger();
             logger.Info("SGDB Initialized");
         }

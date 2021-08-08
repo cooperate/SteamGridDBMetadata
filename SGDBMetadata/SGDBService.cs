@@ -13,22 +13,16 @@ namespace SGDBMetadata
 {
     public class SgdbServiceClient
     {
-        private string baseUrl = "https://www.steamgriddb.com/api/v2/";
+        private readonly string baseUrl = "https://www.steamgriddb.com/api/v2/";
 
         private RestClient client;
-        private string dimension;
-        private string style;
-        private string nsfw;
-        private string humor;
+        private readonly SGDBMetadataSettings settings;
 
-        public SgdbServiceClient(string bearerToken, string dimension, string style, string nsfw, string humor)
+        public SgdbServiceClient(SGDBMetadataSettings settings)
         {
             client = new RestClient(baseUrl);
-            client.Authenticator = new JwtAuthenticator(bearerToken);
-            this.dimension = dimension;
-            this.style = style;
-            this.nsfw = nsfw;
-            this.humor = humor;
+            client.Authenticator = new JwtAuthenticator(settings.ApiKey);
+            this.settings = settings;
         }
 
         public RestClient RestClient { get; set; }
@@ -65,22 +59,11 @@ namespace SGDBMetadata
             var request = new RestRequest("grids/{platform}/{gameId}", Method.GET);
             request.AddParameter("platform", platform, ParameterType.UrlSegment);
             request.AddParameter("gameId", gameId, ParameterType.UrlSegment);
-            if (!string.IsNullOrEmpty(dimension) && dimension != "any")
-            {
-                request.AddParameter("dimensions", dimension, ParameterType.GetOrPost);
-            }
-            if (!string.IsNullOrEmpty(style) && style != "any")
-            {
-                request.AddParameter("styles", style, ParameterType.GetOrPost);
-            }
-            if (!string.IsNullOrEmpty(nsfw))
-            {
-                request.AddParameter("nsfw", nsfw, ParameterType.GetOrPost);
-            }
-            if (!string.IsNullOrEmpty(humor))
-            {
-                request.AddParameter("humor", humor, ParameterType.GetOrPost);
-            }
+            request.AddParameter("dimensions", settings.SDimension, ParameterType.GetOrPost);
+            request.AddParameter("styles", settings.SStyle, ParameterType.GetOrPost);
+            request.AddParameter("nsfw", settings.SNsfw, ParameterType.GetOrPost);
+            request.AddParameter("humor", settings.SHumor, ParameterType.GetOrPost);
+
             return Execute<ResponseModel<GridModel>>(request);
         }
 
@@ -88,22 +71,10 @@ namespace SGDBMetadata
         {
             var request = new RestRequest("grids/game/{id}", Method.GET);
             request.AddParameter("id", gameId, ParameterType.UrlSegment);
-            if (!string.IsNullOrEmpty(dimension) && dimension != "any")
-            {
-                request.AddParameter("dimensions", dimension, ParameterType.GetOrPost);
-            }
-            if (!string.IsNullOrEmpty(style) && style != "any")
-            {
-                request.AddParameter("styles", style, ParameterType.GetOrPost);
-            }
-            if (!string.IsNullOrEmpty(nsfw))
-            {
-                request.AddParameter("nsfw", nsfw, ParameterType.GetOrPost);
-            }
-            if (!string.IsNullOrEmpty(humor))
-            {
-                request.AddParameter("humor", humor, ParameterType.GetOrPost);
-            }
+            request.AddParameter("dimensions", settings.SDimension, ParameterType.GetOrPost);
+            request.AddParameter("styles", settings.SStyle, ParameterType.GetOrPost);
+            request.AddParameter("nsfw", settings.SNsfw, ParameterType.GetOrPost);
+            request.AddParameter("humor", settings.SHumor, ParameterType.GetOrPost);
             return Execute<ResponseModel<GridModel>>(request);
         }
         
@@ -113,15 +84,10 @@ namespace SGDBMetadata
             logger.Info("getSGDBGameHero");
             var request = new RestRequest("/heroes/game/{id}", Method.GET);
             request.AddParameter("id", gameId, ParameterType.UrlSegment);
-            if (!string.IsNullOrEmpty(nsfw))
-            {
-                request.AddParameter("nsfw", nsfw, ParameterType.GetOrPost);
-            }
-            if (!string.IsNullOrEmpty(humor))
-            {
-                request.AddParameter("humor", humor, ParameterType.GetOrPost);
-            }
-            return this.Execute<ResponseModel<HeroModel>>(request);
+            request.AddParameter("nsfw", settings.SNsfw, ParameterType.GetOrPost);
+            request.AddParameter("humor", settings.SHumor, ParameterType.GetOrPost);
+
+            return Execute<ResponseModel<HeroModel>>(request);
         }
 
         public ResponseModel<HeroModel> getSGDBGameHeroByAppId(string platform, string gameId)
@@ -131,14 +97,9 @@ namespace SGDBMetadata
             var request = new RestRequest("heroes/{platform}/{gameId}", Method.GET);
             request.AddParameter("platform", platform, ParameterType.UrlSegment);
             request.AddParameter("gameId", gameId, ParameterType.UrlSegment);
-            if (!string.IsNullOrEmpty(nsfw))
-            {
-                request.AddParameter("nsfw", nsfw, ParameterType.GetOrPost);
-            }
-            if (!string.IsNullOrEmpty(humor))
-            {
-                request.AddParameter("humor", humor, ParameterType.GetOrPost);
-            }
+            request.AddParameter("nsfw", settings.SNsfw, ParameterType.GetOrPost);
+            request.AddParameter("humor", settings.SHumor, ParameterType.GetOrPost);
+
             return Execute<ResponseModel<HeroModel>>(request);
         }
 
@@ -146,14 +107,9 @@ namespace SGDBMetadata
         {
             var request = new RestRequest("logos/game/{gameId}", Method.GET);
             request.AddParameter("gameId", gameId, ParameterType.UrlSegment);
-            if (!string.IsNullOrEmpty(nsfw))
-            {
-                request.AddParameter("nsfw", nsfw, ParameterType.GetOrPost);
-            }
-            if (!string.IsNullOrEmpty(humor))
-            {
-                request.AddParameter("humor", humor, ParameterType.GetOrPost);
-            }
+            request.AddParameter("nsfw", settings.SNsfw, ParameterType.GetOrPost);
+            request.AddParameter("humor", settings.SHumor, ParameterType.GetOrPost);
+
             return Execute<ResponseModel<MediaModel>>(request);
         }
 
@@ -162,14 +118,9 @@ namespace SGDBMetadata
             var request = new RestRequest("logos/{platform}/{gameId}", Method.GET);
             request.AddParameter("platform", platform, ParameterType.UrlSegment);
             request.AddParameter("gameId", gameId, ParameterType.UrlSegment);
-            if (!string.IsNullOrEmpty(nsfw))
-            {
-                request.AddParameter("nsfw", nsfw, ParameterType.GetOrPost);
-            }
-            if (!string.IsNullOrEmpty(humor))
-            {
-                request.AddParameter("humor", humor, ParameterType.GetOrPost);
-            }
+            request.AddParameter("nsfw", settings.SNsfw, ParameterType.GetOrPost);
+            request.AddParameter("humor", settings.SHumor, ParameterType.GetOrPost);
+
             return Execute<ResponseModel<MediaModel>>(request);
         }
 
@@ -177,14 +128,9 @@ namespace SGDBMetadata
         {
             var request = new RestRequest("icons/game/{gameId}", Method.GET);
             request.AddParameter("gameId", gameId, ParameterType.UrlSegment);
-            if (!string.IsNullOrEmpty(nsfw))
-            {
-                request.AddParameter("nsfw", nsfw, ParameterType.GetOrPost);
-            }
-            if (!string.IsNullOrEmpty(humor))
-            {
-                request.AddParameter("humor", humor, ParameterType.GetOrPost);
-            }
+            request.AddParameter("nsfw", settings.SNsfw, ParameterType.GetOrPost);
+            request.AddParameter("humor", settings.SHumor, ParameterType.GetOrPost);
+
             return Execute<ResponseModel<MediaModel>>(request);
         }
 
@@ -193,14 +139,9 @@ namespace SGDBMetadata
             var request = new RestRequest("icons/{platform}/{gameId}", Method.GET);
             request.AddParameter("platform", platform, ParameterType.UrlSegment);
             request.AddParameter("gameId", gameId, ParameterType.UrlSegment);
-            if (!string.IsNullOrEmpty(nsfw))
-            {
-                request.AddParameter("nsfw", nsfw, ParameterType.GetOrPost);
-            }
-            if (!string.IsNullOrEmpty(humor))
-            {
-                request.AddParameter("humor", humor, ParameterType.GetOrPost);
-            }
+            request.AddParameter("nsfw", settings.SNsfw, ParameterType.GetOrPost);
+            request.AddParameter("humor", settings.SHumor, ParameterType.GetOrPost);
+
             return Execute<ResponseModel<MediaModel>>(request);
         }
 
