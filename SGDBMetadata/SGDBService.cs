@@ -185,7 +185,7 @@ namespace SGDBMetadata
             }
             else
             {
-                var sgdbException = new Exception("Service failure.");
+                var sgdbException = new Exception("Service failure during getGameSGDBFuzzySearch");
                 throw sgdbException;
             }
         }
@@ -202,7 +202,7 @@ namespace SGDBMetadata
             }
             else
             {
-                var sgdbException = new Exception("Service failure.");
+                var sgdbException = new Exception("Service failure during getGameListSGDB");
                 throw sgdbException;
             }
         }
@@ -229,7 +229,7 @@ namespace SGDBMetadata
             return "bad path";
         }
 
-        public List<GridModel> getCoverImages(string gameName, string platform, string gameId)
+        public List<GridModel> getCoverImages(GenericItemOption searchSelection, string platform, string gameId)
         {
             if (platform != null && gameId != null)
             {
@@ -244,14 +244,13 @@ namespace SGDBMetadata
                 }
                 else
                 {
-                    var sgdbException = new Exception("Service failure.");
+                    var sgdbException = new Exception("Service failure during getCoverImages.");
                     throw sgdbException;
                 }
             }
-            else
+            else if (searchSelection != null)
             {
-                SearchModel gameCoverSearch = getGameSGDBFuzzySearch(gameName);
-                ResponseModel<GridModel> grid = getSGDBGameGridCover(gameCoverSearch.id);
+                ResponseModel<GridModel> grid = getSGDBGameGridCover(int.Parse(searchSelection.Description));
                 if (grid.success && grid.data.Count > 0)
                 {
                     return grid.data;
@@ -262,9 +261,13 @@ namespace SGDBMetadata
                 }
                 else
                 {
-                    var sgdbException = new Exception("Service failure.");
+                    var sgdbException = new Exception("Service failure during getCoverImages.");
                     throw sgdbException;
                 }
+            }
+            else
+            {
+                return null;
             }
         }
 
@@ -295,11 +298,11 @@ namespace SGDBMetadata
             return "bad path";
         }
 
-        public List<HeroModel> getHeroImages(string gameName, string platform, string gameId)
+        public List<HeroModel> getHeroImages(GenericItemOption searchSelection, string platform, string gameId)
         {
             var logger = LogManager.GetLogger();
             logger.Info("getHeroImages");
-            logger.Info(gameName);
+            logger.Info(searchSelection?.Name);
             logger.Info(platform);
             logger.Info(gameId);
             if (platform != null && gameId != null)
@@ -315,14 +318,13 @@ namespace SGDBMetadata
                 }
                 else
                 {
-                    var sgdbException = new Exception("Service failure.");
+                    var sgdbException = new Exception("Service failure during getHeroImages");
                     throw sgdbException;
                 }
             }
-            else
+            else if (searchSelection != null)
             {
-                SearchModel gameHeroSearch = getGameSGDBFuzzySearch(gameName);
-                ResponseModel<HeroModel> hero = getSGDBGameHero(gameHeroSearch.id);
+                ResponseModel<HeroModel> hero = getSGDBGameHero(int.Parse(searchSelection.Description));
                 if (hero.success && hero.data.Count > 0)
                 {
                     return hero.data;
@@ -333,9 +335,13 @@ namespace SGDBMetadata
                 }
                 else
                 {
-                    var sgdbException = new Exception("Service failure.");
+                    var sgdbException = new Exception("Service failure during getHeroImages");
                     throw sgdbException;
                 }
+            }
+            else
+            {
+                return null;
             }
         }
 
@@ -361,7 +367,7 @@ namespace SGDBMetadata
             return "bad path";
         }
 
-        public List<MediaModel> getLogoImages(string gameName, string platform, string gameId)
+        public List<MediaModel> getLogoImages(GenericItemOption searchSelection, string platform, string gameId)
         {
             if (platform != null && gameId != null)
             {
@@ -376,14 +382,13 @@ namespace SGDBMetadata
                 }
                 else
                 {
-                    var sgdbException = new Exception("Service failure.");
+                    var sgdbException = new Exception("Service failure during getLogoImages");
                     throw sgdbException;
                 }
             }
-            else
+            else if (searchSelection != null)
             {
-                SearchModel gameLogoSearch = getGameSGDBFuzzySearch(gameName);
-                ResponseModel<MediaModel> logo = getSGDBGameLogo(gameLogoSearch.id);
+                ResponseModel<MediaModel> logo = getSGDBGameLogo(int.Parse(searchSelection.Description));
                 if (logo.success && logo.data.Count > 0)
                 {
                     return logo.data;
@@ -394,9 +399,13 @@ namespace SGDBMetadata
                 }
                 else
                 {
-                    var sgdbException = new Exception("Service failure.");
+                    var sgdbException = new Exception("Service failure during getLogoImages");
                     throw sgdbException;
                 }
+            }
+            else
+            {
+                return null;
             }
         }
 
@@ -422,7 +431,7 @@ namespace SGDBMetadata
             return "bad path";
         }
 
-        public List<MediaModel> getIconImages(string gameName, string platform, string gameId)
+        public List<MediaModel> getIconImages(GenericItemOption searchSelection, string platform, string gameId)
         {
             if (platform != null && gameId != null)
             {
@@ -437,14 +446,13 @@ namespace SGDBMetadata
                 }
                 else
                 {
-                    var sgdbException = new Exception("Service failure.");
+                    var sgdbException = new Exception("Service failure during getIconImages");
                     throw sgdbException;
                 }
             }
-            else
+            else if (searchSelection != null)
             {
-                SearchModel gameIconSearch = getGameSGDBFuzzySearch(gameName);
-                ResponseModel<MediaModel> icon = getSGDBGameIcon(gameIconSearch.id);
+                ResponseModel<MediaModel> icon = getSGDBGameIcon(int.Parse(searchSelection.Description));
                 if (icon.success && icon.data.Count > 0)
                 {
                     return icon.data;
@@ -455,9 +463,13 @@ namespace SGDBMetadata
                 }
                 else
                 {
-                    var sgdbException = new Exception("Service failure.");
+                    var sgdbException = new Exception("Service failure during getIconImages");
                     throw sgdbException;
                 }
+            }
+            else
+            {
+                return null;
             }
         }
     }

@@ -87,7 +87,7 @@ namespace SGDBMetadata
                 {
                     if (string.IsNullOrEmpty(gamePlatformEnum) == false || searchSelection != null)
                     {
-                        var covers = services.getCoverImages(searchSelection?.Name ?? null, gamePlatformEnum ?? null, options.GameData.GameId ?? null);
+                        var covers = services.getCoverImages(searchSelection ?? null, gamePlatformEnum ?? null, options.GameData.GameId ?? null);
                         dynamic selection = null;
                         if (covers != null)
                         {
@@ -134,7 +134,7 @@ namespace SGDBMetadata
                 {
                     if (string.IsNullOrEmpty(gamePlatformEnum) == false || searchSelection != null)
                     {
-                        var heroes = services.getHeroImages(searchSelection?.Name ?? null, gamePlatformEnum ?? null, options.GameData.GameId ?? null);
+                        var heroes = services.getHeroImages(searchSelection ?? null, gamePlatformEnum ?? null, options.GameData.GameId ?? null);
                         dynamic selection = null;
                         if (heroes != null)
                         {
@@ -193,11 +193,11 @@ namespace SGDBMetadata
                         List<MediaModel> icons;
                         if (iconAssetSelection == "logos")
                         {
-                            icons = services.getLogoImages(searchSelection?.Name ?? null, gamePlatformEnum ?? null, options.GameData.GameId ?? null);
+                            icons = services.getLogoImages(searchSelection ?? null, gamePlatformEnum ?? null, options.GameData.GameId ?? null);
                         }
                         else
                         {
-                            icons = services.getIconImages(searchSelection?.Name ?? null, gamePlatformEnum ?? null, options.GameData.GameId ?? null);
+                            icons = services.getIconImages(searchSelection ?? null, gamePlatformEnum ?? null, options.GameData.GameId ?? null);
                         }
                         dynamic selection = null;
                         if (icons != null)
