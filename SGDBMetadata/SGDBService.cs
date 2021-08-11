@@ -61,7 +61,7 @@ namespace SGDBMetadata
             request.AddParameter("gameId", gameId, ParameterType.UrlSegment);
             if (settings.CoverStyle != "any")
             {
-                request.AddParameter("dimensions", settings.CoverStyle, ParameterType.GetOrPost);
+                request.AddParameter("styles", settings.CoverStyle, ParameterType.GetOrPost);
             }
             if (settings.CoverDimension != "any")
             {
@@ -79,7 +79,7 @@ namespace SGDBMetadata
             request.AddParameter("id", gameId, ParameterType.UrlSegment);
             if (settings.CoverStyle != "any")
             {
-                request.AddParameter("dimensions", settings.CoverStyle, ParameterType.GetOrPost);
+                request.AddParameter("styles", settings.CoverStyle, ParameterType.GetOrPost);
             }
             if (settings.CoverDimension != "any")
             {
@@ -98,7 +98,7 @@ namespace SGDBMetadata
             request.AddParameter("id", gameId, ParameterType.UrlSegment);
             if (settings.BackgroundStyle != "any")
             {
-                request.AddParameter("dimensions", settings.BackgroundStyle, ParameterType.GetOrPost);
+                request.AddParameter("styles", settings.BackgroundStyle, ParameterType.GetOrPost);
             }
             if (settings.BackgroundDimension != "any")
             {
@@ -119,7 +119,7 @@ namespace SGDBMetadata
             request.AddParameter("gameId", gameId, ParameterType.UrlSegment);
             if (settings.BackgroundStyle != "any")
             {
-                request.AddParameter("dimensions", settings.BackgroundStyle, ParameterType.GetOrPost);
+                request.AddParameter("styles", settings.BackgroundStyle, ParameterType.GetOrPost);
             }
             if (settings.BackgroundDimension != "any")
             {
