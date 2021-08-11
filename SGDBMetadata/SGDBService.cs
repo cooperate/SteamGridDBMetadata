@@ -207,7 +207,7 @@ namespace SGDBMetadata
             }
         }
 
-        public string getCoverImageUrl(string gameName, string platform, string gameId)
+        public string getCoverImageUrl(SearchModel gameSearchItem, string platform, string gameId)
         {
             if (platform != null && gameId != null)
             {
@@ -217,10 +217,9 @@ namespace SGDBMetadata
                     return grid.data[0].url;
                 }
             }
-            else
+            else if (gameSearchItem != null)
             {
-                SearchModel gameCoverSearch = getGameSGDBFuzzySearch(gameName);
-                ResponseModel<GridModel> grid = getSGDBGameGridCover(gameCoverSearch.id);
+                ResponseModel<GridModel> grid = getSGDBGameGridCover(gameSearchItem.id);
                 if (grid.success && grid.data.Count > 0)
                 {
                     return grid.data[0].url;
@@ -271,11 +270,11 @@ namespace SGDBMetadata
             }
         }
 
-        public string getHeroImageUrl(string gameName, string platform, string gameId)
+        public string getHeroImageUrl(SearchModel gameSearchItem, string platform, string gameId)
         {
             var logger = LogManager.GetLogger();
             logger.Info("getHeroImageUrl");
-            logger.Info(gameName);
+            logger.Info(gameSearchItem?.name);
             logger.Info(platform);
             logger.Info(gameId);
             if (platform != null && gameId != null)
@@ -286,10 +285,9 @@ namespace SGDBMetadata
                     return hero.data[0].url;
                 }
             }
-            else
+            else if (gameSearchItem != null)
             {
-                SearchModel gameHeroSearch = getGameSGDBFuzzySearch(gameName);
-                ResponseModel<HeroModel> hero = getSGDBGameHero(gameHeroSearch.id);
+                ResponseModel<HeroModel> hero = getSGDBGameHero(gameSearchItem.id);
                 if (hero.success && hero.data.Count > 0)
                 {
                     return hero.data[0].url;
@@ -345,7 +343,7 @@ namespace SGDBMetadata
             }
         }
 
-        public string getLogoImageUrl(string gameName, string platform, string gameId)
+        public string getLogoImageUrl(SearchModel gameSearchItem, string platform, string gameId)
         {
             if (platform != null && gameId != null)
             {
@@ -355,10 +353,9 @@ namespace SGDBMetadata
                     return logo.data[0].url;
                 }
             }
-            else
+            else if (gameSearchItem != null)
             {
-                SearchModel gameLogoSearch = getGameSGDBFuzzySearch(gameName);
-                ResponseModel<MediaModel> logo = getSGDBGameLogo(gameLogoSearch.id);
+                ResponseModel<MediaModel> logo = getSGDBGameLogo(gameSearchItem.id);
                 if (logo.success && logo.data.Count > 0)
                 {
                     return logo.data[0].url;
@@ -409,7 +406,7 @@ namespace SGDBMetadata
             }
         }
 
-        public string getIconImageUrl(string gameName, string platform, string gameId)
+        public string getIconImageUrl(SearchModel gameSearchItem, string platform, string gameId)
         {
             if (platform != null && gameId != null)
             {
@@ -419,10 +416,9 @@ namespace SGDBMetadata
                     return icon.data[0].url;
                 }
             }
-            else
+            else if (gameSearchItem != null)
             {
-                SearchModel gameIconSearch = getGameSGDBFuzzySearch(gameName);
-                ResponseModel<MediaModel> icon = getSGDBGameIcon(gameIconSearch.id);
+                ResponseModel<MediaModel> icon = getSGDBGameIcon(gameSearchItem.id);
                 if (icon.success && icon.data.Count > 0)
                 {
                     return icon.data[0].url;

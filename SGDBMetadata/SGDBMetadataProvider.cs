@@ -13,6 +13,7 @@ namespace SGDBMetadata
         private readonly SGDBMetadata plugin;
         private SgdbServiceClient services;
         private GenericItemOption searchSelection;
+        private SearchModel gameSearchItem;
         private string gamePlatformEnum;
         private List<MetadataField> availableFields;
         private string iconAssetSelection;
@@ -71,7 +72,7 @@ namespace SGDBMetadata
             logger.Info("GetCoverImage");
             if (options.IsBackgroundDownload)
             {
-                string gameUrl = services.getCoverImageUrl(options.GameData.Name, gamePlatformEnum ?? null, options.GameData.GameId ?? null);
+                string gameUrl = services.getCoverImageUrl(gameSearchItem ?? null, gamePlatformEnum ?? null, options.GameData.GameId ?? null);
                 if (gameUrl == "bad path")
                 {
                     return base.GetCoverImage();
@@ -118,7 +119,7 @@ namespace SGDBMetadata
         {
             if (options.IsBackgroundDownload)
             {
-                string gameUrl = services.getHeroImageUrl(options.GameData.Name, gamePlatformEnum ?? null, options.GameData.GameId ?? null);
+                string gameUrl = services.getHeroImageUrl(gameSearchItem ?? null, gamePlatformEnum ?? null, options.GameData.GameId ?? null);
                 if (gameUrl == "bad path")
                 {
                     return base.GetBackgroundImage();
@@ -169,11 +170,11 @@ namespace SGDBMetadata
                 string gameUrl;
                 if (iconAssetSelection == "logos")
                 {
-                    gameUrl = services.getLogoImageUrl(options.GameData.Name, gamePlatformEnum ?? null, options.GameData.GameId ?? null);
+                    gameUrl = services.getLogoImageUrl(gameSearchItem ?? null, gamePlatformEnum ?? null, options.GameData.GameId ?? null);
                 }
                 else
                 {
-                    gameUrl = services.getIconImageUrl(options.GameData.Name, gamePlatformEnum ?? null, options.GameData.GameId ?? null);
+                    gameUrl = services.getIconImageUrl(gameSearchItem ?? null, gamePlatformEnum ?? null, options.GameData.GameId ?? null);
                 }
                 if (gameUrl == "bad path")
                 {
@@ -261,20 +262,24 @@ namespace SGDBMetadata
 
         private void GetSgdbMetadata()
         {
-            convertPlayniteGamePluginIdToSGDBPlatformEnum(options.GameData.PluginId);
+            var logger = LogManager.GetLogger();
+            logger.Info("GetSgdbMetadata");
 
+            convertPlayniteGamePluginIdToSGDBPlatformEnum(options.GameData.PluginId);
             if (!options.IsBackgroundDownload)
             {
-                var logger = LogManager.GetLogger();
-                logger.Info("GetSgdbMetadata");
-
                 if (string.IsNullOrEmpty(gamePlatformEnum))
                 {
                     var gameList = new List<GenericItemOption>(services.getGameListSGDB(options.GameData.Name).Select(game => new GenericItemOption(game.name, game.id.ToString())));
                     GetGame(gameList, "Choose Game");
                 }
             }
+            else if (string.IsNullOrEmpty(gamePlatformEnum))
+            {
+                gameSearchItem = services.getGameSGDBFuzzySearch(options.GameData.Name);
+            }
         }
+
         private ImageFileOption GetCoverManually(List<GridModel> possibleCovers)
         {
             var selection = new List<ImageFileOption>();
