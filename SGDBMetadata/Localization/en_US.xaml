@@ -9,6 +9,8 @@
     <sys:String x:Key="LOCSteamGridDBMetadata_SettingDimensionLabel">Dimension:</sys:String>
     <sys:String x:Key="LOCSteamGridDBMetadata_SettingAdultContentLabel">Adult content:</sys:String>
     <sys:String x:Key="LOCSteamGridDBMetadata_SettingHumorContentLabel">Humor:</sys:String>
+
+    <sys:String x:Key="LOCSteamGridDBMetadata_SettingGetApiKeyButton">Get API Key</sys:String>
     
     <sys:String x:Key="LOCSteamGridDBMetadata_SettingGenericAny">Any</sys:String>
     <sys:String x:Key="LOCSteamGridDBMetadata_SettingGenericNotAdult">Only get assets not tagged as adult content</sys:String>

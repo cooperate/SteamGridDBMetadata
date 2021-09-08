@@ -7,8 +7,12 @@
              d:DesignHeight="400" d:DesignWidth="600">
     <ScrollViewer>
         <StackPanel Margin="20">
-            <TextBlock Text="{DynamicResource LOCSteamGridDBMetadata_SettingApiKey}"/>
-            <TextBox Text="{Binding Settings.ApiKey}" Margin="0,10,0,0" />
+            <DockPanel>
+                <TextBlock Text="{DynamicResource LOCSteamGridDBMetadata_SettingApiKey}" DockPanel.Dock="Left" VerticalAlignment="Center"/>
+                <Button Content="{DynamicResource LOCSteamGridDBMetadata_SettingGetApiKeyButton}" DockPanel.Dock="Right" VerticalAlignment="Center"
+                        Command="{Binding LoginCommand}" Margin="10,0,0,0"/>
+                <TextBox Name="AccountAccessCode" Text="{Binding Settings.ApiKey}" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            </DockPanel>
 
             <Label Content="{DynamicResource LOCSteamGridDBMetadata_SettingCoverLabel}" Margin="0,15,0,0"/>
             <Separator/>

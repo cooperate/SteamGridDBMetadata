@@ -92,5 +92,18 @@ namespace SGDBMetadata
             errors = new List<string>();
             return true;
         }
+
+        public RelayCommand<object> LoginCommand
+        {
+            get => new RelayCommand<object>((a) =>
+            {
+                Login();
+            });
+        }
+
+        private void Login()
+        {
+            System.Diagnostics.Process.Start(@"https://www.steamgriddb.com/profile/preferences/api");
+        }
     }
 }
