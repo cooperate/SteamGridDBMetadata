@@ -80,6 +80,7 @@
     <None Include="extension.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Manifests\Installer_Manifest.yaml" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
