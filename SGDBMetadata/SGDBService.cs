@@ -36,7 +36,7 @@ namespace SGDBMetadata
             var response = client.Execute(request);
             if (response.ErrorException != null)
             {
-                const string message = "Error retrieving response.  Check inner details for more info.";
+                const string message = "Error retrieving response. Check inner details for more info.";
                 var sgdbException = new Exception(message, response.ErrorException);
                 throw sgdbException;
             }

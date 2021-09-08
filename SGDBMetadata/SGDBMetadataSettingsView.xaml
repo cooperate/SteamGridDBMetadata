@@ -7,10 +7,10 @@
              d:DesignHeight="400" d:DesignWidth="600">
     <ScrollViewer>
         <StackPanel Margin="20">
-            <TextBlock Text="SteamGridDB API Key:"/>
+            <TextBlock Text="{DynamicResource LOCSteamGridDBMetadata_SettingApiKey}"/>
             <TextBox Text="{Binding Settings.ApiKey}" Margin="0,10,0,0" />
 
-            <Label Content="Cover settings" Margin="0,15,0,0"/>
+            <Label Content="{DynamicResource LOCSteamGridDBMetadata_SettingCoverLabel}" Margin="0,15,0,0"/>
             <Separator/>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -23,32 +23,32 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Column="0" Grid.Row="0" Text="Style:" Margin="0,10,0,0"/>
+                <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource LOCSteamGridDBMetadata_SettingStyleLabel}" Margin="0,11,0.2,31" Grid.RowSpan="2"/>
                 <ComboBox x:Name="cmbCoverStyles" Grid.Column="1" Grid.Row="0"
                         DisplayMemberPath="Value"
                         SelectedValuePath="Key"
                         SelectedValue="{Binding Settings.CoverStyle}" Margin="10,10,0,0" />
 
-                <TextBlock Grid.Column="0" Grid.Row="1" Text="Dimension:" Margin="0,10,0,0"/>
+                <TextBlock Grid.Column="0" Grid.Row="1" Text="{DynamicResource LOCSteamGridDBMetadata_SettingDimensionLabel}" Margin="0,10,0,0"/>
                 <ComboBox x:Name="cmbCoverDimensions" Grid.Column="1" Grid.Row="1"
                         DisplayMemberPath="Value"
                         SelectedValuePath="Key"
                         SelectedValue="{Binding Settings.CoverDimension}" Margin="10,10,0,0"/>
 
-                <TextBlock Grid.Column="0" Grid.Row="2" Text="Adult content:" Margin="0,10,0,0"/>
+                <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource LOCSteamGridDBMetadata_SettingAdultContentLabel}" Margin="0,10,0,0"/>
                 <ComboBox x:Name="cmbCoverNsfw" Grid.Column="1" Grid.Row="2"
                         DisplayMemberPath="Value"
                         SelectedValuePath="Key"
                         SelectedValue="{Binding Settings.CoverNsfw}" Margin="10,10,0,0"/>
 
-                <TextBlock Grid.Column="0" Grid.Row="3" Text="Humor:" Margin="0,10,0,0"/>
+                <TextBlock Grid.Column="0" Grid.Row="3" Text="{DynamicResource LOCSteamGridDBMetadata_SettingHumorContentLabel}" Margin="0,10,0,0"/>
                 <ComboBox x:Name="cmbCoverHumor" Grid.Column="1" Grid.Row="3"
                         DisplayMemberPath="Value"
                         SelectedValuePath="Key"
                         SelectedValue="{Binding Settings.CoverHumor}" Margin="10,10,0,0"/>
             </Grid>
 
-            <Label Content="Background Image settings" Margin="0,15,0,0"/>
+            <Label Content="{DynamicResource LOCSteamGridDBMetadata_SettingBackgroundLabel}" Margin="0,15,0,0"/>
             <Separator/>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -61,32 +61,32 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Column="0" Grid.Row="0" Text="Style:" Margin="0,10,0,0"/>
+                <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource LOCSteamGridDBMetadata_SettingStyleLabel}" Margin="0,10,0,0"/>
                 <ComboBox x:Name="cmbBackgroundStyles" Grid.Column="1" Grid.Row="0"
                         DisplayMemberPath="Value"
                         SelectedValuePath="Key"
                         SelectedValue="{Binding Settings.BackgroundStyle}" Margin="10,10,0,0" />
 
-                <TextBlock Grid.Column="0" Grid.Row="1" Text="Dimension:" Margin="0,10,0,0"/>
+                <TextBlock Grid.Column="0" Grid.Row="1" Text="{DynamicResource LOCSteamGridDBMetadata_SettingDimensionLabel}" Margin="0,10,0,0"/>
                 <ComboBox x:Name="cmbBackgroundDimensions" Grid.Column="1" Grid.Row="1"
                         DisplayMemberPath="Value"
                         SelectedValuePath="Key"
                         SelectedValue="{Binding Settings.BackgroundDimension}" Margin="10,10,0,0"/>
 
-                <TextBlock Grid.Column="0" Grid.Row="2" Text="Adult content:" Margin="0,10,0,0"/>
+                <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource LOCSteamGridDBMetadata_SettingAdultContentLabel}" Margin="0,10,0,0"/>
                 <ComboBox x:Name="cmbBackgroundNsfw" Grid.Column="1" Grid.Row="2"
                         DisplayMemberPath="Value"
                         SelectedValuePath="Key"
                         SelectedValue="{Binding Settings.BackgroundNsfw}" Margin="10,10,0,0"/>
 
-                <TextBlock Grid.Column="0" Grid.Row="3" Text="Humor:" Margin="0,10,0,0"/>
+                <TextBlock Grid.Column="0" Grid.Row="3" Text="{DynamicResource LOCSteamGridDBMetadata_SettingHumorContentLabel}" Margin="0,10,0,0"/>
                 <ComboBox x:Name="cmbBackgroundHumor" Grid.Column="1" Grid.Row="3"
                         DisplayMemberPath="Value"
                         SelectedValuePath="Key"
                         SelectedValue="{Binding Settings.BackgroundHumor}" Margin="10,10,0,0"/>
             </Grid>
 
-            <Label Content="Icon settings" Margin="0,15,0,0"/>
+            <Label Content="{DynamicResource LOCSteamGridDBMetadata_SettingIconLabel}" Margin="0,15,0,0"/>
             <Separator/>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -105,13 +105,13 @@
                         SelectedValuePath="Key"
                         SelectedValue="{Binding Settings.IconAssetSelection}" Margin="10,10,0,0"/>
 
-                <TextBlock Grid.Column="0" Grid.Row="1" Text="Adult content:" Margin="0,10,0,0"/>
+                <TextBlock Grid.Column="0" Grid.Row="1" Text="{DynamicResource LOCSteamGridDBMetadata_SettingAdultContentLabel}" Margin="0,10,0,0"/>
                 <ComboBox x:Name="cmbIconNsfw" Grid.Column="1" Grid.Row="1"
                         DisplayMemberPath="Value"
                         SelectedValuePath="Key"
                         SelectedValue="{Binding Settings.IconNsfw}" Margin="10,10,0,0"/>
 
-                <TextBlock Grid.Column="0" Grid.Row="2" Text="Humor:" Margin="0,10,0,0"/>
+                <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource LOCSteamGridDBMetadata_SettingHumorContentLabel}" Margin="0,10,0,0"/>
                 <ComboBox x:Name="cmbIconHumor" Grid.Column="1" Grid.Row="2"
                         DisplayMemberPath="Value"
                         SelectedValuePath="Key"

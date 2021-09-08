@@ -231,7 +231,7 @@ namespace SGDBMetadata
                 if (string.IsNullOrEmpty(gamePlatformEnum))
                 {
                     var gameList = new List<GenericItemOption>(services.getGameListSGDB(options.GameData.Name).Select(game => new GenericItemOption(game.name, game.id.ToString())));
-                    GetGame(gameList, "Choose Game");
+                    GetGame(gameList, ResourceProvider.GetString("LOCSteamGridDBMetadata_WindowTitleChooseGame"));
                 }
             }
             else if (string.IsNullOrEmpty(gamePlatformEnum))
@@ -250,7 +250,7 @@ namespace SGDBMetadata
             if (selection.Count > 0)
             {
                 return plugin.PlayniteApi.Dialogs.ChooseImageFile(
-                    selection, "Choose Cover");
+                    selection, ResourceProvider.GetString("LOCSteamGridDBMetadata_WindowTitleChooseCover"));
             }
             else
             {
@@ -268,7 +268,7 @@ namespace SGDBMetadata
             if (selection.Count > 0)
             {
                 return plugin.PlayniteApi.Dialogs.ChooseImageFile(
-                selection, "Choose Background");
+                selection, ResourceProvider.GetString("LOCSteamGridDBMetadata_WindowTitleChooseBackground"));
             }
             else
             {
@@ -291,7 +291,7 @@ namespace SGDBMetadata
             if (selection.Count > 0)
             {
                 return plugin.PlayniteApi.Dialogs.ChooseImageFile(
-                selection, "Choose Icon");
+                selection, ResourceProvider.GetString("LOCSteamGridDBMetadata_WindowTitleChooseIcon"));
             }
             else
             {

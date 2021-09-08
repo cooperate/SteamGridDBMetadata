@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Playnite.SDK;
 
 namespace SGDBMetadata
 {
@@ -24,33 +25,33 @@ namespace SGDBMetadata
             // Generic
             var cmbGenericNsfw = new Dictionary<string, string>
             {
-                { "any", "Any" },
-                { "false", "Only get assets not tagged as adult content" },
-                { "true", "Only get assets tagged as adult content" },
+                { "any", ResourceProvider.GetString("LOCSteamGridDBMetadata_SettingGenericAny") },
+                { "false", ResourceProvider.GetString("LOCSteamGridDBMetadata_SettingGenericNotAdult") },
+                { "true", ResourceProvider.GetString("LOCSteamGridDBMetadata_SettingGenericOnlyAdult") },
             };
 
             var cmbGenericHumor = new Dictionary<string, string>
             {
-                { "any", "Any" },
-                { "false", "Only get assets not tagged as humor" },
-                { "true", "Only get assets tagged as humor" },
+                { "any", ResourceProvider.GetString("LOCSteamGridDBMetadata_SettingGenericAny") },
+                { "false", ResourceProvider.GetString("LOCSteamGridDBMetadata_SettingGenericNotHumor") },
+                { "true", ResourceProvider.GetString("LOCSteamGridDBMetadata_SettingGenericOnlyHumor") },
             };
 
 
             // Cover items sources
             cmbCoverStyles.ItemsSource = new Dictionary<string, string>
             {
-                { "any", "Any" },
-                { "alternate", "Alternate" },
-                { "blurred", "Blurred" },
-                { "white_logo", "White Logo" },
-                { "material", "Material" },
-                { "no_logo", "No Logo" }
+                { "any", ResourceProvider.GetString("LOCSteamGridDBMetadata_SettingGenericAny") },
+                { "alternate", ResourceProvider.GetString("LOCSteamGridDBMetadata_SettingStyleAlternate") },
+                { "blurred", ResourceProvider.GetString("LOCSteamGridDBMetadata_SettingStyleBlurred") },
+                { "white_logo", ResourceProvider.GetString("LOCSteamGridDBMetadata_SettingStyleWhiteLogo") },
+                { "material", ResourceProvider.GetString("LOCSteamGridDBMetadata_SettingStyleMaterial") },
+                { "no_logo", ResourceProvider.GetString("LOCSteamGridDBMetadata_SettingStyleNoLogo") }
             };
 
             cmbCoverDimensions.ItemsSource = new Dictionary<string, string>
             {
-                { "any", "Any" },
+                { "any", ResourceProvider.GetString("LOCSteamGridDBMetadata_SettingGenericAny") },
                 { "460x215", "460x215" },
                 { "920x430",  "920x430" },
                 { "600x900", "600x900" },
@@ -66,16 +67,16 @@ namespace SGDBMetadata
             // Background Image items sources
             cmbBackgroundStyles.ItemsSource = new Dictionary<string, string>
             {
-                { "any", "Any" },
-                { "alternate", "Alternate" },
-                { "blurred", "Blurred" },
-                { "white_logo", "White Logo" },
-                { "material", "Material" },
-                { "no_logo", "No Logo" }
+                { "any", ResourceProvider.GetString("LOCSteamGridDBMetadata_SettingGenericAny") },
+                { "alternate", ResourceProvider.GetString("LOCSteamGridDBMetadata_SettingStyleAlternate") },
+                { "blurred", ResourceProvider.GetString("LOCSteamGridDBMetadata_SettingStyleBlurred") },
+                { "white_logo", ResourceProvider.GetString("LOCSteamGridDBMetadata_SettingStyleWhiteLogo") },
+                { "material", ResourceProvider.GetString("LOCSteamGridDBMetadata_SettingStyleMaterial") },
+                { "no_logo", ResourceProvider.GetString("LOCSteamGridDBMetadata_SettingStyleNoLogo") }
             };
             cmbBackgroundDimensions.ItemsSource = new Dictionary<string, string>
             {
-                { "any", "Any" },
+                { "any", ResourceProvider.GetString("LOCSteamGridDBMetadata_SettingGenericAny") },
                 { "1920x620", "1920x620" },
                 { "3840x1240",  "3840x1240" },
                 { "1600x650", "1600x650" }
@@ -87,8 +88,8 @@ namespace SGDBMetadata
             // Icon items sources
             cmbIconAssetSelection.ItemsSource = new Dictionary<string, string>
             {
-                { "icons", "Icons" },
-                { "logos", "Logos" },
+                { "icons", ResourceProvider.GetString("LOCSteamGridDBMetadata_SettingIconAssetIcon") },
+                { "logos", ResourceProvider.GetString("LOCSteamGridDBMetadata_SettingIconAssetLogo") },
             };
 
             cmbIconNsfw.ItemsSource = cmbGenericNsfw;

@@ -1,0 +1,32 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOCSteamGridDBMetadata_SettingApiKey">SteamGridDB API Key:</sys:String>
+    <sys:String x:Key="LOCSteamGridDBMetadata_SettingCoverLabel">Cover settings</sys:String>
+    <sys:String x:Key="LOCSteamGridDBMetadata_SettingBackgroundLabel">Background Image settings</sys:String>
+    <sys:String x:Key="LOCSteamGridDBMetadata_SettingIconLabel">Icon settings</sys:String>
+    <sys:String x:Key="LOCSteamGridDBMetadata_SettingStyleLabel">Style:</sys:String>
+    <sys:String x:Key="LOCSteamGridDBMetadata_SettingDimensionLabel">Dimension:</sys:String>
+    <sys:String x:Key="LOCSteamGridDBMetadata_SettingAdultContentLabel">Adult content:</sys:String>
+    <sys:String x:Key="LOCSteamGridDBMetadata_SettingHumorContentLabel">Humor:</sys:String>
+    
+    <sys:String x:Key="LOCSteamGridDBMetadata_SettingGenericAny">Any</sys:String>
+    <sys:String x:Key="LOCSteamGridDBMetadata_SettingGenericNotAdult">Only get assets not tagged as adult content</sys:String>
+    <sys:String x:Key="LOCSteamGridDBMetadata_SettingGenericOnlyAdult">Only get assets tagged as adult content</sys:String>
+    <sys:String x:Key="LOCSteamGridDBMetadata_SettingGenericNotHumor">Only get assets not tagged as humor</sys:String>
+    <sys:String x:Key="LOCSteamGridDBMetadata_SettingGenericOnlyHumor">Only get assets tagged as humor</sys:String>
+
+    <sys:String x:Key="LOCSteamGridDBMetadata_SettingStyleAlternate">Alternate</sys:String>
+    <sys:String x:Key="LOCSteamGridDBMetadata_SettingStyleBlurred">Blurred</sys:String>
+    <sys:String x:Key="LOCSteamGridDBMetadata_SettingStyleWhiteLogo">White Logo</sys:String>
+    <sys:String x:Key="LOCSteamGridDBMetadata_SettingStyleMaterial">Material</sys:String>
+    <sys:String x:Key="LOCSteamGridDBMetadata_SettingStyleNoLogo">No Logo</sys:String>
+
+    <sys:String x:Key="LOCSteamGridDBMetadata_SettingIconAssetIcon">Icons</sys:String>
+    <sys:String x:Key="LOCSteamGridDBMetadata_SettingIconAssetLogo">Logos</sys:String>
+
+    <sys:String x:Key="LOCSteamGridDBMetadata_WindowTitleChooseGame">Choose game</sys:String>
+    <sys:String x:Key="LOCSteamGridDBMetadata_WindowTitleChooseIcon">Choose icon</sys:String>
+    <sys:String x:Key="LOCSteamGridDBMetadata_WindowTitleChooseCover">Choose cover</sys:String>
+    <sys:String x:Key="LOCSteamGridDBMetadata_WindowTitleChooseBackground">Choose background</sys:String>
+</ResourceDictionary>
