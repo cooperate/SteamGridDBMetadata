@@ -8,7 +8,7 @@
     <ScrollViewer>
         <StackPanel Margin="20">
             <TextBlock Text="SteamGridDB API Key:"/>
-            <TextBox Text="{Binding ApiKey}" Margin="0,10,0,0" />
+            <TextBox Text="{Binding Settings.ApiKey}" Margin="0,10,0,0" />
 
             <Label Content="Cover settings" Margin="0,15,0,0"/>
             <Separator/>
@@ -27,25 +27,25 @@
                 <ComboBox x:Name="cmbCoverStyles" Grid.Column="1" Grid.Row="0"
                         DisplayMemberPath="Value"
                         SelectedValuePath="Key"
-                        SelectedValue="{Binding CoverStyle}" Margin="10,10,0,0" />
+                        SelectedValue="{Binding Settings.CoverStyle}" Margin="10,10,0,0" />
 
                 <TextBlock Grid.Column="0" Grid.Row="1" Text="Dimension:" Margin="0,10,0,0"/>
                 <ComboBox x:Name="cmbCoverDimensions" Grid.Column="1" Grid.Row="1"
                         DisplayMemberPath="Value"
                         SelectedValuePath="Key"
-                        SelectedValue="{Binding CoverDimension}" Margin="10,10,0,0"/>
+                        SelectedValue="{Binding Settings.CoverDimension}" Margin="10,10,0,0"/>
 
                 <TextBlock Grid.Column="0" Grid.Row="2" Text="Adult content:" Margin="0,10,0,0"/>
                 <ComboBox x:Name="cmbCoverNsfw" Grid.Column="1" Grid.Row="2"
                         DisplayMemberPath="Value"
                         SelectedValuePath="Key"
-                        SelectedValue="{Binding CoverNsfw}" Margin="10,10,0,0"/>
+                        SelectedValue="{Binding Settings.CoverNsfw}" Margin="10,10,0,0"/>
 
                 <TextBlock Grid.Column="0" Grid.Row="3" Text="Humor:" Margin="0,10,0,0"/>
                 <ComboBox x:Name="cmbCoverHumor" Grid.Column="1" Grid.Row="3"
                         DisplayMemberPath="Value"
                         SelectedValuePath="Key"
-                        SelectedValue="{Binding CoverHumor}" Margin="10,10,0,0"/>
+                        SelectedValue="{Binding Settings.CoverHumor}" Margin="10,10,0,0"/>
             </Grid>
 
             <Label Content="Background Image settings" Margin="0,15,0,0"/>
@@ -65,25 +65,25 @@
                 <ComboBox x:Name="cmbBackgroundStyles" Grid.Column="1" Grid.Row="0"
                         DisplayMemberPath="Value"
                         SelectedValuePath="Key"
-                        SelectedValue="{Binding BackgroundStyle}" Margin="10,10,0,0" />
+                        SelectedValue="{Binding Settings.BackgroundStyle}" Margin="10,10,0,0" />
 
                 <TextBlock Grid.Column="0" Grid.Row="1" Text="Dimension:" Margin="0,10,0,0"/>
                 <ComboBox x:Name="cmbBackgroundDimensions" Grid.Column="1" Grid.Row="1"
                         DisplayMemberPath="Value"
                         SelectedValuePath="Key"
-                        SelectedValue="{Binding BackgroundDimension}" Margin="10,10,0,0"/>
+                        SelectedValue="{Binding Settings.BackgroundDimension}" Margin="10,10,0,0"/>
 
                 <TextBlock Grid.Column="0" Grid.Row="2" Text="Adult content:" Margin="0,10,0,0"/>
                 <ComboBox x:Name="cmbBackgroundNsfw" Grid.Column="1" Grid.Row="2"
                         DisplayMemberPath="Value"
                         SelectedValuePath="Key"
-                        SelectedValue="{Binding BackgroundNsfw}" Margin="10,10,0,0"/>
+                        SelectedValue="{Binding Settings.BackgroundNsfw}" Margin="10,10,0,0"/>
 
                 <TextBlock Grid.Column="0" Grid.Row="3" Text="Humor:" Margin="0,10,0,0"/>
                 <ComboBox x:Name="cmbBackgroundHumor" Grid.Column="1" Grid.Row="3"
                         DisplayMemberPath="Value"
                         SelectedValuePath="Key"
-                        SelectedValue="{Binding BackgroundHumor}" Margin="10,10,0,0"/>
+                        SelectedValue="{Binding Settings.BackgroundHumor}" Margin="10,10,0,0"/>
             </Grid>
 
             <Label Content="Icon settings" Margin="0,15,0,0"/>
@@ -103,21 +103,20 @@
                 <ComboBox x:Name="cmbIconAssetSelection" Grid.Column="1" Grid.Row="0"
                         DisplayMemberPath="Value"
                         SelectedValuePath="Key"
-                        SelectedValue="{Binding IconAssetSelection}" Margin="10,10,0,0"/>
+                        SelectedValue="{Binding Settings.IconAssetSelection}" Margin="10,10,0,0"/>
 
                 <TextBlock Grid.Column="0" Grid.Row="1" Text="Adult content:" Margin="0,10,0,0"/>
                 <ComboBox x:Name="cmbIconNsfw" Grid.Column="1" Grid.Row="1"
                         DisplayMemberPath="Value"
                         SelectedValuePath="Key"
-                        SelectedValue="{Binding IconNsfw}" Margin="10,10,0,0"/>
+                        SelectedValue="{Binding Settings.IconNsfw}" Margin="10,10,0,0"/>
 
                 <TextBlock Grid.Column="0" Grid.Row="2" Text="Humor:" Margin="0,10,0,0"/>
                 <ComboBox x:Name="cmbIconHumor" Grid.Column="1" Grid.Row="2"
                         DisplayMemberPath="Value"
                         SelectedValuePath="Key"
-                        SelectedValue="{Binding IconHumor}" Margin="10,10,0,0"/>
+                        SelectedValue="{Binding Settings.IconHumor}" Margin="10,10,0,0"/>
             </Grid>
-            
         </StackPanel>
     </ScrollViewer>
 </UserControl>

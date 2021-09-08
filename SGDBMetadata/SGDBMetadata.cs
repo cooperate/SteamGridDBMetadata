@@ -13,7 +13,7 @@ namespace SGDBMetadata
     {
         private static readonly ILogger logger = LogManager.GetLogger();
 
-        private SGDBMetadataSettings settings { get; set; }
+        private SGDBMetadataSettingsViewModel settings { get; set; }
 
         public override Guid Id { get; } = Guid.Parse("f9a763e1-1ccb-4d7d-b955-d59e708f71c1");
 
@@ -28,12 +28,16 @@ namespace SGDBMetadata
 
         public SGDBMetadata(IPlayniteAPI api) : base(api)
         {
-            settings = new SGDBMetadataSettings(this);
+            settings = new SGDBMetadataSettingsViewModel(this);
+            Properties = new MetadataPluginProperties
+            {
+                HasSettings = true
+            };
         }
 
         public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options)
         {
-            return new SGDBMetadataProvider(options, this, settings);
+            return new SGDBMetadataProvider(options, this, settings.Settings);
         }
 
         public override ISettings GetSettings(bool firstRunSettings)

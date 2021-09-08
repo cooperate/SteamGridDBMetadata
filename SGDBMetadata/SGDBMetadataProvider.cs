@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Playnite.SDK;
+using Playnite.SDK.Models;
+using Playnite.SDK.Plugins;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Playnite.SDK;
-using Playnite.SDK.Metadata;
-using Playnite.SDK.Plugins;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace SGDBMetadata
 {
@@ -66,18 +68,14 @@ namespace SGDBMetadata
         }
 
         // Override additional methods based on supported metadata fields.
-        public override MetadataFile GetCoverImage()
+        public override MetadataFile GetCoverImage(GetMetadataFieldArgs args)
         {
             var logger = LogManager.GetLogger();
             logger.Info("GetCoverImage");
             if (options.IsBackgroundDownload)
             {
                 string gameUrl = services.getCoverImageUrl(gameSearchItem ?? null, gamePlatformEnum ?? null, options.GameData.GameId ?? null);
-                if (gameUrl == "bad path")
-                {
-                    return base.GetCoverImage();
-                }
-                else
+                if (gameUrl != "bad path")
                 {
                     return new MetadataFile(gameUrl);
                 }
@@ -94,37 +92,23 @@ namespace SGDBMetadata
                         {
                             selection = GetCoverManually(covers);
                         }
-                        if (selection == null || selection.Path == "nopath")
-                        {
-                            return base.GetCoverImage();
-                        }
-                        else
+                        if (selection != null || selection?.Path ?? "nopath" != "nopath")
                         {
                             return new MetadataFile(selection.FullRes);
                         }
                     }
-                    else
-                    {
-                        return base.GetCoverImage();
-                    }
-                }
-                else
-                {
-                    return base.GetCoverImage();
                 }
             }
+
+            return base.GetCoverImage(args);
         }
 
-        public override MetadataFile GetBackgroundImage()
+        public override MetadataFile GetBackgroundImage(GetMetadataFieldArgs args)
         {
             if (options.IsBackgroundDownload)
             {
                 string gameUrl = services.getHeroImageUrl(gameSearchItem ?? null, gamePlatformEnum ?? null, options.GameData.GameId ?? null);
-                if (gameUrl == "bad path")
-                {
-                    return base.GetBackgroundImage();
-                }
-                else
+                if (gameUrl != "bad path")
                 {
                     return new MetadataFile(gameUrl);
                 }
@@ -141,28 +125,18 @@ namespace SGDBMetadata
                         {
                             selection = GetHeroManually(heroes);
                         }
-                        if (selection == null || selection.Path == "nopath")
-                        {
-                            return base.GetBackgroundImage();
-                        }
-                        else
+                        if (selection != null || selection?.Path ?? "nopath" != "nopath")
                         {
                             return new MetadataFile(selection.FullRes);
                         }
                     }
-                    else
-                    {
-                        return base.GetBackgroundImage();
-                    }
-                }
-                else
-                {
-                    return base.GetBackgroundImage();
                 }
             }
+
+            return base.GetBackgroundImage(args);
         }
 
-        public override MetadataFile GetIcon()
+        public override MetadataFile GetIcon(GetMetadataFieldArgs args)
         {
             if (options.IsBackgroundDownload)
             {
@@ -176,11 +150,7 @@ namespace SGDBMetadata
                 {
                     gameUrl = services.getIconImageUrl(gameSearchItem ?? null, gamePlatformEnum ?? null, options.GameData.GameId ?? null);
                 }
-                if (gameUrl == "bad path")
-                {
-                    return base.GetIcon();
-                }
-                else
+                if (gameUrl != "bad path")
                 {
                     return new MetadataFile(gameUrl);
                 }
@@ -205,25 +175,15 @@ namespace SGDBMetadata
                         {
                             selection = GetIconManually(icons);
                         }
-                        if (selection == null || selection.Path == "nopath")
-                        {
-                            return base.GetIcon();
-                        }
-                        else
+                        if (selection != null || selection?.Path ?? "nopath" != "nopath")
                         {
                             return new MetadataFile(selection.FullRes);
                         }
                     }
-                    else
-                    {
-                        return base.GetIcon();
-                    }
-                }
-                else
-                {
-                    return base.GetIcon();
                 }
             }
+
+            return base.GetIcon(args);
         }
 
         private void GetGame(List<GenericItemOption> gameList, string caption)
