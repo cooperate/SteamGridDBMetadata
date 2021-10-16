@@ -43,7 +43,7 @@ namespace SGDBMetadata
             logger.Info("SGDB Initialized");
         }
 
-        public void convertPlayniteGamePluginIdToSGDBPlatformEnum(Guid pluginId)
+        public void convertPlayniteGamePluginIdToSGDBPlatformEnum(Guid pluginId, string gameId)
         {
             //check for platform "steam""origin""egs""bnet""uplay"
             // only steam is reliable enough on sgdb
@@ -51,7 +51,14 @@ namespace SGDBMetadata
             switch (BuiltinExtensions.GetExtensionFromId(pluginId))
             {
                 case BuiltinExtension.SteamLibrary:
-                    gamePlatformEnum = "steam";
+                    //Normal games AppIds don't surpass the max int32 value
+                    //Steam mods seem to use a randomly generated ID that surpass
+                    //that value, so they shouldn't be used for matching.
+                    //Mods should be matched by game name
+                    if (int.TryParse(gameId, out int result))
+                    {
+                        gamePlatformEnum = "steam";
+                    }
                     return;
                 case BuiltinExtension.OriginLibrary:
                     //gamePlatformEnum = "origin";
@@ -225,7 +232,7 @@ namespace SGDBMetadata
             var logger = LogManager.GetLogger();
             logger.Info("GetSgdbMetadata");
 
-            convertPlayniteGamePluginIdToSGDBPlatformEnum(options.GameData.PluginId);
+            convertPlayniteGamePluginIdToSGDBPlatformEnum(options.GameData.PluginId, options.GameData.GameId);
             if (!options.IsBackgroundDownload)
             {
                 if (string.IsNullOrEmpty(gamePlatformEnum))
