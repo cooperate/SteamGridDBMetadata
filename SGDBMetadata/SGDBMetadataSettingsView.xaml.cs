@@ -72,10 +72,9 @@ namespace SGDBMetadata
                 { "any", ResourceProvider.GetString("LOCSteamGridDBMetadata_SettingGenericAny") },
                 { "alternate", ResourceProvider.GetString("LOCSteamGridDBMetadata_SettingStyleAlternate") },
                 { "blurred", ResourceProvider.GetString("LOCSteamGridDBMetadata_SettingStyleBlurred") },
-                { "white_logo", ResourceProvider.GetString("LOCSteamGridDBMetadata_SettingStyleWhiteLogo") },
                 { "material", ResourceProvider.GetString("LOCSteamGridDBMetadata_SettingStyleMaterial") },
-                { "no_logo", ResourceProvider.GetString("LOCSteamGridDBMetadata_SettingStyleNoLogo") }
             };
+
             cmbBackgroundDimensions.ItemsSource = new Dictionary<string, string>
             {
                 { "any", ResourceProvider.GetString("LOCSteamGridDBMetadata_SettingGenericAny") },
