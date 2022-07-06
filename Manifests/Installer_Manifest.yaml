@@ -8,3 +8,11 @@ Packages:
       - Playnite 9 support
       - Added localizations support
       - Added button in settings page to open SteamGridDB API Key page
+  - Version: 1.1
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-07-05
+    PackageUrl: https://github.com/cooperate/SteamGridDBMetadata/releases/download/1.1/SteamGridDB_Playnite_Metadata_1_1.pext
+    Changelog:
+      - Added option to download covers with dimensions 460x215 & 920x430 and 512x512 & 1024x1024 at the same time
+      - Fix invalid Style options being available to select for background images
+      - Fix error when downloading metadata for Steam games that are mods
