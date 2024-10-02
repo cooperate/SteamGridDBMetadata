@@ -19,6 +19,7 @@ namespace SGDBMetadata
         private string gamePlatformEnum;
         private List<MetadataField> availableFields;
         private string iconAssetSelection;
+        private const string demoSuffix = " Demo";
         public override List<MetadataField> AvailableFields
         {
             get
@@ -55,7 +56,11 @@ namespace SGDBMetadata
                     //Steam mods seem to use a randomly generated ID that surpass
                     //that value, so they shouldn't be used for matching.
                     //Mods should be matched by game name
-                    if (int.TryParse(gameId, out int result))
+
+                    // Demo entries are also ignored to fallback to normal search since
+                    // they won't be matched using ID on SGDB
+                    if (int.TryParse(gameId, out int _) &&
+                        !options.GameData.Name.EndsWith(demoSuffix, StringComparison.OrdinalIgnoreCase))
                     {
                         gamePlatformEnum = "steam";
                     }
@@ -200,14 +205,13 @@ namespace SGDBMetadata
                 try
                 {
                     return new List<GenericItemOption>(services.getGameListSGDB(a).Select(game => new GenericItemOption(game.name, game.id.ToString())));
-
                 }
                 catch
                 {
                     var sgdbException = new Exception("Service failure.");
                     throw sgdbException;
                 }
-            }, options.GameData.Name, caption);
+            }, CleanupGameName(options.GameData.Name), caption);
             searchSelection = item;
         }
 
@@ -233,18 +237,29 @@ namespace SGDBMetadata
             logger.Info("GetSgdbMetadata");
 
             convertPlayniteGamePluginIdToSGDBPlatformEnum(options.GameData.PluginId, options.GameData.GameId);
+            var cleanedUpGameName = CleanupGameName(options.GameData.Name);
             if (!options.IsBackgroundDownload)
             {
                 if (string.IsNullOrEmpty(gamePlatformEnum))
                 {
-                    var gameList = new List<GenericItemOption>(services.getGameListSGDB(options.GameData.Name).Select(game => new GenericItemOption(game.name, game.id.ToString())));
+                    var gameList = new List<GenericItemOption>(services.getGameListSGDB(cleanedUpGameName).Select(game => new GenericItemOption(game.name, game.id.ToString())));
                     GetGame(gameList, ResourceProvider.GetString("LOCSteamGridDBMetadata_WindowTitleChooseGame"));
                 }
             }
             else if (string.IsNullOrEmpty(gamePlatformEnum))
             {
-                gameSearchItem = services.getGameSGDBFuzzySearch(options.GameData.Name);
+                gameSearchItem = services.getGameSGDBFuzzySearch(cleanedUpGameName);
             }
+        }
+
+        private string CleanupGameName(string gameName)
+        {           
+            if (gameName.EndsWith(demoSuffix, StringComparison.OrdinalIgnoreCase))
+            {
+                gameName = gameName.Substring(0, gameName.Length - demoSuffix.Length);
+            }
+
+            return gameName;
         }
 
         private ImageFileOption GetCoverManually(List<GridModel> possibleCovers)
