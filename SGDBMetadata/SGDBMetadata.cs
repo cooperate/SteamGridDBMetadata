@@ -26,7 +26,7 @@ namespace SGDBMetadata
 
         public override string Name => "SteamGridDB";
 
-        public SGDBMetadata(IPlayniteAPI api) : base(api)
+        public SGDBMetadata(IPlayniteAPI api) : base(api) 
         {
             settings = new SGDBMetadataSettingsViewModel(this);
             Properties = new MetadataPluginProperties

@@ -8,6 +8,9 @@ using RestSharp;
 using RestSharp.Authenticators;
 using SGDBMetadata;
 using Playnite.SDK;
+using System.Reflection;
+using System.Net.Http;
+using System.Threading;
 
 namespace SGDBMetadata
 {
@@ -22,39 +25,57 @@ namespace SGDBMetadata
         {
             client = new RestClient(baseUrl);
             client.Authenticator = new JwtAuthenticator(settings.ApiKey);
+
             this.settings = settings;
         }
 
         public RestClient RestClient { get; set; }
 
-        public T Execute<T>(RestRequest request) where T : new()
+        public List<T> Execute<T>(RestRequest request, bool pagination = true) where T : new()
         {
             request.OnBeforeDeserialization = resp => { resp.ContentType = "application/json"; };
             var logger = LogManager.GetLogger();
             var fullUrl = client.BuildUri(request);
             logger.Info(fullUrl.ToString());
-            var response = client.Execute(request);
-            if (response.ErrorException != null)
+
+            var items = new List<T>();
+            int page = 0;
+
+            while(true)
             {
-                const string message = "Error retrieving response. Check inner details for more info.";
-                var sgdbException = new Exception(message, response.ErrorException);
-                throw sgdbException;
+                request.AddOrUpdateParameter("page", page); 
+                var response = client.Execute(request);
+
+                if (response.ErrorException != null)
+                    throw new Exception("Error retrieving response", response.ErrorException);
+
+                logger.Info(response.Content);
+
+                var json = Newtonsoft.Json.JsonConvert.DeserializeObject<ResponseModel<T>>(response.Content);
+                items.AddRange(json.data);
+                if (json.data.Count > 0 && pagination)
+                {
+                    page++;
+                } else
+                {
+                    break;
+                }
+
             }
-            var content = response.Content;
-            logger.Info(content);
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(content);
+
+            return items;
         }
 
-        public ResponseModel<SearchModel> getSGDBGames(string searchName)
+        public List<SearchModel> getSGDBGames(string searchName)
         {
             var logger = LogManager.GetLogger();
             logger.Info(searchName);
             var request = new RestRequest("search/autocomplete/{searchName}", Method.GET);
             request.AddParameter("searchName", searchName, ParameterType.UrlSegment);
-            return Execute<ResponseModel<SearchModel>>(request);
+            return Execute<SearchModel>(request, false);
         }
 
-        public ResponseModel<GridModel> getSGDBGameGridByAppId(string platform, string gameId)
+        public List<GridModel> getSGDBGameGridByAppId(string platform, string gameId)
         {
             var request = new RestRequest("grids/{platform}/{gameId}", Method.GET);
             request.AddParameter("platform", platform, ParameterType.UrlSegment);
@@ -70,10 +91,10 @@ namespace SGDBMetadata
             request.AddParameter("nsfw", settings.CoverNsfw, ParameterType.GetOrPost);
             request.AddParameter("humor", settings.CoverHumor, ParameterType.GetOrPost);
 
-            return Execute<ResponseModel<GridModel>>(request);
+            return Execute<GridModel>(request);
         }
 
-        public ResponseModel<GridModel> getSGDBGameGridCover(int gameId)
+        public List<GridModel> getSGDBGameGridCover(int gameId)
         {
             var request = new RestRequest("grids/game/{id}", Method.GET);
             request.AddParameter("id", gameId, ParameterType.UrlSegment);
@@ -87,10 +108,10 @@ namespace SGDBMetadata
             }
             request.AddParameter("nsfw", settings.CoverNsfw, ParameterType.GetOrPost);
             request.AddParameter("humor", settings.CoverHumor, ParameterType.GetOrPost);
-            return Execute<ResponseModel<GridModel>>(request);
+            return Execute<GridModel>(request);
         }
         
-        public ResponseModel<HeroModel> getSGDBGameHero(int gameId)
+        public List<HeroModel> getSGDBGameHero(int gameId)
         {
             var logger = LogManager.GetLogger();
             logger.Info("getSGDBGameHero");
@@ -107,10 +128,10 @@ namespace SGDBMetadata
             request.AddParameter("nsfw", settings.BackgroundNsfw, ParameterType.GetOrPost);
             request.AddParameter("humor", settings.BackgroundHumor, ParameterType.GetOrPost);
 
-            return Execute<ResponseModel<HeroModel>>(request);
+            return Execute<HeroModel>(request);
         }
 
-        public ResponseModel<HeroModel> getSGDBGameHeroByAppId(string platform, string gameId)
+        public List<HeroModel> getSGDBGameHeroByAppId(string platform, string gameId)
         {
             var logger = LogManager.GetLogger();
             logger.Info("getSGDBGameHeroByAppId");
@@ -128,20 +149,20 @@ namespace SGDBMetadata
             request.AddParameter("nsfw", settings.BackgroundNsfw, ParameterType.GetOrPost);
             request.AddParameter("humor", settings.BackgroundHumor, ParameterType.GetOrPost);
 
-            return Execute<ResponseModel<HeroModel>>(request);
+            return Execute<HeroModel>(request);
         }
 
-        public ResponseModel<MediaModel> getSGDBGameLogo(int gameId)
+        public List<MediaModel> getSGDBGameLogo(int gameId)
         {
             var request = new RestRequest("logos/game/{gameId}", Method.GET);
             request.AddParameter("gameId", gameId, ParameterType.UrlSegment);
             request.AddParameter("nsfw", settings.IconNsfw, ParameterType.GetOrPost);
             request.AddParameter("humor", settings.IconHumor, ParameterType.GetOrPost);
 
-            return Execute<ResponseModel<MediaModel>>(request);
+            return Execute<MediaModel>(request);
         }
 
-        public ResponseModel<MediaModel> getSGDBGameLogoByAppId(string platform, string gameId)
+        public List<MediaModel> getSGDBGameLogoByAppId(string platform, string gameId)
         {
             var request = new RestRequest("logos/{platform}/{gameId}", Method.GET);
             request.AddParameter("platform", platform, ParameterType.UrlSegment);
@@ -149,20 +170,20 @@ namespace SGDBMetadata
             request.AddParameter("nsfw", settings.IconNsfw, ParameterType.GetOrPost);
             request.AddParameter("humor", settings.IconHumor, ParameterType.GetOrPost);
 
-            return Execute<ResponseModel<MediaModel>>(request);
+            return Execute<MediaModel>(request);
         }
 
-        public ResponseModel<MediaModel> getSGDBGameIcon(int gameId)
+        public List<MediaModel> getSGDBGameIcon(int gameId)
         {
             var request = new RestRequest("icons/game/{gameId}", Method.GET);
             request.AddParameter("gameId", gameId, ParameterType.UrlSegment);
             request.AddParameter("nsfw", settings.IconNsfw, ParameterType.GetOrPost);
             request.AddParameter("humor", settings.IconHumor, ParameterType.GetOrPost);
 
-            return Execute<ResponseModel<MediaModel>>(request);
+            return Execute<MediaModel>(request);
         }
 
-        public ResponseModel<MediaModel> getSGDBGameIconByAppId(string platform, string gameId)
+        public List<MediaModel> getSGDBGameIconByAppId(string platform, string gameId)
         {
             var request = new RestRequest("icons/{platform}/{gameId}", Method.GET);
             request.AddParameter("platform", platform, ParameterType.UrlSegment);
@@ -170,7 +191,7 @@ namespace SGDBMetadata
             request.AddParameter("nsfw", settings.IconNsfw, ParameterType.GetOrPost);
             request.AddParameter("humor", settings.IconHumor, ParameterType.GetOrPost);
 
-            return Execute<ResponseModel<MediaModel>>(request);
+            return Execute<MediaModel>(request);
         }
 
         public SearchModel getGameSGDBFuzzySearch(string gameTitle)
@@ -178,10 +199,10 @@ namespace SGDBMetadata
             var logger = LogManager.GetLogger();
             logger.Info(gameTitle);
             var gameListResponse = getSGDBGames(gameTitle);
-            if (gameListResponse.success)
+            if (gameListResponse.Count > 0)
             {
-                logger.Info(gameListResponse.data[0].name);
-                return gameListResponse.data[0]; //First element of search results, should probably implement fuzzysearchquery based on intentions
+                logger.Info(gameListResponse[0].name);
+                return gameListResponse[0]; //First element of search results, should probably implement fuzzysearchquery based on intentions
             }
             else
             {
@@ -195,10 +216,10 @@ namespace SGDBMetadata
             var logger = LogManager.GetLogger();
             logger.Info(gameTitle);
             var gameListResponse = getSGDBGames(gameTitle);
-            if (gameListResponse.success)
+            if (gameListResponse.Count > 0)
             {
-                logger.Info(gameListResponse.data.ToString());
-                return gameListResponse.data; //First element of search results, should probably implement fuzzysearchquery based on intentions
+                logger.Info(gameListResponse.ToString());
+                return gameListResponse; //First element of search results, should probably implement fuzzysearchquery based on intentions
             }
             else
             {
@@ -211,18 +232,18 @@ namespace SGDBMetadata
         {
             if (platform != null && gameId != null)
             {
-                ResponseModel<GridModel> grid = getSGDBGameGridByAppId(platform, gameId); //First element of search results, should probably implement fuzzysearchquery based on intentions
-                if(grid.success && grid.data.Count > 0)
+                List<GridModel> grid = getSGDBGameGridByAppId(platform, gameId); //First element of search results, should probably implement fuzzysearchquery based on intentions
+                if(grid.Count > 0)
                 {
-                    return grid.data[0].url;
+                    return grid[0].url;
                 }
             }
             else if (gameSearchItem != null)
             {
-                ResponseModel<GridModel> grid = getSGDBGameGridCover(gameSearchItem.id);
-                if (grid.success && grid.data.Count > 0)
+                List<GridModel> grid = getSGDBGameGridCover(gameSearchItem.id);
+                if (grid.Count > 0)
                 {
-                    return grid.data[0].url;
+                    return grid[0].url;
                 }
             }
             return "bad path";
@@ -232,12 +253,12 @@ namespace SGDBMetadata
         {
             if (platform != null && gameId != null)
             {
-                ResponseModel<GridModel> grid = getSGDBGameGridByAppId(platform, gameId); //First element of search results, should probably implement fuzzysearchquery based on intentions
-                if (grid.success && grid.data.Count > 0)
+                List<GridModel> grid = getSGDBGameGridByAppId(platform, gameId); //First element of search results, should probably implement fuzzysearchquery based on intentions
+                if (grid.Count > 0)
                 {
-                    return grid.data;
+                    return grid;
                 }
-                else if (grid.success && grid.data.Count == 0)
+                else if (grid.Count == 0)
                 {
                     return null;
                 }
@@ -249,12 +270,12 @@ namespace SGDBMetadata
             }
             else if (searchSelection != null)
             {
-                ResponseModel<GridModel> grid = getSGDBGameGridCover(int.Parse(searchSelection.Description));
-                if (grid.success && grid.data.Count > 0)
+                List<GridModel> grid = getSGDBGameGridCover(int.Parse(searchSelection.Description));
+                if (grid.Count > 0)
                 {
-                    return grid.data;
+                    return grid;
                 }
-                else if (grid.success && grid.data.Count == 0)
+                else if (grid.Count == 0)
                 {
                     return null;
                 }
@@ -279,18 +300,18 @@ namespace SGDBMetadata
             logger.Info(gameId);
             if (platform != null && gameId != null)
             {
-                ResponseModel<HeroModel> hero = getSGDBGameHeroByAppId(platform, gameId); //First element of search results, should probably implement fuzzysearchquery based on intentions
-                if (hero.success && hero.data.Count > 0)
+                List<HeroModel> hero = getSGDBGameHeroByAppId(platform, gameId); //First element of search results, should probably implement fuzzysearchquery based on intentions
+                if (hero.Count > 0)
                 {
-                    return hero.data[0].url;
+                    return hero[0].url;
                 }
             }
             else if (gameSearchItem != null)
             {
-                ResponseModel<HeroModel> hero = getSGDBGameHero(gameSearchItem.id);
-                if (hero.success && hero.data.Count > 0)
+                List<HeroModel> hero = getSGDBGameHero(gameSearchItem.id);
+                if (hero.Count > 0)
                 {
-                    return hero.data[0].url;
+                    return hero[0].url;
                 }
             }
             return "bad path";
@@ -305,12 +326,12 @@ namespace SGDBMetadata
             logger.Info(gameId);
             if (platform != null && gameId != null)
             {
-                ResponseModel<HeroModel> hero = getSGDBGameHeroByAppId(platform, gameId); //First element of search results, should probably implement fuzzysearchquery based on intentions
-                if (hero.success && hero.data.Count > 0)
+                List<HeroModel> hero = getSGDBGameHeroByAppId(platform, gameId); //First element of search results, should probably implement fuzzysearchquery based on intentions
+                if (hero.Count > 0)
                 {
-                    return hero.data;
+                    return hero;
                 }
-                else if (hero.success && hero.data.Count == 0)
+                else if (hero.Count == 0)
                 {
                     return null;
                 }
@@ -322,12 +343,12 @@ namespace SGDBMetadata
             }
             else if (searchSelection != null)
             {
-                ResponseModel<HeroModel> hero = getSGDBGameHero(int.Parse(searchSelection.Description));
-                if (hero.success && hero.data.Count > 0)
+                List<HeroModel> hero = getSGDBGameHero(int.Parse(searchSelection.Description));
+                if (hero.Count > 0)
                 {
-                    return hero.data;
+                    return hero;
                 }
-                else if (hero.success && hero.data.Count == 0)
+                else if (hero.Count == 0)
                 {
                     return null;
                 }
@@ -347,18 +368,18 @@ namespace SGDBMetadata
         {
             if (platform != null && gameId != null)
             {
-                ResponseModel<MediaModel> logo = getSGDBGameLogoByAppId(platform, gameId); //First element of search results, should probably implement fuzzysearchquery based on intentions
-                if (logo.success && logo.data.Count > 0)
+                List<MediaModel> logo = getSGDBGameLogoByAppId(platform, gameId); //First element of search results, should probably implement fuzzysearchquery based on intentions
+                if (logo.Count > 0)
                 {
-                    return logo.data[0].url;
+                    return logo[0].url;
                 }
             }
             else if (gameSearchItem != null)
             {
-                ResponseModel<MediaModel> logo = getSGDBGameLogo(gameSearchItem.id);
-                if (logo.success && logo.data.Count > 0)
+                List<MediaModel> logo = getSGDBGameLogo(gameSearchItem.id);
+                if (logo.Count > 0)
                 {
-                    return logo.data[0].url;
+                    return logo[0].url;
                 }
             }
             return "bad path";
@@ -368,12 +389,12 @@ namespace SGDBMetadata
         {
             if (platform != null && gameId != null)
             {
-                ResponseModel<MediaModel> logo = getSGDBGameLogoByAppId(platform, gameId); //First element of search results, should probably implement fuzzysearchquery based on intentions
-                if (logo.success && logo.data.Count > 0)
+                List<MediaModel> logo = getSGDBGameLogoByAppId(platform, gameId); //First element of search results, should probably implement fuzzysearchquery based on intentions
+                if (logo.Count > 0)
                 {
-                    return logo.data;
+                    return logo;
                 }
-                else if (logo.success && logo.data.Count == 0)
+                else if (logo.Count == 0)
                 {
                     return null;
                 }
@@ -385,12 +406,12 @@ namespace SGDBMetadata
             }
             else if (searchSelection != null)
             {
-                ResponseModel<MediaModel> logo = getSGDBGameLogo(int.Parse(searchSelection.Description));
-                if (logo.success && logo.data.Count > 0)
+                List<MediaModel> logo = getSGDBGameLogo(int.Parse(searchSelection.Description));
+                if (logo.Count > 0)
                 {
-                    return logo.data;
+                    return logo;
                 }
-                else if (logo.success && logo.data.Count == 0)
+                else if (logo.Count == 0)
                 {
                     return null;
                 }
@@ -410,18 +431,18 @@ namespace SGDBMetadata
         {
             if (platform != null && gameId != null)
             {
-                ResponseModel<MediaModel> icon = getSGDBGameIconByAppId(platform, gameId); //First element of search results, should probably implement fuzzysearchquery based on intentions
-                if (icon.success && icon.data.Count > 0)
+                List<MediaModel> icon = getSGDBGameIconByAppId(platform, gameId); //First element of search results, should probably implement fuzzysearchquery based on intentions
+                if (icon.Count > 0)
                 {
-                    return icon.data[0].url;
+                    return icon[0].url;
                 }
             }
             else if (gameSearchItem != null)
             {
-                ResponseModel<MediaModel> icon = getSGDBGameIcon(gameSearchItem.id);
-                if (icon.success && icon.data.Count > 0)
+                List<MediaModel> icon = getSGDBGameIcon(gameSearchItem.id);
+                if (icon.Count > 0)
                 {
-                    return icon.data[0].url;
+                    return icon[0].url;
                 }
             }
             return "bad path";
@@ -431,12 +452,12 @@ namespace SGDBMetadata
         {
             if (platform != null && gameId != null)
             {
-                ResponseModel<MediaModel> icon = getSGDBGameIconByAppId(platform, gameId); //First element of search results, should probably implement fuzzysearchquery based on intentions
-                if (icon.success && icon.data.Count > 0)
+                List<MediaModel> icon = getSGDBGameIconByAppId(platform, gameId); //First element of search results, should probably implement fuzzysearchquery based on intentions
+                if (icon.Count > 0)
                 {
-                    return icon.data;
+                    return icon;
                 }
-                else if (icon.success && icon.data.Count == 0)
+                else if (icon.Count == 0)
                 {
                     return null;
                 }
@@ -448,12 +469,12 @@ namespace SGDBMetadata
             }
             else if (searchSelection != null)
             {
-                ResponseModel<MediaModel> icon = getSGDBGameIcon(int.Parse(searchSelection.Description));
-                if (icon.success && icon.data.Count > 0)
+                List<MediaModel> icon = getSGDBGameIcon(int.Parse(searchSelection.Description));
+                if (icon.Count > 0)
                 {
-                    return icon.data;
+                    return icon;
                 }
-                else if (icon.success && icon.data.Count == 0)
+                else if (icon.Count == 0)
                 {
                     return null;
                 }
